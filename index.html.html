@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NBA Net Wins Analyzer</title>
+<title>NBA Net Wins Analyzer | Will Fiore</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -78,11 +78,44 @@
 </head>
 <body>
 <header>
-  <h1>NBA Net Wins Analyzer</h1>
-  <span>Career comparison tool — your statistic</span>
+  <div style="display:flex;flex-direction:column;gap:2px;flex:1;">
+    <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;">
+      <h1 style="font-size:18px;font-weight:700;letter-spacing:-0.02em;">NBA Net Wins Analyzer</h1>
+      <span style="font-size:12px;opacity:0.45;font-weight:400;">A career contribution metric by Will Fiore</span>
+    </div>
+    <div style="font-size:11px;opacity:0.35;letter-spacing:0.01em;">64 players · all eras · fully interactive</div>
+  </div>
+  <a href="https://github.com/willf123/nba-net-wins" target="_blank" style="color:#fff;opacity:0.4;font-size:11px;text-decoration:none;white-space:nowrap;align-self:center;border:1px solid rgba(255,255,255,0.2);padding:4px 10px;border-radius:6px;transition:opacity 0.15s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='0.4'">GitHub ↗</a>
 </header>
 
 <div class="container">
+
+<!-- ABOUT CARD -->
+<div class="card" style="background:linear-gradient(135deg,#1a1a1a 0%,#2a2a2a 100%);color:#fff;border-color:#333;">
+  <div style="display:flex;gap:2rem;flex-wrap:wrap;align-items:flex-start;">
+    <div style="flex:2;min-width:260px;">
+      <div style="font-size:13px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;opacity:0.5;margin-bottom:8px;">The Statistic</div>
+      <div style="font-size:15px;font-weight:600;margin-bottom:8px;line-height:1.4;">Net Wins — a player's contextual contribution to wins and losses</div>
+      <div style="font-size:12px;opacity:0.65;line-height:1.7;">
+        Traditional stats measure what a player does. Net Wins measures how much those actions are worth — normalized by what it actually costs a team to win or lose that season.
+      </div>
+    </div>
+    <div style="flex:3;min-width:260px;display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div style="background:rgba(255,255,255,0.06);border-radius:8px;padding:12px;">
+        <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.06em;opacity:0.45;margin-bottom:6px;">Player Wins</div>
+        <div style="font-size:11px;opacity:0.8;line-height:1.6;">(PTS + REB + AST + BLK + STL) ÷ Team's positive actions per win</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.06);border-radius:8px;padding:12px;">
+        <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.06em;opacity:0.45;margin-bottom:6px;">Player Losses</div>
+        <div style="font-size:11px;opacity:0.8;line-height:1.6;">(Missed FG + Missed FT + TOV + PF) ÷ Team's negative actions per loss</div>
+      </div>
+      <div style="background:rgba(26,122,82,0.25);border:1px solid rgba(26,122,82,0.4);border-radius:8px;padding:12px;grid-column:1/-1;">
+        <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.06em;opacity:0.6;margin-bottom:4px;">Net Wins = Player Wins − Player Losses</div>
+        <div style="font-size:11px;opacity:0.75;line-height:1.5;">Example: Cade Cunningham, 2025-26 — 10.36 player wins, 3.44 player losses = <strong>6.92 net wins</strong></div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- SEARCH CARD -->
 <div class="card">
@@ -1603,5 +1636,10 @@ document.addEventListener('click',e=>{
 
 buildAllRankings();
 </script>
+<div style="text-align:center;padding:2rem 1rem;font-size:11px;color:#aaa;border-top:0.5px solid #e0ddd6;margin-top:1rem;">
+  <div style="margin-bottom:4px;">Built by <strong>Will Fiore</strong> · <a href="https://github.com/willf123/nba-net-wins" style="color:#888;text-decoration:none;">github.com/willf123/nba-net-wins</a></div>
+  <div style="opacity:0.6;">Net Wins is an original statistic. Player and team stats sourced from public NBA records. Pre-1974 BLK/STL estimated or editable. All calculations run client-side — no data is sent anywhere.</div>
+</div>
+
 </body>
 </html>
