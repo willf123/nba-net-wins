@@ -317,6 +317,7 @@
         <option value="career">Career net wins</option>
         <option value="avg">Avg / season</option>
         <option value="peak">Peak season</option>
+        <option value="top3">Avg top 3 seasons</option>
       </select>
     </div>
   </div>
@@ -2273,7 +2274,10 @@ function getStats(name){
   const s=COMPUTED[name];
   const tot=s.reduce((a,b)=>a+b.net,0);
   const best=s.reduce((a,b)=>b.net>a.net?b:a);
-  return {name,seasons:s,total:tot,avg:tot/s.length,peak:best.net,peakSeason:best.season,numSeasons:s.length};
+  const sorted=[...s].sort((a,b)=>b.net-a.net);
+  const top3=sorted.slice(0,Math.min(3,sorted.length));
+  const top3avg=top3.reduce((a,b)=>a+b.net,0)/top3.length;
+  return {name,seasons:s,total:tot,avg:tot/s.length,peak:best.net,peakSeason:best.season,numSeasons:s.length,top3avg};
 }
 
 // ─── FILTER / SEARCH ─────────────────────────────────────────────────────────
@@ -2452,10 +2456,11 @@ function buildAllRankings(){
   stats.sort((a,b)=>{
     if(sort==='career')return b.total-a.total;
     if(sort==='avg')return b.avg-a.avg;
+    if(sort==='top3')return b.top3avg-a.top3avg;
     return b.peak-a.peak;
   });
   document.getElementById('allRankContent').innerHTML=`<table class="rank-table">
-    <thead><tr><th>#</th><th>Player</th><th>Pos</th><th>Era</th><th>Career net wins</th><th>Avg/season</th><th>Peak</th><th>Seasons</th><th></th></tr></thead>
+    <thead><tr><th>#</th><th>Player</th><th>Pos</th><th>Era</th><th>Career net wins</th><th>Avg/season</th><th>Avg top 3</th><th>Peak</th><th>Seasons</th><th></th></tr></thead>
     <tbody>${stats.map((p,i)=>{
       const m=PLAYER_META[p.name]||{};
       const onChart=allData.find(d=>d.name===p.name);
@@ -2465,6 +2470,7 @@ function buildAllRankings(){
         <td style="font-size:11px;color:#888">${m.era||''}</td>
         <td class="${p.total>=0?'pos':'neg'}">${p.total.toFixed(1)}</td>
         <td>${p.avg.toFixed(2)}</td>
+        <td>${p.top3avg.toFixed(2)}</td>
         <td>${p.peak.toFixed(2)}</td>
         <td>${p.numSeasons}</td>
         <td>${onChart?'<span style="font-size:11px;color:#888">on chart</span>':`<button onclick="addPlayer('${p.name}')" style="font-size:11px;padding:2px 8px;">+ Add</button>`}</td>
