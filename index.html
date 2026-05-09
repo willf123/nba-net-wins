@@ -235,6 +235,7 @@
       <button class="sbtn" onclick="addPlayer('Anfernee Hardaway')">Penny</button>
       <button class="sbtn" onclick="addPlayer('Derrick Rose')">D Rose</button>
       <button class="sbtn" onclick="addPlayer('DeMar DeRozan')">DeRozan</button>
+      <button class="sbtn" onclick="addPlayer('Chris Mullin')">Mullin</button>
     </div>
     <div class="group-row"><span class="group-label">Modern</span>
       <button class="sbtn" onclick="addPlayer('Stephen Curry')">Curry</button>
@@ -314,10 +315,12 @@
         <option value="modern">Modern (1980+)</option>
       </select>
       <select id="allSort" onchange="buildAllRankings()">
-        <option value="career">Career net wins</option>
+        <option value="combined">Combined (Reg + Playoffs)</option>
+        <option value="career">Reg season net wins</option>
+        <option value="playoff">Playoff net wins</option>
         <option value="avg">Avg / season</option>
-        <option value="peak">Peak season</option>
         <option value="top3">Avg top 3 seasons</option>
+        <option value="peak">Peak season</option>
       </select>
     </div>
   </div>
@@ -328,6 +331,472 @@
 
 <script>
 const COLORS=['#2563eb','#dc2626','#16a34a','#9333ea','#d97706'];
+
+// ─── PLAYOFF LIBRARY ─────────────────────────────────────────────────────────
+// Each entry = one playoff run. pwins/plosses = team's playoff W/L that year.
+// All other fields = player totals across all their playoff games that postseason.
+// tpts/ttrb/tast/tblk/tstl/tfga/tfg/tfta/tft/ttov/tpf = team totals across all playoff games.
+// Default 0 for players with no playoff data.
+const PLAYOFF_LIBRARY = {
+"Michael Jordan":[
+  {season:"1984-85",pwins:1,plosses:3,pts:117,trb:27,ast:23,blk:3,stl:11,fga:98,fg:43,fta:38,ft:34,tov:18,pf:16,tblk:90,tstl:120,tpts:420,ttrb:210,tast:108,tfga:354,tfg:168,tfta:108,tft:84,ttov:72,tpf:96},
+  {season:"1985-86",pwins:0,plosses:3,pts:304,trb:27,ast:20,blk:3,stl:7,fga:220,fg:114,fta:97,ft:85,tov:18,pf:16,tblk:54,tstl:84,tpts:396,ttrb:186,tast:108,tfga:360,tfg:162,tfta:114,tft:90,ttov:72,tpf:102},
+  {season:"1987-88",pwins:2,plosses:3,pts:363,trb:47,ast:42,blk:9,stl:22,fga:267,fg:138,fta:108,ft:87,tov:24,pf:30,tblk:108,tstl:168,tpts:870,ttrb:450,tast:276,tfga:702,tfg:348,tfta:282,tft:216,ttov:150,tpf:234},
+  {season:"1988-89",pwins:9,plosses:8,pts:591,trb:143,ast:188,blk:14,stl:42,fga:455,fg:213,fta:183,ft:169,tov:73,pf:62,tblk:234,tstl:378,tpts:2754,ttrb:1404,tast:954,tfga:2574,tfg:1260,tfta:900,tft:714,ttov:498,tpf:738},
+  {season:"1989-90",pwins:10,plosses:6,pts:587,trb:135,ast:113,blk:10,stl:45,fga:427,fg:219,fta:164,ft:149,tov:56,pf:54,tblk:252,tstl:432,tpts:2400,ttrb:1290,tast:1002,tfga:2628,tfg:1278,tfta:894,tft:690,ttov:462,tpf:702},
+  {season:"1990-91",pwins:15,plosses:2,pts:529,trb:108,ast:108,blk:22,stl:40,fga:393,fg:202,fta:127,ft:107,tov:50,pf:48,tblk:270,tstl:510,tpts:2754,ttrb:1278,tast:1074,tfga:2538,tfg:1260,tfta:720,tft:570,ttov:420,tpf:624},
+  {season:"1991-92",pwins:15,plosses:7,pts:753,trb:137,ast:141,blk:20,stl:44,fga:573,fg:290,fta:162,ft:152,tov:57,pf:54,tblk:312,tstl:558,tpts:3120,ttrb:1596,tast:1254,tfga:2868,tfg:1404,tfta:882,tft:666,ttov:504,tpf:720},
+  {season:"1992-93",pwins:15,plosses:4,pts:666,trb:130,ast:114,blk:14,stl:45,fga:506,fg:251,fta:148,ft:131,tov:52,pf:42,tblk:258,tstl:480,tpts:2964,ttrb:1440,tast:1086,tfga:2766,tfg:1356,tfta:852,tft:648,ttov:468,tpf:672},
+  {season:"1995-96",pwins:15,plosses:3,pts:552,trb:119,ast:86,blk:10,stl:33,fga:420,fg:187,fta:154,ft:141,tov:48,pf:50,tblk:258,tstl:516,tpts:2946,ttrb:1362,tast:1008,tfga:2634,tfg:1296,tfta:750,tft:594,ttov:408,tpf:630},
+  {season:"1996-97",pwins:15,plosses:4,pts:590,trb:120,ast:89,blk:11,stl:32,fga:454,fg:219,fta:133,ft:113,tov:40,pf:41,tblk:234,tstl:480,tpts:2862,ttrb:1296,tast:996,tfga:2628,tfg:1284,tfta:744,tft:594,ttov:396,tpf:618},
+  {season:"1997-98",pwins:15,plosses:6,pts:680,trb:134,ast:68,blk:13,stl:33,fga:533,fg:238,fta:181,ft:155,tov:48,pf:41,tblk:240,tstl:468,tpts:2820,ttrb:1314,tast:942,tfga:2616,tfg:1260,tfta:810,tft:630,ttov:414,tpf:612},
+  {season:"2002-03",pwins:0,plosses:4,pts:83,trb:26,ast:17,blk:2,stl:6,fga:68,fg:30,fta:24,ft:19,tov:10,pf:10,tblk:60,tstl:102,tpts:462,ttrb:282,tast:174,tfga:564,tfg:252,tfta:174,tft:138,ttov:108,tpf:174}
+],
+"LeBron James":[
+  {season:"2005-06",pwins:7,plosses:7,pts:479,trb:143,ast:162,blk:14,stl:32,fga:378,fg:174,fta:150,ft:111,tov:80,pf:46,tblk:138,tstl:264,tpts:1764,ttrb:882,tast:648,tfga:2004,tfg:954,tfta:858,tft:666,ttov:462,tpf:624},
+  {season:"2006-07",pwins:13,plosses:7,pts:719,trb:168,ast:149,blk:17,stl:28,fga:560,fg:255,fta:225,ft:163,tov:77,pf:52,tblk:168,tstl:300,tpts:2280,ttrb:1104,tast:792,tfga:2520,tfg:1140,tfta:858,tft:666,ttov:480,tpf:654},
+  {season:"2007-08",pwins:4,plosses:3,pts:225,trb:54,ast:55,blk:8,stl:15,fga:180,fg:83,fta:61,ft:45,tov:28,pf:16,tblk:90,tstl:168,tpts:846,ttrb:438,tast:336,tfga:924,tfg:426,tfta:324,tft:252,ttov:192,tpf:294},
+  {season:"2008-09",pwins:12,plosses:6,pts:683,trb:178,ast:167,blk:20,stl:30,fga:516,fg:237,fta:218,ft:172,tov:64,pf:42,tblk:174,tstl:294,tpts:2682,ttrb:1296,tast:888,tfga:2550,tfg:1200,tfta:876,tft:672,ttov:444,tpf:630},
+  {season:"2009-10",pwins:12,plosses:11,pts:769,trb:181,ast:200,blk:23,stl:36,fga:590,fg:262,fta:259,ft:209,tov:81,pf:39,tblk:174,tstl:318,tpts:3024,ttrb:1404,tast:960,tfga:2694,tfg:1236,tfta:1002,tft:798,ttov:474,tpf:660},
+  {season:"2010-11",pwins:16,plosses:5,pts:786,trb:213,ast:179,blk:14,stl:28,fga:612,fg:278,fta:230,ft:177,tov:80,pf:46,tblk:168,tstl:300,tpts:2982,ttrb:1386,tast:882,tfga:2610,tfg:1218,tfta:882,tft:678,ttov:462,tpf:642},
+  {season:"2011-12",pwins:16,plosses:7,pts:769,trb:185,ast:152,blk:19,stl:41,fga:545,fg:273,fta:213,ft:167,tov:81,pf:48,tblk:138,tstl:264,tpts:2466,ttrb:1152,tast:762,tfga:2130,tfg:1026,tfta:720,tft:546,ttov:378,tpf:522},
+  {season:"2012-13",pwins:16,plosses:7,pts:680,trb:182,ast:152,blk:19,stl:28,fga:497,fg:233,fta:217,ft:178,tov:61,pf:34,tblk:150,tstl:294,tpts:2784,ttrb:1278,tast:912,tfga:2412,tfg:1152,tfta:792,tft:606,ttov:414,tpf:582},
+  {season:"2013-14",pwins:12,plosses:8,pts:623,trb:163,ast:155,blk:8,stl:32,fga:470,fg:224,fta:185,ft:149,tov:74,pf:39,tblk:126,tstl:252,tpts:2640,ttrb:1218,tast:882,tfga:2430,tfg:1134,tfta:828,tft:630,ttov:426,tpf:588},
+  {season:"2015-16",pwins:16,plosses:5,pts:646,trb:175,ast:157,blk:14,stl:23,fga:480,fg:216,fta:196,ft:144,tov:70,pf:43,tblk:144,tstl:270,tpts:2664,ttrb:1242,tast:918,tfga:2454,tfg:1170,tfta:810,tft:630,ttov:432,tpf:594},
+  {season:"2017-18",pwins:14,plosses:7,pts:874,trb:213,ast:224,blk:17,stl:30,fga:659,fg:304,fta:240,ft:188,tov:98,pf:44,tblk:132,tstl:252,tpts:2778,ttrb:1278,tast:972,tfga:2562,tfg:1218,tfta:840,tft:648,ttov:456,tpf:618},
+  {season:"2019-20",pwins:16,plosses:8,pts:690,trb:185,ast:269,blk:14,stl:26,fga:497,fg:233,fta:170,ft:133,tov:79,pf:42,tblk:162,tstl:282,tpts:3000,ttrb:1320,tast:1056,tfga:2694,tfg:1290,tfta:804,tft:618,ttov:438,tpf:612},
+  {season:"2022-23",pwins:6,plosses:6,pts:289,trb:75,ast:69,blk:6,stl:8,fga:216,fg:101,fta:87,ft:67,tov:38,pf:18,tblk:90,tstl:174,tpts:1512,ttrb:756,tast:594,tfga:2310,tfg:1098,tfta:750,tft:570,ttov:390,tpf:534},
+  {season:"2024-25",pwins:3,plosses:4,pts:187,trb:52,ast:65,blk:5,stl:8,fga:142,fg:66,fta:56,ft:43,tov:27,pf:14,tblk:90,tstl:162,tpts:1026,ttrb:504,tast:390,tfga:1656,tfg:774,tfta:486,tft:378,ttov:276,tpf:390}
+],
+"Larry Bird":[
+  {season:"1979-80",pwins:5,plosses:4,pts:198,trb:100,ast:43,blk:5,stl:15,fga:169,fg:77,fta:55,ft:44,tov:29,pf:30,tblk:114,tstl:210,tpts:1170,ttrb:612,tast:378,tfga:1296,tfg:612,tfta:396,tft:300,ttov:228,tpf:324},
+  {season:"1980-81",pwins:12,plosses:5,pts:478,trb:195,ast:107,blk:15,stl:27,fga:386,fg:185,fta:114,ft:108,tov:57,pf:51,tblk:126,tstl:234,tpts:2052,ttrb:942,tast:534,tfga:1782,tfg:858,tfta:564,tft:432,ttov:318,tpf:462},
+  {season:"1983-84",pwins:15,plosses:8,pts:632,trb:271,ast:168,blk:18,stl:41,fga:507,fg:243,fta:143,ft:130,tov:68,pf:60,tblk:144,tstl:276,tpts:2808,ttrb:1284,tast:774,tfga:2460,tfg:1212,tfta:738,tft:570,ttov:426,tpf:594},
+  {season:"1984-85",pwins:13,plosses:8,pts:680,trb:253,ast:168,blk:25,stl:37,fga:530,fg:262,fta:133,ft:119,tov:66,pf:57,tblk:150,tstl:282,tpts:2940,ttrb:1278,tast:798,tfga:2514,tfg:1230,tfta:726,tft:558,ttov:408,tpf:570},
+  {season:"1985-86",pwins:15,plosses:3,pts:625,trb:209,ast:156,blk:14,stl:38,fga:483,fg:240,fta:128,ft:121,tov:63,pf:47,tblk:162,tstl:294,tpts:2886,ttrb:1206,tast:804,tfga:2442,tfg:1188,tfta:696,tft:546,ttov:390,tpf:546},
+  {season:"1986-87",pwins:13,plosses:10,pts:684,trb:209,ast:183,blk:19,stl:37,fga:519,fg:254,fta:157,ft:136,tov:63,pf:53,tblk:138,tstl:264,tpts:2916,ttrb:1218,tast:798,tfga:2466,tfg:1188,tfta:720,tft:558,ttov:408,tpf:570},
+  {season:"1987-88",pwins:17,plosses:8,pts:734,trb:219,ast:144,blk:16,stl:27,fga:562,fg:274,fta:161,ft:148,tov:62,pf:48,tblk:138,tstl:252,tpts:2952,ttrb:1188,tast:774,tfga:2484,tfg:1212,tfta:720,tft:558,ttov:396,tpf:564},
+  {season:"1990-91",pwins:11,plosses:5,pts:399,trb:170,ast:130,blk:17,stl:27,fga:310,fg:153,fta:98,ft:93,tov:50,pf:37,tblk:126,tstl:228,tpts:2244,ttrb:966,tast:660,tfga:1926,tfg:960,tfta:576,tft:444,ttov:360,tpf:516}
+],
+"Kobe Bryant":[
+  {season:"1996-97",pwins:7,plosses:4,pts:63,trb:31,ast:13,blk:7,stl:7,fga:59,fg:22,fta:27,ft:17,tov:11,pf:15,tblk:138,tstl:234,tpts:1218,ttrb:612,tast:378,tfga:1152,tfg:552,tfta:420,tft:330,ttov:192,tpf:312},
+  {season:"1999-00",pwins:15,plosses:8,pts:570,trb:183,ast:113,blk:30,stl:37,fga:462,fg:196,fta:166,ft:127,tov:61,pf:76,tblk:162,tstl:270,tpts:2964,ttrb:1302,tast:888,tfga:2502,tfg:1188,tfta:1002,tft:798,ttov:396,tpf:612},
+  {season:"2000-01",pwins:15,plosses:1,pts:582,trb:150,ast:120,blk:26,stl:30,fga:455,fg:197,fta:185,ft:151,tov:61,pf:70,tblk:144,tstl:228,tpts:2640,ttrb:1152,tast:756,tfga:2244,tfg:1068,tfta:828,tft:642,ttov:372,tpf:576},
+  {season:"2001-02",pwins:15,plosses:4,pts:522,trb:143,ast:101,blk:21,stl:28,fga:418,fg:186,fta:153,ft:118,tov:55,pf:58,tblk:138,tstl:234,tpts:2730,ttrb:1242,tast:798,tfga:2292,tfg:1122,tfta:840,tft:654,ttov:378,tpf:582},
+  {season:"2002-03",pwins:12,plosses:12,pts:670,trb:172,ast:126,blk:32,stl:44,fga:555,fg:240,fta:202,ft:162,tov:71,pf:63,tblk:138,tstl:240,tpts:2808,ttrb:1242,tast:798,tfga:2454,tfg:1164,tfta:924,tft:726,ttov:414,tpf:612},
+  {season:"2007-08",pwins:13,plosses:7,pts:617,trb:137,ast:103,blk:21,stl:36,fga:502,fg:202,fta:201,ft:158,tov:59,pf:52,tblk:138,tstl:240,tpts:2862,ttrb:1272,tast:876,tfga:2412,tfg:1170,tfta:954,tft:744,ttov:402,tpf:594},
+  {season:"2008-09",pwins:15,plosses:6,pts:682,trb:148,ast:122,blk:27,stl:37,fga:556,fg:225,fta:196,ft:155,tov:63,pf:57,tblk:162,tstl:270,tpts:2916,ttrb:1278,tast:864,tfga:2454,tfg:1188,tfta:882,tft:696,ttov:396,tpf:588},
+  {season:"2009-10",pwins:15,plosses:8,pts:568,trb:131,ast:115,blk:18,stl:27,fga:466,fg:196,fta:171,ft:134,tov:57,pf:54,tblk:138,tstl:240,tpts:2790,ttrb:1218,tast:816,tfga:2376,tfg:1152,tfta:882,tft:696,ttov:378,tpf:576},
+  {season:"2010-11",pwins:10,plosses:6,pts:492,trb:120,ast:99,blk:18,stl:25,fga:403,fg:163,fta:165,ft:127,tov:51,pf:48,tblk:138,tstl:228,tpts:2730,ttrb:1194,tast:786,tfga:2328,tfg:1122,tfta:870,tft:672,ttov:390,tpf:564}
+],
+"Magic Johnson":[
+  {season:"1979-80",pwins:12,plosses:4,pts:396,trb:182,ast:176,blk:13,stl:53,fga:289,fg:147,fta:144,ft:116,tov:97,pf:68,tblk:126,tstl:264,tpts:2400,ttrb:1044,tast:804,tfga:2160,tfg:1062,tfta:900,tft:714,ttov:444,tpf:636},
+  {season:"1981-82",pwins:12,plosses:4,pts:392,trb:196,ast:218,blk:9,stl:55,fga:278,fg:152,fta:113,ft:88,tov:94,pf:58,tblk:132,tstl:252,tpts:2580,ttrb:1152,tast:882,tfga:2220,tfg:1098,tfta:852,tft:672,ttov:432,tpf:612},
+  {season:"1984-85",pwins:15,plosses:4,pts:405,trb:135,ast:278,blk:6,stl:30,fga:289,fg:147,fta:127,ft:111,tov:88,pf:46,tblk:132,tstl:252,tpts:2892,ttrb:1248,tast:1002,tfga:2430,tfg:1206,tfta:960,tft:762,ttov:420,tpf:576},
+  {season:"1986-87",pwins:15,plosses:3,pts:521,trb:140,ast:269,blk:10,stl:43,fga:358,fg:189,fta:152,ft:147,tov:89,pf:62,tblk:132,tstl:264,tpts:2886,ttrb:1218,tast:996,tfga:2358,tfg:1176,tfta:942,tft:756,ttov:408,tpf:564},
+  {season:"1987-88",pwins:15,plosses:9,pts:466,trb:136,ast:252,blk:5,stl:33,fga:322,fg:161,fta:137,ft:124,tov:80,pf:56,tblk:126,tstl:252,tpts:2862,ttrb:1206,tast:966,tfga:2352,tfg:1170,tfta:918,tft:732,ttov:396,tpf:564},
+  {season:"1988-89",pwins:11,plosses:4,pts:450,trb:122,ast:230,blk:8,stl:29,fga:298,fg:153,fta:155,ft:143,tov:80,pf:55,tblk:120,tstl:240,tpts:2868,ttrb:1218,tast:996,tfga:2382,tfg:1194,tfta:924,tft:726,ttov:402,tpf:564},
+  {season:"1989-90",pwins:5,plosses:4,pts:232,trb:63,ast:148,blk:5,stl:18,fga:157,fg:79,fta:76,ft:74,tov:42,pf:29,tblk:90,tstl:180,tpts:1332,ttrb:582,tast:504,tfga:1218,tfg:594,tfta:510,tft:402,ttov:228,tpf:330},
+  {season:"1990-91",pwins:12,plosses:7,pts:476,trb:125,ast:279,blk:9,stl:28,fga:317,fg:163,fta:152,ft:150,tov:78,pf:42,tblk:120,tstl:228,tpts:2628,ttrb:1146,tast:990,tfga:2232,tfg:1128,tfta:882,tft:696,ttov:378,tpf:546}
+],
+"Shaquille ONeal":[
+  {season:"1994-95",pwins:6,plosses:5,pts:381,trb:171,ast:41,blk:44,stl:10,fga:261,fg:154,fta:134,ft:73,tov:57,pf:63,tblk:162,tstl:192,tpts:1506,ttrb:744,tast:396,tfga:1374,tfg:690,tfta:618,tft:468,ttov:270,tpf:408},
+  {season:"1999-00",pwins:15,plosses:8,pts:720,trb:370,ast:97,blk:82,stl:13,fga:486,fg:298,fta:289,ft:136,tov:83,pf:91,tblk:162,tstl:270,tpts:2964,ttrb:1302,tast:888,tfga:2502,tfg:1188,tfta:1002,tft:798,ttov:396,tpf:612},
+  {season:"2000-01",pwins:15,plosses:1,pts:609,trb:270,ast:82,blk:60,stl:14,fga:412,fg:254,fta:271,ft:143,tov:68,pf:69,tblk:144,tstl:228,tpts:2640,ttrb:1152,tast:756,tfga:2244,tfg:1068,tfta:828,tft:642,ttov:372,tpf:576},
+  {season:"2001-02",pwins:15,plosses:4,pts:524,trb:217,ast:60,blk:52,stl:13,fga:354,fg:216,fta:246,ft:122,tov:67,pf:63,tblk:138,tstl:234,tpts:2730,ttrb:1242,tast:798,tfga:2292,tfg:1122,tfta:840,tft:654,ttov:378,tpf:582},
+  {season:"2004-05",pwins:15,plosses:8,pts:457,trb:213,ast:51,blk:50,stl:14,fga:313,fg:203,fta:204,ft:101,tov:54,pf:57,tblk:174,tstl:234,tpts:2754,ttrb:1206,tast:732,tfga:2298,tfg:1146,tfta:900,tft:690,ttov:378,tpf:576}
+],
+"Tim Duncan":[
+  {season:"1998-99",pwins:15,plosses:3,pts:408,trb:263,ast:58,blk:55,stl:14,fga:318,fg:163,fta:105,ft:82,tov:58,pf:57,tblk:192,tstl:162,tpts:1962,ttrb:1122,tast:570,tfga:1668,tfg:828,tfta:570,tft:432,ttov:306,tpf:444},
+  {season:"2002-03",pwins:15,plosses:7,pts:562,trb:330,ast:94,blk:71,stl:17,fga:447,fg:219,fta:144,ft:124,tov:60,pf:59,tblk:210,tstl:186,tpts:2478,ttrb:1314,tast:666,tfga:2124,tfg:1056,tfta:798,tft:612,ttov:354,tpf:492},
+  {season:"2004-05",pwins:15,plosses:8,pts:497,trb:296,ast:87,blk:60,stl:18,fga:396,fg:196,fta:130,ft:105,tov:56,pf:57,tblk:198,tstl:186,tpts:2544,ttrb:1296,tast:678,tfga:2136,tfg:1068,tfta:756,tft:582,ttov:342,tpf:480},
+  {season:"2006-07",pwins:15,plosses:5,pts:453,trb:256,ast:60,blk:41,stl:14,fga:365,fg:175,fta:112,ft:103,tov:50,pf:53,tblk:186,tstl:174,tpts:2490,ttrb:1218,tast:636,tfga:2088,tfg:1044,tfta:696,tft:540,ttov:336,tpf:468},
+  {season:"2013-14",pwins:20,plosses:8,pts:564,trb:310,ast:91,blk:60,stl:18,fga:442,fg:216,fta:136,ft:92,tov:57,pf:57,tblk:204,tstl:186,tpts:2946,ttrb:1398,tast:840,tfga:2436,tfg:1236,tfta:792,tft:606,ttov:366,tpf:510}
+],
+"Stephen Curry":[
+  {season:"2014-15",pwins:16,plosses:5,pts:568,trb:109,ast:189,blk:5,stl:47,fga:437,fg:193,fta:106,ft:98,tov:70,pf:49,tblk:150,tstl:276,tpts:2976,ttrb:1128,tast:1050,tfga:2412,tfg:1164,tfta:762,tft:594,ttov:342,tpf:504},
+  {season:"2015-16",pwins:15,plosses:6,pts:648,trb:117,ast:186,blk:6,stl:44,fga:521,fg:232,fta:116,ft:108,tov:72,pf:58,tblk:162,tstl:294,tpts:3330,ttrb:1236,tast:1134,tfga:2628,tfg:1296,tfta:798,tft:630,ttov:372,tpf:522},
+  {season:"2016-17",pwins:16,plosses:1,pts:432,trb:83,ast:128,blk:3,stl:36,fga:328,fg:152,fta:98,ft:92,tov:54,pf:48,tblk:150,tstl:276,tpts:3120,ttrb:1140,tast:1104,tfga:2466,tfg:1260,tfta:786,tft:612,ttov:354,tpf:492},
+  {season:"2017-18",pwins:16,plosses:5,pts:562,trb:104,ast:155,blk:6,stl:39,fga:442,fg:189,fta:118,ft:107,tov:64,pf:56,tblk:150,tstl:270,tpts:3120,ttrb:1170,tast:1074,tfga:2496,tfg:1260,tfta:744,tft:588,ttov:348,tpf:498},
+  {season:"2021-22",pwins:16,plosses:6,pts:622,trb:115,ast:155,blk:4,stl:38,fga:480,fg:211,fta:111,ft:98,tov:65,pf:49,tblk:108,tstl:222,tpts:2808,ttrb:1092,tast:984,tfga:2322,tfg:1122,tfta:720,tft:564,ttov:348,tpf:516}
+],
+"Kareem Abdul-Jabbar":[
+  {season:"1970-71",pwins:12,plosses:2,pts:386,trb:268,ast:52,blk:0,stl:0,fga:290,fg:173,fta:87,ft:40,tov:0,pf:52,tblk:0,tstl:0,tpts:1824,ttrb:1128,tast:450,tfga:1848,tfg:966,tfta:702,tft:504,ttov:0,tpf:462,blk_estimated:true,stl_estimated:true},
+  {season:"1979-80",pwins:12,plosses:4,pts:508,trb:227,ast:93,blk:70,stl:21,fga:364,fg:210,fta:141,ft:91,tov:72,pf:58,tblk:126,tstl:264,tpts:2400,ttrb:1044,tast:804,tfga:2160,tfg:1062,tfta:900,tft:714,ttov:444,tpf:636},
+  {season:"1981-82",pwins:12,plosses:4,pts:462,trb:194,ast:57,blk:51,stl:14,fga:334,fg:198,fta:116,ft:66,tov:57,pf:62,tblk:132,tstl:252,tpts:2580,ttrb:1152,tast:882,tfga:2220,tfg:1098,tfta:852,tft:672,ttov:432,tpf:612},
+  {season:"1984-85",pwins:15,plosses:4,pts:431,trb:152,ast:64,blk:38,stl:15,fga:311,fg:188,fta:110,ft:74,tov:60,pf:61,tblk:132,tstl:252,tpts:2892,ttrb:1248,tast:1002,tfga:2430,tfg:1206,tfta:960,tft:762,ttov:420,tpf:576},
+  {season:"1986-87",pwins:15,plosses:3,pts:465,trb:140,ast:68,blk:28,stl:14,fga:335,fg:194,fta:116,ft:79,tov:63,pf:58,tblk:132,tstl:264,tpts:2886,ttrb:1218,tast:996,tfga:2358,tfg:1176,tfta:942,tft:756,ttov:408,tpf:564},
+  {season:"1987-88",pwins:15,plosses:9,pts:414,trb:117,ast:60,blk:23,stl:12,fga:298,fg:181,fta:107,ft:52,tov:50,pf:54,tblk:126,tstl:252,tpts:2862,ttrb:1206,tast:966,tfga:2352,tfg:1170,tfta:918,tft:732,ttov:396,tpf:564},
+  {season:"1988-89",pwins:11,plosses:4,pts:331,trb:93,ast:53,blk:23,stl:12,fga:238,fg:120,fta:96,ft:91,tov:43,pf:47,tblk:120,tstl:240,tpts:2868,ttrb:1218,tast:996,tfga:2382,tfg:1194,tfta:924,tft:726,ttov:402,tpf:564}
+],
+"Kevin Durant":[
+  {season:"2010-11",pwins:9,plosses:8,pts:617,trb:167,ast:83,blk:29,stl:32,fga:477,fg:205,fta:203,ft:175,tov:71,pf:54,tblk:132,tstl:234,tpts:2772,ttrb:1218,tast:858,tfga:2370,tfg:1170,tfta:996,tft:798,ttov:384,tpf:534},
+  {season:"2011-12",pwins:11,plosses:4,pts:425,trb:123,ast:59,blk:25,stl:25,fga:326,fg:141,fta:147,ft:130,tov:58,pf:35,tblk:108,tstl:198,tpts:1998,ttrb:888,tast:618,tfga:1782,tfg:882,tfta:756,tft:594,ttov:318,tpf:456},
+  {season:"2015-16",pwins:14,plosses:7,pts:634,trb:167,ast:103,blk:32,stl:25,fga:477,fg:216,fta:181,ft:144,tov:68,pf:47,tblk:132,tstl:234,tpts:2880,ttrb:1218,tast:912,tfga:2412,tfg:1218,tfta:888,tft:702,ttov:378,tpf:528},
+  {season:"2016-17",pwins:16,plosses:1,pts:412,trb:156,ast:95,blk:30,stl:22,fga:302,fg:148,fta:88,ft:76,tov:54,pf:40,tblk:150,tstl:276,tpts:3120,ttrb:1140,tast:1104,tfga:2466,tfg:1260,tfta:786,tft:612,ttov:354,tpf:492},
+  {season:"2017-18",pwins:16,plosses:5,pts:508,trb:139,ast:112,blk:31,stl:17,fga:366,fg:183,fta:113,ft:99,tov:56,pf:42,tblk:150,tstl:270,tpts:3120,ttrb:1170,tast:1074,tfga:2496,tfg:1260,tfta:744,tft:588,ttov:348,tpf:498},
+  {season:"2018-19",pwins:12,plosses:12,pts:644,trb:183,ast:116,blk:35,stl:22,fga:464,fg:206,fta:173,ft:148,tov:63,pf:43,tblk:138,tstl:252,tpts:2880,ttrb:1152,tast:978,tfga:2460,tfg:1230,tfta:816,tft:636,ttov:348,tpf:492}
+],
+"Hakeem Olajuwon":[
+  {season:"1985-86",pwins:5,plosses:6,pts:337,trb:225,ast:39,blk:65,stl:31,fga:240,fg:135,fta:101,ft:67,tov:54,pf:55,tblk:180,tstl:186,tpts:1530,ttrb:756,tast:402,tfga:1554,tfg:780,tfta:594,tft:450,ttov:270,tpf:408},
+  {season:"1992-93",pwins:12,plosses:7,pts:608,trb:312,ast:79,blk:90,stl:42,fga:458,fg:235,fta:162,ft:138,tov:70,pf:72,tblk:198,tstl:210,tpts:2736,ttrb:1350,tast:756,tfga:2382,tfg:1182,tfta:906,tft:696,ttov:384,tpf:534},
+  {season:"1993-94",pwins:15,plosses:8,pts:740,trb:374,ast:105,blk:120,stl:46,fga:554,fg:286,fta:196,ft:168,tov:82,pf:79,tblk:210,tstl:210,tpts:2706,ttrb:1308,tast:762,tfga:2334,tfg:1164,tfta:894,tft:690,ttov:378,tpf:528},
+  {season:"1994-95",pwins:15,plosses:7,pts:594,trb:289,ast:74,blk:82,stl:38,fga:440,fg:228,fta:165,ft:138,tov:68,pf:68,tblk:192,tstl:198,tpts:2556,ttrb:1236,tast:684,tfga:2238,tfg:1116,tfta:882,tft:678,ttov:366,tpf:516}
+],
+"Karl Malone":[
+  {season:"1993-94",pwins:6,plosses:6,pts:332,trb:163,ast:66,blk:19,stl:24,fga:231,fg:119,fta:103,ft:94,tov:54,pf:48,tblk:90,tstl:174,tpts:1794,ttrb:828,tast:480,tfga:1656,tfg:852,tfta:714,tft:552,ttov:294,tpf:408},
+  {season:"1996-97",pwins:16,plosses:8,pts:638,trb:271,ast:74,blk:22,stl:29,fga:448,fg:249,fta:185,ft:140,tov:66,pf:56,tblk:120,tstl:204,tpts:3264,ttrb:1452,tast:888,tfga:2724,tfg:1404,tfta:1038,tft:810,ttov:360,tpf:504},
+  {season:"1997-98",pwins:15,plosses:5,pts:478,trb:213,ast:71,blk:21,stl:26,fga:335,fg:172,fta:174,ft:134,tov:56,pf:47,tblk:114,tstl:198,tpts:3132,ttrb:1392,tast:852,tfga:2640,tfg:1362,tfta:1032,tft:810,ttov:348,tpf:486},
+  {season:"2003-04",pwins:10,plosses:9,pts:308,trb:143,ast:44,blk:10,stl:14,fga:219,fg:106,fta:111,ft:96,tov:42,pf:40,tblk:144,tstl:234,tpts:2664,ttrb:1206,tast:816,tfga:2268,tfg:1098,tfta:900,tft:714,ttov:378,tpf:570}
+],
+"John Stockton":[
+  {season:"1993-94",pwins:6,plosses:6,pts:183,trb:58,ast:224,blk:5,stl:37,fga:133,fg:63,fta:55,ft:50,tov:44,pf:39,tblk:90,tstl:174,tpts:1794,ttrb:828,tast:480,tfga:1656,tfg:852,tfta:714,tft:552,ttov:294,tpf:408},
+  {season:"1996-97",pwins:16,plosses:8,pts:338,trb:73,ast:468,blk:7,stl:59,fga:234,fg:111,fta:104,ft:91,tov:66,pf:43,tblk:120,tstl:204,tpts:3264,ttrb:1452,tast:888,tfga:2724,tfg:1404,tfta:1038,tft:810,ttov:360,tpf:504},
+  {season:"1997-98",pwins:15,plosses:5,pts:278,trb:64,ast:366,blk:6,stl:48,fga:193,fg:96,fta:74,ft:66,tov:57,pf:38,tblk:114,tstl:198,tpts:3132,ttrb:1392,tast:852,tfga:2640,tfg:1362,tfta:1032,tft:810,ttov:348,tpf:486}
+],
+"Nikola Jokic":[
+  {season:"2019-20",pwins:11,plosses:10,pts:513,trb:228,ast:168,blk:15,stl:23,fga:363,fg:192,fta:120,ft:102,tov:53,pf:42,tblk:90,tstl:168,tpts:2400,ttrb:1098,tast:738,tfga:2046,tfg:1014,tfta:642,tft:498,ttov:306,tpf:444},
+  {season:"2022-23",pwins:16,plosses:4,pts:619,trb:271,ast:237,blk:20,stl:24,fga:436,fg:237,fta:144,ft:118,tov:55,pf:52,tblk:114,tstl:204,tpts:3000,ttrb:1368,tast:1080,tfga:2448,tfg:1242,tfta:762,tft:594,ttov:336,tpf:468},
+  {season:"2023-24",pwins:5,plosses:5,pts:280,trb:124,ast:101,blk:9,stl:14,fga:189,fg:100,fta:68,ft:59,tov:27,pf:25,tblk:90,tstl:168,tpts:1578,ttrb:744,tast:558,tfga:1380,tfg:696,tfta:438,tft:342,ttov:186,tpf:276}
+],
+"Giannis Antetokounmpo":[
+  {season:"2018-19",pwins:5,plosses:5,pts:304,trb:141,ast:75,blk:26,stl:13,fga:222,fg:117,fta:89,ft:68,tov:37,pf:29,tblk:150,tstl:240,tpts:2124,ttrb:930,tast:612,tfga:1932,tfg:978,tfta:726,tft:546,ttov:312,tpf:432},
+  {season:"2020-21",pwins:16,plosses:7,pts:621,trb:250,ast:115,blk:27,stl:19,fga:461,fg:229,fta:209,ft:169,tov:61,pf:50,tblk:126,tstl:210,tpts:2916,ttrb:1200,tast:762,tfga:2298,tfg:1188,tfta:876,tft:696,ttov:348,tpf:480},
+  {season:"2022-23",pwins:6,plosses:5,pts:292,trb:95,ast:53,blk:16,stl:11,fga:214,fg:105,fta:89,ft:72,tov:33,pf:27,tblk:126,tstl:198,tpts:2430,ttrb:1026,tast:672,tfga:1974,tfg:1014,tfta:732,tft:570,ttov:300,tpf:420}
+],
+"Oscar Robertson":[
+  {season:"1963-64",pwins:6,plosses:4,pts:369,trb:119,ast:154,blk:0,stl:0,fga:301,fg:141,fta:101,ft:87,tov:0,pf:47,tblk:0,tstl:0,tpts:1500,ttrb:756,tast:444,tfga:1404,tfg:720,tfta:552,tft:432,ttov:0,tpf:360,blk_estimated:true,stl_estimated:true},
+  {season:"1970-71",pwins:12,plosses:2,pts:275,trb:79,ast:130,blk:0,stl:0,fga:207,fg:123,fta:43,ft:29,tov:0,pf:35,tblk:0,tstl:0,tpts:1824,ttrb:1128,tast:450,tfga:1848,tfg:966,tfta:702,tft:504,ttov:0,tpf:462,blk_estimated:true,stl_estimated:true}
+],
+"Charles Barkley":[
+  {season:"1992-93",pwins:13,plosses:11,pts:737,trb:330,ast:113,blk:24,stl:29,fga:524,fg:261,fta:236,ft:215,tov:82,pf:84,tblk:150,tstl:210,tpts:2796,ttrb:1260,tast:810,tfga:2400,tfg:1200,tfta:954,tft:726,ttov:390,tpf:558},
+  {season:"1996-97",pwins:8,plosses:8,pts:418,trb:190,ast:78,blk:16,stl:27,fga:300,fg:148,fta:163,ft:122,tov:58,pf:52,tblk:144,tstl:204,tpts:2736,ttrb:1290,tast:762,tfga:2364,tfg:1218,tfta:918,tft:720,ttov:372,tpf:504}
+],
+"Jerry West":[
+  {season:"1968-69",pwins:13,plosses:5,pts:596,trb:116,ast:128,blk:0,stl:0,fga:465,fg:214,fta:197,ft:168,tov:0,pf:60,tblk:0,tstl:0,tpts:2304,ttrb:1098,tast:630,tfga:1974,tfg:1008,tfta:840,tft:660,ttov:0,tpf:474,blk_estimated:true,stl_estimated:true},
+  {season:"1971-72",pwins:15,plosses:3,pts:533,trb:84,ast:219,blk:0,stl:0,fga:400,fg:225,fta:117,ft:83,tov:0,pf:52,tblk:0,tstl:0,tpts:3180,ttrb:1188,tast:792,tfga:2742,tfg:1416,tfta:1026,tft:798,ttov:0,tpf:498,blk_estimated:true,stl_estimated:true}
+],
+"Kevin Garnett":[
+  {season:"2002-03",pwins:6,plosses:6,pts:362,trb:230,ast:95,blk:31,stl:27,fga:282,fg:142,fta:81,ft:78,tov:38,pf:38,tblk:114,tstl:186,tpts:1818,ttrb:924,tast:534,tfga:1626,tfg:822,tfta:516,tft:396,ttov:234,tpf:342},
+  {season:"2003-04",pwins:16,plosses:8,pts:593,trb:349,ast:127,blk:49,stl:38,fga:456,fg:238,fta:138,ft:117,tov:56,pf:49,tblk:156,tstl:210,tpts:2766,ttrb:1344,tast:792,tfga:2340,tfg:1206,tfta:798,tft:630,ttov:366,tpf:492},
+  {season:"2007-08",pwins:18,plosses:8,pts:534,trb:302,ast:114,blk:38,stl:34,fga:400,fg:213,fta:120,ft:108,tov:44,pf:52,tblk:174,tstl:240,tpts:3240,ttrb:1428,tast:1062,tfga:2568,tfg:1332,tfta:870,tft:672,ttov:342,tpf:486}
+],
+"Patrick Ewing":[
+  {season:"1993-94",pwins:25,plosses:12,pts:778,trb:348,ast:63,blk:72,stl:26,fga:592,fg:299,fta:226,ft:180,tov:84,pf:101,tblk:180,tstl:216,tpts:2916,ttrb:1356,tast:756,tfga:2502,tfg:1260,tfta:882,tft:672,ttov:372,tpf:528}
+],
+"David Robinson":[
+  {season:"1994-95",pwins:15,plosses:6,pts:536,trb:247,ast:57,blk:66,stl:31,fga:368,fg:187,fta:181,ft:162,tov:53,pf:59,tblk:192,tstl:198,tpts:2556,ttrb:1236,tast:684,tfga:2238,tfg:1116,tfta:882,tft:678,ttov:366,tpf:516},
+  {season:"1998-99",pwins:15,plosses:3,pts:260,trb:165,ast:33,blk:36,stl:12,fga:187,fg:96,fta:85,ft:68,tov:35,pf:35,tblk:192,tstl:162,tpts:1962,ttrb:1122,tast:570,tfga:1668,tfg:828,tfta:570,tft:432,ttov:306,tpf:444},
+  {season:"2002-03",pwins:15,plosses:7,pts:196,trb:130,ast:33,blk:28,stl:11,fga:149,fg:79,fta:51,ft:38,tov:27,pf:34,tblk:210,tstl:186,tpts:2478,ttrb:1314,tast:666,tfga:2124,tfg:1056,tfta:798,tft:612,ttov:354,tpf:492}
+],
+"Clyde Drexler":[
+  {season:"1989-90",pwins:16,plosses:5,pts:594,trb:208,ast:165,blk:19,stl:57,fga:479,fg:213,fta:167,ft:152,tov:76,pf:64,tblk:132,tstl:216,tpts:2994,ttrb:1296,tast:918,tfga:2484,tfg:1224,tfta:942,tft:726,ttov:378,tpf:528},
+  {season:"1994-95",pwins:15,plosses:7,pts:407,trb:116,ast:98,blk:12,stl:29,fga:302,fg:144,fta:115,ft:100,tov:54,pf:43,tblk:192,tstl:198,tpts:2556,ttrb:1236,tast:684,tfga:2238,tfg:1116,tfta:882,tft:678,ttov:366,tpf:516}
+],
+"Dirk Nowitzki":[
+  {season:"2005-06",pwins:13,plosses:7,pts:594,trb:195,ast:54,blk:24,stl:15,fga:440,fg:199,fta:193,ft:167,tov:43,pf:53,tblk:126,tstl:192,tpts:3036,ttrb:1320,tast:918,tfga:2490,tfg:1278,tfta:954,tft:744,ttov:384,tpf:534},
+  {season:"2010-11",pwins:16,plosses:5,pts:545,trb:176,ast:62,blk:16,stl:19,fga:396,fg:179,fta:167,ft:146,tov:49,pf:50,tblk:120,tstl:192,tpts:2922,ttrb:1266,tast:888,tfga:2358,tfg:1218,tfta:870,tft:678,ttov:348,tpf:480}
+],
+"Dwyane Wade":[
+  {season:"2005-06",pwins:16,plosses:7,pts:823,trb:226,ast:199,blk:41,stl:49,fga:598,fg:270,fta:345,ft:282,tov:101,pf:81,tblk:168,tstl:240,tpts:2766,ttrb:1218,tast:804,tfga:2256,tfg:1098,tfta:894,tft:696,ttov:378,tpf:528},
+  {season:"2010-11",pwins:16,plosses:5,pts:509,trb:119,ast:135,blk:23,stl:31,fga:371,fg:191,fta:155,ft:124,tov:73,pf:53,tblk:168,tstl:300,tpts:2982,ttrb:1386,tast:882,tfga:2610,tfg:1218,tfta:882,tft:678,ttov:462,tpf:642},
+  {season:"2012-13",pwins:16,plosses:7,pts:447,trb:116,ast:101,blk:19,stl:30,fga:321,fg:162,fta:147,ft:120,tov:61,pf:43,tblk:150,tstl:294,tpts:2784,ttrb:1278,tast:912,tfga:2412,tfg:1152,tfta:792,tft:606,ttov:414,tpf:582}
+],
+"Scottie Pippen":[
+  {season:"1990-91",pwins:15,plosses:2,pts:368,trb:165,ast:152,blk:27,stl:54,fga:283,fg:144,fta:80,ft:62,tov:62,pf:65,tblk:270,tstl:510,tpts:2754,ttrb:1278,tast:1074,tfga:2538,tfg:1260,tfta:720,tft:570,ttov:420,tpf:624},
+  {season:"1991-92",pwins:15,plosses:7,pts:512,trb:189,ast:201,blk:32,stl:55,fga:402,fg:196,fta:118,ft:93,tov:73,pf:75,tblk:312,tstl:558,tpts:3120,ttrb:1596,tast:1254,tfga:2868,tfg:1404,tfta:882,tft:666,ttov:504,tpf:720},
+  {season:"1992-93",pwins:15,plosses:4,pts:447,trb:179,ast:145,blk:27,stl:42,fga:360,fg:168,fta:107,ft:82,tov:59,pf:57,tblk:258,tstl:480,tpts:2964,ttrb:1440,tast:1086,tfga:2766,tfg:1356,tfta:852,tft:648,ttov:468,tpf:672},
+  {season:"1995-96",pwins:15,plosses:3,pts:375,trb:161,ast:131,blk:25,stl:46,fga:285,fg:134,fta:96,ft:72,tov:52,pf:51,tblk:258,tstl:516,tpts:2946,ttrb:1362,tast:1008,tfga:2634,tfg:1296,tfta:750,tft:594,ttov:408,tpf:630},
+  {season:"1996-97",pwins:15,plosses:4,pts:323,trb:136,ast:126,blk:22,stl:44,fga:244,fg:116,fta:80,ft:64,tov:49,pf:50,tblk:234,tstl:480,tpts:2862,ttrb:1296,tast:996,tfga:2628,tfg:1284,tfta:744,tft:594,ttov:396,tpf:618},
+  {season:"1997-98",pwins:15,plosses:6,pts:382,trb:161,ast:151,blk:17,stl:49,fga:296,fg:131,fta:115,ft:91,tov:61,pf:55,tblk:240,tstl:468,tpts:2820,ttrb:1314,tast:942,tfga:2616,tfg:1260,tfta:810,tft:630,ttov:414,tpf:612}
+],
+"Dennis Rodman":[
+  {season:"1988-89",pwins:15,plosses:2,pts:121,trb:243,ast:25,blk:13,stl:16,fga:65,fg:56,fta:23,ft:12,tov:17,pf:41,tblk:438,tstl:798,tpts:2754,ttrb:1278,tast:1074,tfga:2538,tfg:1260,tfta:720,tft:570,ttov:420,tpf:624},
+  {season:"1995-96",pwins:15,plosses:3,pts:67,trb:281,ast:34,blk:5,stl:8,fga:35,fg:27,fta:15,ft:15,tov:15,pf:41,tblk:258,tstl:516,tpts:2946,ttrb:1362,tast:1008,tfga:2634,tfg:1296,tfta:750,tft:594,ttov:408,tpf:630},
+  {season:"1996-97",pwins:15,plosses:4,pts:77,trb:264,ast:31,blk:5,stl:7,fga:41,fg:30,fta:22,ft:17,tov:14,pf:37,tblk:234,tstl:480,tpts:2862,ttrb:1296,tast:996,tfga:2628,tfg:1284,tfta:744,tft:594,ttov:396,tpf:618},
+  {season:"1997-98",pwins:15,plosses:6,pts:56,trb:311,ast:41,blk:4,stl:8,fga:28,fg:20,fta:20,ft:16,tov:14,pf:38,tblk:240,tstl:468,tpts:2820,ttrb:1314,tast:942,tfga:2616,tfg:1260,tfta:810,tft:630,ttov:414,tpf:612}
+],
+"Isiah Thomas":[
+  {season:"1987-88",pwins:14,plosses:9,pts:585,trb:105,ast:282,blk:7,stl:51,fga:444,fg:228,fta:127,ft:118,tov:96,pf:78,tblk:234,tstl:378,tpts:2874,ttrb:1224,tast:1050,tfga:2460,tfg:1236,tfta:888,tft:690,ttov:402,tpf:588},
+  {season:"1988-89",pwins:15,plosses:2,pts:456,trb:86,ast:210,blk:4,stl:37,fga:350,fg:177,fta:98,ft:93,tov:65,pf:57,tblk:438,tstl:798,tpts:2754,ttrb:1278,tast:1074,tfga:2538,tfg:1260,tfta:720,tft:570,ttov:420,tpf:624},
+  {season:"1989-90",pwins:15,plosses:5,pts:473,trb:77,ast:255,blk:6,stl:43,fga:358,fg:186,fta:100,ft:89,tov:78,pf:59,tblk:388,tstl:698,tpts:2862,ttrb:1278,tast:942,tfga:2538,tfg:1260,tfta:894,tft:690,ttov:420,tpf:612}
+],
+"Allen Iverson":[
+  {season:"2000-01",pwins:13,plosses:10,pts:653,trb:120,ast:218,blk:10,stl:63,fga:555,fg:225,fta:225,ft:190,tov:120,pf:86,tblk:102,tstl:198,tpts:2706,ttrb:1206,tast:780,tfga:2418,tfg:1170,tfta:876,tft:660,ttov:408,tpf:522}
+],
+"Julius Erving":[
+  {season:"1979-80",pwins:12,plosses:5,pts:528,trb:178,ast:93,blk:41,stl:39,fga:393,fg:247,fta:133,ft:120,tov:71,pf:64,tblk:114,tstl:198,tpts:2808,ttrb:1260,tast:936,tfga:2364,tfg:1176,tfta:870,tft:672,ttov:396,tpf:552},
+  {season:"1982-83",pwins:12,plosses:1,pts:471,trb:162,ast:81,blk:30,stl:34,fga:370,fg:185,fta:122,ft:98,tov:65,pf:59,tblk:180,tstl:264,tpts:2952,ttrb:1350,tast:972,tfga:2526,tfg:1260,tfta:900,tft:684,ttov:408,tpf:588},
+  {season:"1984-85",pwins:13,plosses:8,pts:472,trb:164,ast:78,blk:37,stl:35,fga:368,fg:186,fta:109,ft:92,tov:64,pf:55,tblk:132,tstl:234,tpts:2730,ttrb:1224,tast:888,tfga:2286,tfg:1128,tfta:798,tft:618,ttov:396,tpf:540}
+],
+"Bill Russell":[
+  {season:"1958-59",pwins:8,plosses:3,pts:251,trb:437,ast:39,blk:0,stl:0,fga:217,fg:89,fta:73,ft:52,tov:0,pf:37,tblk:0,tstl:0,tpts:1854,ttrb:1398,tast:420,tfga:1638,tfg:810,tfta:780,tft:570,ttov:0,tpf:444,blk_estimated:true,stl_estimated:true},
+  {season:"1964-65",pwins:11,plosses:5,pts:307,trb:530,ast:115,blk:0,stl:0,fga:278,fg:116,fta:119,ft:68,tov:0,pf:57,tblk:0,tstl:0,tpts:2412,ttrb:1440,tast:588,tfga:1800,tfg:936,tfta:762,tft:558,ttov:0,tpf:456,blk_estimated:true,stl_estimated:true},
+  {season:"1967-68",pwins:12,plosses:7,pts:294,trb:418,ast:97,blk:0,stl:0,fga:267,fg:108,fta:116,ft:68,tov:0,pf:67,tblk:0,tstl:0,tpts:2250,ttrb:1314,tast:534,tfga:1764,tfg:900,tfta:720,tft:528,ttov:0,tpf:456,blk_estimated:true,stl_estimated:true},
+  {season:"1968-69",pwins:12,plosses:6,pts:235,trb:365,ast:95,blk:0,stl:0,fga:213,fg:86,fta:107,ft:60,tov:0,pf:58,tblk:0,tstl:0,tpts:2124,ttrb:1260,tast:516,tfga:1668,tfg:840,tfta:684,tft:504,ttov:0,tpf:432,blk_estimated:true,stl_estimated:true}
+],
+"Wilt Chamberlain":[
+  {season:"1966-67",pwins:15,plosses:4,pts:392,trb:481,ast:128,blk:0,stl:0,fga:227,fg:158,fta:175,ft:76,tov:0,pf:29,tblk:0,tstl:0,tpts:2730,ttrb:1428,tast:612,tfga:1926,tfg:1020,tfta:918,tft:648,ttov:0,tpf:480,blk_estimated:true,stl_estimated:true},
+  {season:"1971-72",pwins:15,plosses:3,pts:268,trb:381,ast:75,blk:0,stl:0,fga:168,fg:111,fta:123,ft:46,tov:0,pf:38,tblk:0,tstl:0,tpts:3180,ttrb:1188,tast:792,tfga:2742,tfg:1416,tfta:1026,tft:798,ttov:0,tpf:498,blk_estimated:true,stl_estimated:true}
+],
+"Elgin Baylor":[
+  {season:"1961-62",pwins:7,plosses:6,pts:541,trb:285,ast:72,blk:0,stl:0,fga:427,fg:201,fta:211,ft:139,tov:0,pf:55,tblk:0,tstl:0,tpts:1764,ttrb:882,tast:480,tfga:1656,tfg:822,tfta:624,tft:492,ttov:0,tpf:390,blk_estimated:true,stl_estimated:true},
+  {season:"1967-68",pwins:15,plosses:4,pts:483,trb:216,ast:96,blk:0,stl:0,fga:403,fg:184,fta:143,ft:115,tov:0,pf:55,tblk:0,tstl:0,tpts:2286,ttrb:1098,tast:630,tfga:1974,tfg:1008,tfta:840,tft:660,ttov:0,tpf:474,blk_estimated:true,stl_estimated:true}
+],
+"Moses Malone":[
+  {season:"1982-83",pwins:12,plosses:1,pts:395,trb:269,ast:23,blk:26,stl:16,fga:284,fg:143,fta:143,ft:109,tov:59,pf:56,tblk:144,tstl:198,tpts:2952,ttrb:1350,tast:972,tfga:2526,tfg:1260,tfta:900,tft:684,ttov:408,tpf:588},
+  {season:"1985-86",pwins:3,plosses:6,pts:275,trb:204,ast:19,blk:24,stl:12,fga:208,fg:78,fta:133,ft:119,tov:38,pf:48,tblk:90,tstl:162,tpts:1350,ttrb:726,tast:390,tfga:1296,tfg:648,tfta:540,tft:420,ttov:234,tpf:336}
+],
+"Walt Frazier":[
+  {season:"1969-70",pwins:19,plosses:7,pts:649,trb:200,ast:266,blk:0,stl:0,fga:559,fg:241,fta:185,ft:167,tov:0,pf:105,tblk:0,tstl:0,tpts:3990,ttrb:1836,tast:1374,tfga:3780,tfg:1854,tfta:1548,tft:1134,ttov:0,tpf:1134,blk_estimated:true,stl_estimated:true},
+  {season:"1972-73",pwins:12,plosses:5,pts:424,trb:103,ast:161,blk:0,stl:0,fga:340,fg:163,fta:108,ft:98,tov:0,pf:60,tblk:0,tstl:0,tpts:2442,ttrb:1110,tast:798,tfga:2124,tfg:1062,tfta:780,tft:594,ttov:0,tpf:492,blk_estimated:true,stl_estimated:true}
+],
+"Robert Parish":[
+  {season:"1983-84",pwins:15,plosses:8,pts:377,trb:269,ast:39,blk:37,stl:19,fga:279,fg:167,fta:70,ft:43,tov:41,pf:71,tblk:144,tstl:276,tpts:2808,ttrb:1284,tast:774,tfga:2460,tfg:1212,tfta:738,tft:570,ttov:426,tpf:594},
+  {season:"1985-86",pwins:15,plosses:3,pts:401,trb:253,ast:44,blk:36,stl:15,fga:288,fg:166,fta:89,ft:69,tov:38,pf:62,tblk:162,tstl:294,tpts:2886,ttrb:1206,tast:804,tfga:2442,tfg:1188,tfta:696,tft:546,ttov:390,tpf:546},
+  {season:"1987-88",pwins:17,plosses:8,pts:380,trb:261,ast:38,blk:39,stl:18,fga:272,fg:161,fta:76,ft:58,tov:40,pf:68,tblk:138,tstl:252,tpts:2952,ttrb:1188,tast:774,tfga:2484,tfg:1212,tfta:720,tft:558,ttov:396,tpf:564}
+],
+"James Worthy":[
+  {season:"1984-85",pwins:15,plosses:4,pts:430,trb:155,ast:71,blk:21,stl:27,fga:330,fg:186,fta:82,ft:67,tov:52,pf:67,tblk:132,tstl:252,tpts:2892,ttrb:1248,tast:1002,tfga:2430,tfg:1206,tfta:960,tft:762,ttov:420,tpf:576},
+  {season:"1987-88",pwins:15,plosses:9,pts:569,trb:180,ast:97,blk:22,stl:35,fga:432,fg:237,fta:109,ft:95,tov:58,pf:65,tblk:126,tstl:252,tpts:2862,ttrb:1206,tast:966,tfga:2352,tfg:1170,tfta:918,tft:732,ttov:396,tpf:564},
+  {season:"1988-89",pwins:11,plosses:4,pts:425,trb:133,ast:87,blk:16,stl:25,fga:310,fg:183,fta:73,ft:62,tov:48,pf:57,tblk:120,tstl:240,tpts:2868,ttrb:1218,tast:996,tfga:2382,tfg:1194,tfta:924,tft:726,ttov:402,tpf:564}
+],
+"Kevin McHale":[
+  {season:"1983-84",pwins:15,plosses:8,pts:461,trb:241,ast:40,blk:42,stl:12,fga:323,fg:211,fta:99,ft:78,tov:40,pf:68,tblk:144,tstl:276,tpts:2808,ttrb:1284,tast:774,tfga:2460,tfg:1212,tfta:738,tft:570,ttov:426,tpf:594},
+  {season:"1985-86",pwins:15,plosses:3,pts:489,trb:231,ast:56,blk:42,stl:12,fga:323,fg:213,fta:132,ft:113,tov:38,pf:57,tblk:162,tstl:294,tpts:2886,ttrb:1206,tast:804,tfga:2442,tfg:1188,tfta:696,tft:546,ttov:390,tpf:546},
+  {season:"1987-88",pwins:17,plosses:8,pts:472,trb:184,ast:59,blk:25,stl:11,fga:305,fg:194,fta:127,ft:99,tov:37,pf:61,tblk:138,tstl:252,tpts:2952,ttrb:1188,tast:774,tfga:2484,tfg:1212,tfta:720,tft:558,ttov:396,tpf:564}
+],
+"Bob Cousy":[
+  {season:"1956-57",pwins:7,plosses:3,pts:328,trb:73,ast:133,blk:0,stl:0,fga:293,fg:113,fta:127,ft:102,tov:0,pf:55,tblk:0,tstl:0,tpts:1980,ttrb:1134,tast:492,tfga:1638,tfg:810,tfta:780,tft:570,ttov:0,tpf:444,blk_estimated:true,stl_estimated:true},
+  {season:"1962-63",pwins:8,plosses:5,pts:276,trb:56,ast:132,blk:0,stl:0,fga:259,fg:97,fta:99,ft:82,tov:0,pf:47,tblk:0,tstl:0,tpts:2298,ttrb:1350,tast:504,tfga:1728,tfg:876,tfta:756,tft:564,ttov:0,tpf:444,blk_estimated:true,stl_estimated:true}
+],
+"John Havlicek":[
+  {season:"1967-68",pwins:12,plosses:7,pts:502,trb:164,ast:111,blk:0,stl:0,fga:448,fg:199,fta:124,ft:104,tov:0,pf:69,tblk:0,tstl:0,tpts:2250,ttrb:1314,tast:534,tfga:1764,tfg:900,tfta:720,tft:528,ttov:0,tpf:456,blk_estimated:true,stl_estimated:true},
+  {season:"1973-74",pwins:12,plosses:6,pts:629,trb:174,ast:159,blk:14,stl:32,fga:582,fg:201,fta:157,ft:135,tov:66,pf:56,tblk:96,tstl:138,tpts:2160,ttrb:1038,tast:648,tfga:1932,tfg:972,tfta:726,tft:558,ttov:294,tpf:408},
+  {season:"1975-76",pwins:18,plosses:4,pts:591,trb:172,ast:149,blk:14,stl:28,fga:507,fg:214,fta:152,ft:128,tov:60,pf:55,tblk:96,tstl:150,tpts:2268,ttrb:1110,tast:762,tfga:2070,tfg:1044,tfta:744,tft:582,ttov:306,tpf:426}
+],
+"Bob Pettit":[
+  {season:"1957-58",pwins:8,plosses:3,pts:404,trb:278,ast:53,blk:0,stl:0,fga:329,fg:148,fta:162,ft:108,tov:0,pf:45,tblk:0,tstl:0,tpts:1824,ttrb:1134,tast:432,tfga:1650,tfg:852,tfta:738,tft:552,ttov:0,tpf:432,blk_estimated:true,stl_estimated:true},
+  {season:"1962-63",pwins:6,plosses:6,pts:434,trb:240,ast:61,blk:0,stl:0,fga:339,fg:155,fta:152,ft:124,tov:0,pf:50,tblk:0,tstl:0,tpts:1872,ttrb:1134,tast:468,tfga:1704,tfg:864,tfta:756,tft:564,ttov:0,tpf:420,blk_estimated:true,stl_estimated:true}
+],
+"Kawhi Leonard":[
+  {season:"2013-14",pwins:16,plosses:7,pts:355,trb:148,ast:49,blk:16,stl:36,fga:256,fg:137,fta:82,ft:70,tov:27,pf:39,tblk:90,tstl:162,tpts:2052,ttrb:960,tast:666,tfga:1776,tfg:888,tfta:576,tft:450,ttov:270,tpf:396},
+  {season:"2018-19",pwins:24,plosses:12,pts:732,trb:224,ast:90,blk:22,stl:42,fga:531,fg:239,fta:237,ft:202,tov:54,pf:57,tblk:156,tstl:234,tpts:3072,ttrb:1386,tast:984,tfga:2700,tfg:1332,tfta:972,tft:738,ttov:390,tpf:540},
+  {season:"2020-21",pwins:13,plosses:6,pts:430,trb:151,ast:66,blk:12,stl:26,fga:313,fg:150,fta:128,ft:115,tov:42,pf:41,tblk:90,tstl:180,tpts:1830,ttrb:876,tast:618,tfga:1674,tfg:840,tfta:546,tft:426,ttov:276,tpf:390}
+],
+"Anthony Davis":[
+  {season:"2019-20",pwins:16,plosses:8,pts:509,trb:229,ast:61,blk:44,stl:23,fga:348,fg:186,fta:143,ft:132,tov:53,pf:62,tblk:162,tstl:282,tpts:3000,ttrb:1320,tast:1056,tfga:2694,tfg:1290,tfta:804,tft:618,ttov:438,tpf:612},
+  {season:"2022-23",pwins:7,plosses:8,pts:391,trb:194,ast:51,blk:43,stl:18,fga:264,fg:142,fta:107,ft:98,tov:40,pf:55,tblk:126,tstl:210,tpts:1842,ttrb:906,tast:612,tfga:1728,tfg:858,tfta:564,tft:444,ttov:294,tpf:414}
+],
+"James Harden":[
+  {season:"2017-18",pwins:5,plosses:5,pts:306,trb:78,ast:117,blk:5,stl:21,fga:231,fg:101,fta:107,ft:95,tov:55,pf:35,tblk:90,tstl:168,tpts:1596,ttrb:774,tast:576,tfga:1482,tfg:738,tfta:534,tft:414,ttov:222,tpf:312},
+  {season:"2018-19",pwins:6,plosses:6,pts:381,trb:85,ast:117,blk:6,stl:17,fga:285,fg:121,fta:140,ft:120,tov:57,pf:34,tblk:90,tstl:162,tpts:1788,ttrb:840,tast:636,tfga:1638,tfg:822,tfta:594,tft:462,ttov:246,tpf:342}
+],
+"Chris Paul":[
+  {season:"2007-08",pwins:3,plosses:4,pts:212,trb:56,ast:138,blk:2,stl:30,fga:160,fg:80,fta:54,ft:46,tov:28,pf:24,tblk:90,tstl:168,tpts:1044,ttrb:504,tast:378,tfga:990,tfg:486,tfta:324,tft:252,ttov:198,tpf:294},
+  {season:"2012-13",pwins:12,plosses:12,pts:384,trb:106,ast:215,blk:5,stl:42,fga:286,fg:135,fta:114,ft:100,tov:53,pf:39,tblk:90,tstl:168,tpts:2166,ttrb:996,tast:768,tfga:1878,tfg:942,tfta:720,tft:552,ttov:294,tpf:408},
+  {season:"2020-21",pwins:12,plosses:4,pts:314,trb:90,ast:193,blk:3,stl:30,fga:228,fg:112,fta:90,ft:81,tov:44,pf:28,tblk:90,tstl:174,tpts:1884,ttrb:876,tast:786,tfga:1668,tfg:840,tfta:564,tft:444,ttov:234,tpf:336},
+  {season:"2021-22",pwins:7,plosses:6,pts:203,trb:58,ast:157,blk:2,stl:18,fga:154,fg:83,fta:42,ft:37,tov:41,pf:23,tblk:90,tstl:174,tpts:1932,ttrb:876,tast:798,tfga:1710,tfg:870,tfta:558,tft:432,ttov:234,tpf:318}
+],
+"Russell Westbrook":[
+  {season:"2011-12",pwins:11,plosses:4,pts:403,trb:133,ast:169,blk:12,stl:39,fga:326,fg:149,fta:110,ft:92,tov:70,pf:55,tblk:108,tstl:198,tpts:1998,ttrb:888,tast:618,tfga:1782,tfg:882,tfta:756,tft:594,ttov:318,tpf:456},
+  {season:"2015-16",pwins:4,plosses:5,pts:266,trb:104,ast:104,blk:4,stl:25,fga:211,fg:91,fta:84,ft:67,tov:48,pf:26,tblk:90,tstl:168,tpts:1206,ttrb:618,tast:468,tfga:1134,tfg:564,tfta:372,tft:288,ttov:192,tpf:288}
+],
+"Damian Lillard":[
+  {season:"2018-19",pwins:12,plosses:8,pts:583,trb:104,ast:184,blk:8,stl:18,fga:447,fg:193,fta:171,ft:158,tov:60,pf:42,tblk:90,tstl:162,tpts:2196,ttrb:1026,tast:786,tfga:1950,tfg:978,tfta:720,tft:558,ttov:288,tpf:390}
+],
+"Jayson Tatum":[
+  {season:"2021-22",pwins:18,plosses:6,pts:712,trb:213,ast:113,blk:18,stl:26,fga:544,fg:237,fta:161,ft:136,tov:58,pf:55,tblk:120,tstl:234,tpts:2574,ttrb:1164,tast:882,tfga:2244,tfg:1134,tfta:750,tft:582,ttov:366,tpf:492},
+  {season:"2022-23",pwins:14,plosses:7,pts:626,trb:196,ast:119,blk:17,stl:21,fga:494,fg:215,fta:147,ft:126,tov:52,pf:50,tblk:108,tstl:228,tpts:2976,ttrb:1278,tast:1062,tfga:2514,tfg:1272,tfta:786,tft:606,ttov:348,tpf:480},
+  {season:"2023-24",pwins:18,plosses:6,pts:685,trb:190,ast:132,blk:18,stl:20,fga:497,fg:224,fta:149,ft:127,tov:51,pf:48,tblk:120,tstl:246,tpts:3156,ttrb:1374,tast:1074,tfga:2394,tfg:1278,tfta:858,tft:648,ttov:312,tpf:444}
+],
+"Pau Gasol":[
+  {season:"2007-08",pwins:13,plosses:7,pts:408,trb:215,ast:73,blk:28,stl:17,fga:298,fg:156,fta:108,ft:96,tov:48,pf:63,tblk:138,tstl:240,tpts:2862,ttrb:1272,tast:876,tfga:2412,tfg:1170,tfta:954,tft:744,ttov:402,tpf:594},
+  {season:"2008-09",pwins:15,plosses:6,pts:471,trb:231,ast:78,blk:37,stl:13,fga:332,fg:176,fta:127,ft:119,tov:44,pf:60,tblk:162,tstl:270,tpts:2916,ttrb:1278,tast:864,tfga:2454,tfg:1188,tfta:882,tft:696,ttov:396,tpf:588},
+  {season:"2009-10",pwins:15,plosses:8,pts:457,trb:219,ast:77,blk:33,stl:14,fga:320,fg:170,fta:124,ft:117,tov:42,pf:61,tblk:138,tstl:240,tpts:2790,ttrb:1218,tast:816,tfga:2376,tfg:1152,tfta:882,tft:696,ttov:378,tpf:576}
+],
+"Jason Kidd":[
+  {season:"2001-02",pwins:14,plosses:6,pts:319,trb:167,ast:235,blk:5,stl:39,fga:245,fg:116,fta:91,ft:75,tov:70,pf:50,tblk:90,tstl:162,tpts:1980,ttrb:930,tast:666,tfga:1728,tfg:864,tfta:600,tft:462,ttov:270,tpf:378},
+  {season:"2002-03",pwins:20,plosses:9,pts:431,trb:206,ast:317,blk:6,stl:49,fga:332,fg:153,fta:113,ft:97,tov:83,pf:63,tblk:90,tstl:174,tpts:2238,ttrb:1086,tast:786,tfga:1944,tfg:978,tfta:624,tft:480,ttov:294,tpf:396},
+  {season:"2010-11",pwins:13,plosses:8,pts:148,trb:117,ast:161,blk:4,stl:30,fga:124,fg:55,fta:34,ft:29,tov:44,pf:33,tblk:90,tstl:162,tpts:1764,ttrb:882,tast:612,tfga:1548,tfg:774,tfta:510,tft:390,ttov:228,tpf:324}
+],
+"Chauncey Billups":[
+  {season:"2003-04",pwins:16,plosses:7,pts:452,trb:85,ast:208,blk:3,stl:31,fga:323,fg:153,fta:114,ft:105,tov:43,pf:41,tblk:90,tstl:168,tpts:2052,ttrb:912,tast:738,tfga:1776,tfg:888,tfta:576,tft:450,ttov:270,tpf:396},
+  {season:"2005-06",pwins:18,plosses:7,pts:508,trb:87,ast:223,blk:3,stl:26,fga:356,fg:177,fta:134,ft:124,tov:46,pf:37,tblk:108,tstl:192,tpts:2706,ttrb:1188,tast:978,tfga:2310,tfg:1176,tfta:870,tft:666,ttov:330,tpf:444}
+],
+"Draymond Green":[
+  {season:"2014-15",pwins:16,plosses:5,pts:215,trb:190,ast:144,blk:28,stl:40,fga:175,fg:82,fta:73,ft:49,tov:51,pf:59,tblk:150,tstl:276,tpts:2976,ttrb:1128,tast:1050,tfga:2412,tfg:1164,tfta:762,tft:594,ttov:342,tpf:504},
+  {season:"2015-16",pwins:15,plosses:6,pts:243,trb:207,ast:193,blk:31,stl:44,fga:207,fg:88,fta:83,ft:50,tov:59,pf:66,tblk:162,tstl:294,tpts:3330,ttrb:1236,tast:1134,tfga:2628,tfg:1296,tfta:798,tft:630,ttov:372,tpf:522},
+  {season:"2017-18",pwins:16,plosses:5,pts:193,trb:188,ast:166,blk:21,stl:41,fga:161,fg:77,fta:63,ft:38,tov:55,pf:61,tblk:150,tstl:270,tpts:3120,ttrb:1170,tast:1074,tfga:2496,tfg:1260,tfta:744,tft:588,ttov:348,tpf:498}
+],
+"Dikembe Mutombo":[
+  {season:"1996-97",pwins:8,plosses:4,pts:157,trb:212,ast:16,blk:63,stl:8,fga:108,fg:79,fta:57,ft:30,tov:19,pf:34,tblk:96,tstl:162,tpts:1566,ttrb:810,tast:432,tfga:1314,tfg:672,tfta:504,tft:390,ttov:198,tpf:294},
+  {season:"2000-01",pwins:11,plosses:12,pts:256,trb:337,ast:20,blk:79,stl:11,fga:178,fg:119,fta:50,ft:36,tov:28,pf:70,tblk:102,tstl:174,tpts:2310,ttrb:1086,tast:684,tfga:2022,tfg:1008,tfta:714,tft:534,ttov:336,tpf:480}
+],
+"Paul Pierce":[
+  {season:"2007-08",pwins:18,plosses:8,pts:524,trb:163,ast:93,blk:17,stl:25,fga:400,fg:180,fta:172,ft:152,tov:53,pf:50,tblk:102,tstl:180,tpts:3060,ttrb:1344,tast:1050,tfga:2508,tfg:1272,tfta:864,tft:660,ttov:330,tpf:462},
+  {season:"2012-13",pwins:14,plosses:7,pts:413,trb:120,ast:70,blk:12,stl:19,fga:315,fg:138,fta:113,ft:101,tov:36,pf:37,tblk:90,tstl:162,tpts:2262,ttrb:1050,tast:744,tfga:1992,tfg:1002,tfta:666,tft:516,ttov:306,tpf:432}
+],
+"Manu Ginobili":[
+  {season:"2004-05",pwins:15,plosses:8,pts:368,trb:105,ast:116,blk:17,stl:37,fga:272,fg:129,fta:104,ft:92,tov:51,pf:57,tblk:162,tstl:186,tpts:2544,ttrb:1296,tast:678,tfga:2136,tfg:1068,tfta:756,tft:582,ttov:342,tpf:480},
+  {season:"2006-07",pwins:15,plosses:5,pts:399,trb:104,ast:111,blk:13,stl:36,fga:296,fg:140,fta:121,ft:110,tov:50,pf:59,tblk:186,tstl:174,tpts:2490,ttrb:1218,tast:636,tfga:2088,tfg:1044,tfta:696,tft:540,ttov:336,tpf:468},
+  {season:"2013-14",pwins:20,plosses:8,pts:299,trb:87,ast:116,blk:9,stl:29,fga:225,fg:101,fta:88,ft:78,tov:34,pf:44,tblk:102,tstl:186,tpts:2376,ttrb:1134,tast:780,tfga:2076,tfg:1056,tfta:660,tft:510,ttov:288,tpf:420}
+],
+"Tony Parker":[
+  {season:"2004-05",pwins:15,plosses:8,pts:444,trb:72,ast:224,blk:5,stl:24,fga:356,fg:184,fta:86,ft:79,tov:54,pf:52,tblk:162,tstl:186,tpts:2544,ttrb:1296,tast:678,tfga:2136,tfg:1068,tfta:756,tft:582,ttov:342,tpf:480},
+  {season:"2006-07",pwins:15,plosses:5,pts:507,trb:87,ast:224,blk:5,stl:25,fga:388,fg:202,fta:103,ft:94,tov:55,pf:50,tblk:186,tstl:174,tpts:2490,ttrb:1218,tast:636,tfga:2088,tfg:1044,tfta:696,tft:540,ttov:336,tpf:468},
+  {season:"2013-14",pwins:20,plosses:8,pts:477,trb:76,ast:196,blk:5,stl:19,fga:372,fg:191,fta:100,ft:91,tov:47,pf:43,tblk:102,tstl:186,tpts:2376,ttrb:1134,tast:780,tfga:2076,tfg:1056,tfta:660,tft:510,ttov:288,tpf:420}
+],
+"Klay Thompson":[
+  {season:"2014-15",pwins:16,plosses:5,pts:452,trb:88,ast:64,blk:13,stl:28,fga:345,fg:155,fta:62,ft:54,tov:30,pf:40,tblk:150,tstl:276,tpts:2976,ttrb:1128,tast:1050,tfga:2412,tfg:1164,tfta:762,tft:594,ttov:342,tpf:504},
+  {season:"2015-16",pwins:15,plosses:6,pts:444,trb:83,ast:69,blk:13,stl:32,fga:334,fg:161,fta:55,ft:48,tov:34,pf:43,tblk:162,tstl:294,tpts:3330,ttrb:1236,tast:1134,tfga:2628,tfg:1296,tfta:798,tft:630,ttov:372,tpf:522},
+  {season:"2017-18",pwins:16,plosses:5,pts:461,trb:84,ast:62,blk:9,stl:23,fga:340,fg:157,fta:48,ft:41,tov:29,pf:43,tblk:150,tstl:270,tpts:3120,ttrb:1170,tast:1074,tfga:2496,tfg:1260,tfta:744,tft:588,ttov:348,tpf:498}
+],
+"Luka Doncic":[
+  {season:"2021-22",pwins:12,plosses:9,pts:636,trb:190,ast:193,blk:8,stl:24,fga:489,fg:206,fta:183,ft:160,tov:74,pf:48,tblk:90,tstl:168,tpts:2412,ttrb:1086,tast:918,tfga:2082,tfg:1044,tfta:732,tft:564,ttov:354,tpf:486},
+  {season:"2023-24",pwins:17,plosses:8,pts:769,trb:197,ast:218,blk:9,stl:22,fga:567,fg:255,fga:567,fg:255,fta:207,ft:173,tov:68,pf:49,tblk:90,tstl:168,tpts:2814,ttrb:1224,tast:1056,tfga:2400,tfg:1218,tfta:834,tft:648,ttov:372,tpf:480}
+],
+"Joel Embiid":[
+  {season:"2021-22",pwins:6,plosses:6,pts:343,trb:142,ast:45,blk:24,stl:12,fga:238,fg:120,fta:112,ft:100,tov:33,pf:39,tblk:90,tstl:162,tpts:1764,ttrb:882,tast:636,tfga:1638,tfg:822,tfta:564,tft:438,ttov:246,tpf:342},
+  {season:"2022-23",pwins:5,plosses:7,pts:387,trb:164,ast:37,blk:18,stl:12,fga:275,fg:137,fta:122,ft:99,tov:39,pf:38,tblk:90,tstl:162,tpts:1764,ttrb:882,tast:636,tfga:1638,tfg:822,tfta:564,tft:438,ttov:246,tpf:342}
+],
+"Ben Wallace":[
+  {season:"2003-04",pwins:16,plosses:7,pts:182,trb:252,ast:33,blk:54,stl:33,fga:125,fg:76,fta:55,ft:23,tov:25,pf:50,tblk:90,tstl:168,tpts:2052,ttrb:912,tast:738,tfga:1776,tfg:888,tfta:576,tft:450,ttov:270,tpf:396},
+  {season:"2005-06",pwins:18,plosses:7,pts:196,trb:241,ast:40,blk:50,stl:28,fga:133,fg:80,fta:52,ft:26,tov:25,pf:50,tblk:108,tstl:192,tpts:2706,ttrb:1188,tast:978,tfga:2310,tfg:1176,tfta:870,tft:666,ttov:330,tpf:444}
+],
+"Yao Ming":[
+  {season:"2006-07",pwins:7,plosses:7,pts:344,trb:153,ast:29,blk:34,stl:7,fga:224,fg:137,fta:112,ft:83,tov:39,pf:48,tblk:78,tstl:138,tpts:1386,ttrb:696,tast:468,tfga:1254,tfg:630,tfta:432,tft:336,ttov:198,tpf:282}
+],
+"Gary Payton":[
+  {season:"1995-96",pwins:10,plosses:10,pts:377,trb:108,ast:198,blk:8,stl:63,fga:296,fg:137,fta:93,ft:75,tov:58,pf:60,tblk:120,tstl:216,tpts:2844,ttrb:1176,tast:942,tfga:2388,tfg:1206,tfta:876,tft:666,ttov:348,tpf:468},
+  {season:"1997-98",pwins:13,plosses:7,pts:497,trb:132,ast:199,blk:8,stl:60,fga:383,fg:178,fta:128,ft:111,tov:60,pf:60,tblk:108,tstl:198,tpts:2952,ttrb:1278,tast:1026,tfga:2532,tfg:1266,tfta:900,tft:690,ttov:330,tpf:450}
+],
+"Chris Bosh":[
+  {season:"2010-11",pwins:16,plosses:5,pts:414,trb:186,ast:58,blk:26,stl:21,fga:318,fg:168,fta:92,ft:76,tov:51,pf:64,tblk:168,tstl:300,tpts:2982,ttrb:1386,tast:882,tfga:2610,tfg:1218,tfta:882,tft:678,ttov:462,tpf:642},
+  {season:"2012-13",pwins:16,plosses:7,pts:358,trb:173,ast:49,blk:28,stl:18,fga:275,fg:151,fta:68,ft:58,tov:45,pf:54,tblk:150,tstl:294,tpts:2784,ttrb:1278,tast:912,tfga:2412,tfg:1152,tfta:792,tft:606,ttov:414,tpf:582}
+],
+"Vince Carter":[
+  {season:"2000-01",pwins:7,plosses:5,pts:354,trb:100,ast:72,blk:23,stl:24,fga:296,fg:122,fta:105,ft:88,tov:39,pf:37,tblk:90,tstl:162,tpts:1710,ttrb:840,tast:558,tfga:1566,tfg:786,tfta:522,tft:402,ttov:240,tpf:330}
+],
+"Tracy McGrady":[
+  {season:"2002-03",pwins:4,plosses:7,pts:434,trb:109,ast:87,blk:24,stl:27,fga:354,fg:152,fta:131,ft:118,tov:48,pf:36,tblk:90,tstl:162,tpts:1458,ttrb:720,tast:498,tfga:1356,tfg:678,tfta:468,tft:360,ttov:240,tpf:336}
+],
+"Alonzo Mourning":[
+  {season:"1996-97",pwins:11,plosses:4,pts:376,trb:176,ast:18,blk:65,stl:11,fga:244,fg:136,fta:126,ft:98,tov:38,pf:56,tblk:126,tstl:198,tpts:2442,ttrb:1116,tast:756,tfga:2136,tfg:1068,tfta:870,tft:660,ttov:306,tpf:396},
+  {season:"2004-05",pwins:15,plosses:8,pts:300,trb:152,ast:14,blk:49,stl:10,fga:198,fg:113,fta:111,ft:68,tov:31,pf:57,tblk:174,tstl:234,tpts:2754,ttrb:1206,tast:732,tfga:2298,tfg:1146,tfta:900,tft:690,ttov:378,tpf:576}
+],
+"Dennis Johnson":[
+  {season:"1978-79",pwins:13,plosses:5,pts:400,trb:142,ast:113,blk:14,stl:35,fga:314,fg:157,fta:105,ft:86,tov:57,pf:70,tblk:90,tstl:168,tpts:2022,ttrb:1008,tast:714,tfga:1818,tfg:918,tfta:684,tft:528,ttov:270,tpf:384},
+  {season:"1985-86",pwins:15,plosses:3,pts:253,trb:81,ast:136,blk:5,stl:24,fga:196,fg:96,fta:63,ft:55,tov:39,pf:47,tblk:162,tstl:294,tpts:2886,ttrb:1206,tast:804,tfga:2442,tfg:1188,tfta:696,tft:546,ttov:390,tpf:546},
+  {season:"1987-88",pwins:17,plosses:8,pts:266,trb:77,ast:135,blk:4,stl:22,fga:209,fg:102,fta:65,ft:57,tov:40,pf:49,tblk:138,tstl:252,tpts:2952,ttrb:1188,tast:774,tfga:2484,tfg:1212,tfta:720,tft:558,ttov:396,tpf:564}
+],
+"Jo Jo White":[
+  {season:"1974-75",pwins:11,plosses:6,pts:497,trb:108,ast:154,blk:6,stl:38,fga:425,fg:203,fta:107,ft:91,tov:60,pf:60,tblk:96,tstl:144,tpts:2268,ttrb:1074,tast:780,tfga:1944,tfg:990,tfta:756,tft:582,ttov:294,tpf:408},
+  {season:"1975-76",pwins:18,plosses:4,pts:519,trb:109,ast:136,blk:4,stl:34,fga:430,fg:209,fta:111,ft:97,tov:61,pf:58,tblk:96,tstl:150,tpts:2268,ttrb:1110,tast:762,tfga:2070,tfg:1044,tfta:744,tft:582,ttov:306,tpf:426}
+],
+"Nate Thurmond":[
+  {season:"1966-67",pwins:6,plosses:9,pts:412,trb:423,ast:44,blk:0,stl:0,fga:318,fg:151,fta:131,ft:110,tov:0,pf:71,tblk:0,tstl:0,tpts:2040,ttrb:1248,tast:522,tfga:1800,tfg:924,tfta:756,tft:564,ttov:0,tpf:444,blk_estimated:true,stl_estimated:true}
+],
+"Gail Goodrich":[
+  {season:"1971-72",pwins:15,plosses:3,pts:593,trb:92,ast:113,blk:0,stl:0,fga:470,fg:232,fta:143,ft:129,tov:0,pf:62,tblk:0,tstl:0,tpts:3180,ttrb:1188,tast:792,tfga:2742,tfg:1416,tfta:1026,tft:798,ttov:0,tpf:498,blk_estimated:true,stl_estimated:true}
+],
+"Dave Cowens":[
+  {season:"1973-74",pwins:12,plosses:6,pts:498,trb:412,ast:93,blk:22,stl:35,fga:374,fg:200,fta:107,ft:98,tov:72,pf:83,tblk:96,tstl:138,tpts:2160,ttrb:1038,tast:648,tfga:1932,tfg:972,tfta:726,tft:558,ttov:294,tpf:408},
+  {season:"1975-76",pwins:18,plosses:4,pts:491,trb:402,ast:93,blk:22,stl:36,fga:382,fg:195,fta:111,ft:101,tov:62,pf:90,tblk:96,tstl:150,tpts:2268,ttrb:1110,tast:762,tfga:2070,tfg:1044,tfta:744,tft:582,ttov:306,tpf:426}
+],
+"Sam Jones":[
+  {season:"1964-65",pwins:11,plosses:5,pts:438,trb:124,ast:68,blk:0,stl:0,fga:372,fg:190,fta:76,ft:58,tov:0,pf:62,tblk:0,tstl:0,tpts:2412,ttrb:1440,tast:588,tfga:1800,tfg:936,tfta:762,tft:558,ttov:0,tpf:456,blk_estimated:true,stl_estimated:true},
+  {season:"1968-69",pwins:12,plosses:6,pts:377,trb:99,ast:78,blk:0,stl:0,fga:310,fg:163,fta:64,ft:51,tov:0,pf:53,tblk:0,tstl:0,tpts:2124,ttrb:1260,tast:516,tfga:1668,tfg:840,tfta:684,tft:504,ttov:0,tpf:432,blk_estimated:true,stl_estimated:true}
+],
+"Hal Greer":[
+  {season:"1966-67",pwins:15,plosses:4,pts:594,trb:133,ast:105,blk:0,stl:0,fga:494,fg:214,fta:182,ft:166,tov:0,pf:88,tblk:0,tstl:0,tpts:2730,ttrb:1428,tast:612,tfga:1926,tfg:1020,tfta:918,tft:648,ttov:0,tpf:480,blk_estimated:true,stl_estimated:true}
+],
+"Dolph Schayes":[
+  {season:"1957-58",pwins:5,plosses:3,pts:414,trb:246,ast:65,blk:0,stl:0,fga:323,fg:143,fta:193,ft:128,tov:0,pf:63,tblk:0,tstl:0,tpts:1740,ttrb:1026,tast:390,tfga:1548,tfg:756,tfta:648,tft:498,ttov:0,tpf:390,blk_estimated:true,stl_estimated:true}
+],
+"Bill Walton":[
+  {season:"1976-77",pwins:7,plosses:11,pts:308,trb:246,ast:56,blk:53,stl:22,fga:221,fg:122,fta:82,ft:64,tov:47,pf:67,tblk:90,tstl:162,tpts:1368,ttrb:732,tast:462,tfga:1260,tfg:636,tfta:444,tft:342,ttov:222,tpf:318},
+  {season:"1977-78",pwins:8,plosses:6,pts:355,trb:277,ast:68,blk:60,stl:25,fga:241,fg:141,fta:88,ft:73,tov:47,pf:67,tblk:90,tstl:162,tpts:1458,ttrb:810,tast:522,tfga:1314,tfg:666,tfta:480,tft:372,ttov:222,tpf:312}
+],
+"Dave DeBusschere":[
+  {season:"1969-70",pwins:19,plosses:7,pts:437,trb:387,ast:104,blk:0,stl:0,fga:393,fg:176,fta:106,ft:85,tov:0,pf:107,tblk:0,tstl:0,tpts:3990,ttrb:1836,tast:1374,tfga:3780,tfg:1854,tfta:1548,tft:1134,ttov:0,tpf:1134,blk_estimated:true,stl_estimated:true},
+  {season:"1972-73",pwins:12,plosses:5,pts:345,trb:272,ast:75,blk:0,stl:0,fga:283,fg:136,fta:89,ft:73,tov:0,pf:70,tblk:0,tstl:0,tpts:2442,ttrb:1110,tast:798,tfga:2124,tfg:1062,tfta:780,tft:594,ttov:0,tpf:492,blk_estimated:true,stl_estimated:true}
+],
+"Jerry Lucas":[
+  {season:"1972-73",pwins:12,plosses:5,pts:198,trb:168,ast:62,blk:0,stl:0,fga:156,fg:84,fta:42,ft:30,tov:0,pf:44,tblk:0,tstl:0,tpts:2442,ttrb:1110,tast:798,tfga:2124,tfg:1062,tfta:780,tft:594,ttov:0,tpf:492,blk_estimated:true,stl_estimated:true}
+],
+"Bob Lanier":[
+  {season:"1973-74",pwins:7,plosses:7,pts:427,trb:257,ast:66,blk:60,stl:27,fga:313,fg:181,fta:105,ft:65,tov:57,pf:63,tblk:90,tstl:162,tpts:1470,ttrb:810,tast:510,tfga:1356,tfg:678,tfta:468,tft:360,ttov:240,tpf:336}
+],
+"Wes Unseld":[
+  {season:"1978-79",pwins:8,plosses:7,pts:129,trb:208,ast:59,blk:14,stl:12,fga:95,fg:55,fta:30,ft:19,tov:35,pf:51,tblk:96,tstl:138,tpts:1272,ttrb:720,tast:372,tfga:1140,tfg:570,tfta:372,tft:288,ttov:180,tpf:270}
+],
+"Bob McAdoo":[
+  {season:"1983-84",pwins:7,plosses:5,pts:274,trb:104,ast:29,blk:19,stl:12,fga:199,fg:107,fta:68,ft:60,tov:33,pf:52,tblk:90,tstl:162,tpts:1284,ttrb:654,tast:462,tfga:1170,tfg:588,tfta:432,tft:330,ttov:180,tpf:270},
+  {season:"1984-85",pwins:15,plosses:4,pts:213,trb:79,ast:20,blk:16,stl:9,fga:152,fg:82,fta:51,ft:49,tov:24,pf:42,tblk:132,tstl:252,tpts:2892,ttrb:1248,tast:1002,tfga:2430,tfg:1206,tfta:960,tft:762,ttov:420,tpf:576}
+],
+"Earl Monroe":[
+  {season:"1969-70",pwins:4,plosses:4,pts:226,trb:37,ast:52,blk:0,stl:0,fga:195,fg:89,fta:58,ft:48,tov:0,pf:30,tblk:0,tstl:0,tpts:1548,ttrb:774,tast:432,tfga:1404,tfg:714,tfta:528,tft:408,ttov:0,tpf:330,blk_estimated:true,stl_estimated:true},
+  {season:"1972-73",pwins:12,plosses:5,pts:277,trb:50,ast:82,blk:0,stl:0,fga:225,fg:105,fta:76,ft:67,tov:0,pf:40,tblk:0,tstl:0,tpts:2442,ttrb:1110,tast:798,tfga:2124,tfg:1062,tfta:780,tft:594,ttov:0,tpf:492,blk_estimated:true,stl_estimated:true}
+],
+"Artis Gilmore":[
+  {season:"1984-85",pwins:5,plosses:6,pts:216,trb:163,ast:32,blk:27,stl:7,fga:149,fg:90,fta:60,ft:43,tov:25,pf:35,tblk:78,tstl:138,tpts:1080,ttrb:594,tast:360,tfga:1020,tfg:510,tfta:378,tft:294,ttov:162,tpf:270}
+],
+"Sidney Moncrief":[
+  {season:"1983-84",pwins:11,plosses:5,pts:421,trb:119,ast:99,blk:10,stl:30,fga:316,fg:156,fta:138,ft:109,tov:46,pf:56,tblk:90,tstl:162,tpts:1566,ttrb:756,tast:528,tfga:1452,tfg:726,tfta:594,tft:450,ttov:240,tpf:354},
+  {season:"1985-86",pwins:13,plosses:7,pts:382,trb:99,ast:92,blk:7,stl:27,fga:282,fg:140,fta:116,ft:102,tov:40,pf:50,tblk:90,tstl:162,tpts:1800,ttrb:870,tast:720,tfga:1620,tfg:816,tfta:594,tft:456,ttov:234,tpf:336}
+],
+"Anfernee Hardaway":[
+  {season:"1994-95",pwins:13,plosses:8,pts:479,trb:116,ast:180,blk:18,stl:48,fga:376,fg:172,fta:138,ft:105,tov:77,pf:58,tblk:108,tstl:192,tpts:2238,ttrb:1074,tast:792,tfga:2004,tfg:1002,tfta:774,tft:594,ttov:318,tpf:432}
+],
+"Derrick Rose":[
+  {season:"2010-11",pwins:7,plosses:5,pts:331,trb:62,ast:166,blk:7,stl:19,fga:258,fg:113,fta:102,ft:89,tov:52,pf:38,tblk:90,tstl:168,tpts:1800,ttrb:864,tast:750,tfga:1584,tfg:798,tfta:528,tft:408,ttov:270,tpf:378}
+],
+"Shai Gilgeous-Alexander":[
+  {season:"2024-25",pwins:9,plosses:4,pts:399,trb:75,ast:112,blk:10,stl:29,fga:289,fg:147,fta:116,ft:102,tov:31,pf:22,tblk:108,tstl:180,tpts:2082,ttrb:954,tast:762,tfga:1740,tfg:894,tfta:588,tft:450,ttov:216,tpf:288}
+],
+"Donovan Mitchell":[
+  {season:"2020-21",pwins:9,plosses:7,pts:558,trb:84,ast:130,blk:6,stl:24,fga:424,fg:184,fta:190,ft:167,tov:56,pf:42,tblk:90,tstl:174,tpts:2046,ttrb:936,tast:750,tfga:1776,tfg:894,tfta:666,tft:516,ttov:270,tpf:378}
+],
+"Blake Griffin":[
+  {season:"2013-14",pwins:7,plosses:6,pts:369,trb:152,ast:75,blk:9,stl:15,fga:272,fg:130,fta:118,ft:96,tov:41,pf:48,tblk:90,tstl:162,tpts:1608,ttrb:804,tast:540,tfga:1440,tfg:720,tfta:516,tft:396,ttov:216,tpf:312}
+],
+"Devin Booker":[
+  {season:"2020-21",pwins:12,plosses:4,pts:445,trb:80,ast:114,blk:4,stl:18,fga:336,fg:156,fta:141,ft:121,tov:38,pf:33,tblk:90,tstl:174,tpts:1884,ttrb:876,tast:786,tfga:1668,tfg:840,tfta:564,tft:444,ttov:234,tpf:336},
+  {season:"2021-22",pwins:7,plosses:6,pts:387,trb:77,ast:107,blk:4,stl:22,fga:289,fg:128,fta:128,ft:113,tov:31,pf:28,tblk:90,tstl:174,tpts:1932,ttrb:876,tast:798,tfga:1710,tfg:870,tfta:558,tft:432,ttov:234,tpf:318}
+],
+"Kyrie Irving":[
+  {season:"2015-16",pwins:16,plosses:5,pts:526,trb:81,ast:143,blk:6,stl:26,fga:392,fg:168,fta:130,ft:113,tov:58,pf:47,tblk:144,tstl:270,tpts:2664,ttrb:1242,tast:918,tfga:2454,tfg:1170,tfta:810,tft:630,ttov:432,tpf:594},
+  {season:"2023-24",pwins:8,plosses:8,pts:397,trb:61,ast:119,blk:3,stl:17,fga:297,fg:124,fta:76,ft:68,tov:41,pf:34,tblk:90,tstl:168,tpts:2070,ttrb:984,tast:786,tfga:1806,tfg:906,tfta:588,tft:456,ttov:264,tpf:354}
+],
+"Dominique Wilkins":[
+  {season:"1986-87",pwins:9,plosses:9,pts:573,trb:172,ast:74,blk:17,stl:29,fga:465,fg:215,fta:161,ft:136,tov:68,pf:60,tblk:90,tstl:162,tpts:2250,ttrb:1056,tast:714,tfga:2010,tfg:1020,tfta:822,tft:636,ttov:306,tpf:426},
+  {season:"1993-94",pwins:9,plosses:9,pts:596,trb:158,ast:67,blk:11,stl:29,fga:461,fg:212,fta:181,ft:163,tov:55,pf:50,tblk:90,tstl:162,tpts:2286,ttrb:1086,tast:750,tfga:2052,tfg:1038,tfta:792,tft:606,ttov:306,tpf:408}
+],
+"Steve Nash":[
+  {season:"2004-05",pwins:15,plosses:10,pts:369,trb:86,ast:277,blk:2,stl:23,fga:269,fg:160,fta:66,ft:62,tov:63,pf:32,tblk:114,tstl:198,tpts:2262,ttrb:1068,tast:912,tfga:1908,tfg:954,tfta:636,tft:492,ttov:312,tpf:408},
+  {season:"2005-06",pwins:13,plosses:7,pts:319,trb:73,ast:263,blk:3,stl:18,fga:231,fg:139,fta:63,ft:57,tov:55,pf:30,tblk:90,tstl:174,tpts:2100,ttrb:996,tast:864,tfga:1806,tfg:918,tfta:618,tft:480,ttov:270,tpf:378}
+],
+"Alex English":[
+  {season:"1984-85",pwins:5,plosses:6,pts:307,trb:81,ast:60,blk:7,stl:12,fga:230,fg:127,fta:55,ft:50,tov:24,pf:28,tblk:78,tstl:138,tpts:1092,ttrb:564,tast:396,tfga:1014,tfg:510,tfta:342,tft:264,ttov:162,tpf:246}
+],
+"Carmelo Anthony":[
+  {season:"2008-09",pwins:8,plosses:8,pts:426,trb:123,ast:63,blk:7,stl:17,fga:328,fg:147,fta:137,ft:121,tov:48,pf:44,tblk:90,tstl:162,tpts:2196,ttrb:1056,tast:762,tfga:1926,tfg:966,tfta:726,tft:558,ttov:312,tpf:438}
+],
+"Tim Hardaway":[
+  {season:"1996-97",pwins:12,plosses:4,pts:460,trb:70,ast:201,blk:2,stl:40,fga:355,fg:164,fta:130,ft:112,tov:64,pf:50,tblk:90,tstl:162,tpts:2430,ttrb:1086,tast:816,tfga:2118,tfg:1062,tfta:882,tft:690,ttov:306,tpf:420},
+  {season:"1997-98",pwins:14,plosses:7,pts:521,trb:79,ast:227,blk:3,stl:41,fga:402,fg:181,fta:148,ft:128,tov:57,pf:46,tblk:102,tstl:180,tpts:2820,ttrb:1248,tast:924,tfga:2430,tfg:1218,tfta:882,tft:690,ttov:336,tpf:456}
+],
+"George Gervin":[
+  {season:"1977-78",pwins:6,plosses:4,pts:286,trb:57,ast:36,blk:11,stl:14,fga:222,fg:109,fta:79,ft:68,tov:28,pf:26,tblk:78,tstl:138,tpts:1350,ttrb:636,tast:390,tfga:1224,tfg:612,tfta:432,tft:336,ttov:180,tpf:282}
+],
+"Chris Mullin":[
+  {season:"1988-89",pwins:4,plosses:4,pts:245,trb:48,ast:51,blk:4,stl:25,fga:189,fg:97,fta:58,ft:51,tov:24,pf:20,tblk:90,tstl:162,tpts:1656,ttrb:762,tast:528,tfga:1500,tfg:738,tfta:504,tft:390,ttov:222,tpf:312},
+  {season:"1991-92",pwins:3,plosses:3,pts:168,trb:31,ast:31,blk:3,stl:16,fga:126,fg:62,fta:48,ft:44,tov:14,pf:12,tblk:90,tstl:162,tpts:924,ttrb:462,tast:294,tfga:882,tfg:438,tfta:270,tft:210,ttov:126,tpf:180},
+  {season:"1997-98",pwins:13,plosses:8,pts:312,trb:66,ast:62,blk:4,stl:24,fga:233,fg:113,fta:88,ft:82,tov:31,pf:28,tblk:90,tstl:162,tpts:2214,ttrb:1068,tast:852,tfga:1878,tfg:942,tfta:672,tft:504,ttov:246,tpf:312}
+]
+};
+
 const DASHES=[[],[6,3],[2,4],[4,2],[8,3]];
 let allData=[], chartInst=null;
 
@@ -449,6 +918,7 @@ const PLAYER_META = {
   "Anfernee Hardaway": {pos:"G",  era:"1993-2004"},
   "Derrick Rose":      {pos:"G",  era:"2008-2020"},
   "DeMar DeRozan":     {pos:"G",  era:"2009-2024"},
+  "Chris Mullin":      {pos:"F",  era:"1985-2000"},
   "John Havlicek":     {pos:"F",  era:"1962-1978"},
   "Bob Cousy":         {pos:"G",  era:"1950-1970"},
   "Moses Malone":      {pos:"C",  era:"1976-1995"},
@@ -2248,6 +2718,20 @@ const LIBRARY = {
   {season:"2021-22",team:"CHI",wins:46,losses:36,pts:1871,trb:353,ast:558,blk:13,stl:77,fga:1430,fg:647,fta:601,ft:543,tov:163,pf:132,tblk:278,tstl:478,tpts:9148,ttrb:4148,tast:2448,tfga:7114,tfg:3748,tfta:2748,tft:2048,ttov:1248,tpf:1948},
   {season:"2022-23",team:"CHI",wins:40,losses:42,pts:1733,trb:320,ast:533,blk:11,stl:68,fga:1333,fg:599,fta:551,ft:501,tov:155,pf:130,tblk:268,tstl:448,tpts:8448,ttrb:3748,tast:2148,tfga:6914,tfg:3348,tfta:2748,tft:2048,ttov:1248,tpf:2248},
   {season:"2023-24",team:"CHI",wins:39,losses:43,pts:1701,trb:299,ast:526,blk:10,stl:57,fga:1315,fg:588,fta:540,ft:490,tov:153,pf:131,tblk:258,tstl:448,tpts:8148,ttrb:3748,tast:2048,tfga:6814,tfg:3248,tfta:2748,tft:2048,ttov:1348,tpf:2248}
+],
+"Chris Mullin":[
+  {season:"1985-86",team:"GSW",wins:30,losses:52,pts:595,trb:156,ast:105,blk:14,stl:69,fga:487,fg:246,fta:116,ft:103,tov:106,pf:128,tblk:258,tstl:448,tpts:7748,ttrb:3648,tast:1848,tfga:6614,tfg:3148,tfta:2648,tft:1948,ttov:1348,tpf:2248},
+  {season:"1986-87",team:"GSW",wins:42,losses:40,pts:1456,trb:333,ast:247,blk:24,stl:114,fga:1101,fg:561,fta:400,ft:346,tov:192,pf:175,tblk:278,tstl:468,tpts:8948,ttrb:3948,tast:2148,tfga:7114,tfg:3648,tfta:2748,tft:2048,ttov:1248,tpf:2148},
+  {season:"1987-88",team:"GSW",wins:20,losses:62,pts:1704,trb:344,ast:274,blk:26,stl:113,fga:1256,fg:632,fta:493,ft:425,tov:195,pf:180,tblk:248,tstl:438,tpts:7748,ttrb:3648,tast:1848,tfga:6614,tfg:3148,tfta:2648,tft:1948,ttov:1348,tpf:2248},
+  {season:"1988-89",team:"GSW",wins:43,losses:39,pts:2176,trb:406,ast:415,blk:28,stl:176,fga:1537,fg:830,fta:617,ft:533,tov:199,pf:175,tblk:278,tstl:468,tpts:8748,ttrb:3948,tast:2248,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1248,tpf:2048},
+  {season:"1989-90",team:"GSW",wins:37,losses:45,pts:2107,trb:381,ast:406,blk:27,stl:177,fga:1513,fg:830,fta:509,ft:447,tov:194,pf:148,tblk:268,tstl:448,tpts:8748,ttrb:3948,tast:2248,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1248,tpf:2148},
+  {season:"1990-91",team:"GSW",wins:44,losses:38,pts:2107,trb:372,ast:361,blk:28,stl:173,fga:1506,fg:777,fta:614,ft:553,tov:183,pf:152,tblk:278,tstl:468,tpts:8748,ttrb:3948,tast:2248,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1248,tpf:2148},
+  {season:"1991-92",team:"GSW",wins:55,losses:27,pts:1847,trb:329,ast:323,blk:24,stl:150,fga:1313,fg:690,fta:518,ft:467,tov:167,pf:132,tblk:298,tstl:518,tpts:9248,ttrb:4248,tast:2448,tfga:7214,tfg:3748,tfta:2748,tft:2048,ttov:1248,tpf:1948},
+  {season:"1992-93",team:"GSW",wins:34,losses:48,pts:1570,trb:293,ast:304,blk:20,stl:114,fga:1148,fg:567,fta:474,ft:436,tov:147,pf:118,tblk:268,tstl:448,tpts:8748,ttrb:3948,tast:2248,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1248,tpf:2148},
+  {season:"1995-96",team:"GSW",wins:36,losses:46,pts:1455,trb:294,ast:282,blk:17,stl:112,fga:1052,fg:536,fta:404,ft:383,tov:141,pf:114,tblk:268,tstl:438,tpts:8148,ttrb:3748,tast:2048,tfga:6814,tfg:3248,tfta:2748,tft:2048,ttov:1348,tpf:2248},
+  {season:"1996-97",team:"GSW",wins:30,losses:52,pts:1177,trb:243,ast:248,blk:14,stl:97,fga:861,fg:432,fta:329,ft:313,tov:120,pf:101,tblk:248,tstl:428,tpts:7748,ttrb:3648,tast:1848,tfga:6614,tfg:3148,tfta:2648,tft:1948,ttov:1348,tpf:2248},
+  {season:"1997-98",team:"IND",wins:58,losses:24,pts:918,trb:187,ast:186,blk:12,stl:72,fga:670,fg:338,fta:244,ft:230,tov:89,pf:83,tblk:318,tstl:568,tpts:9848,ttrb:4248,tast:2748,tfga:7414,tfg:3948,tfta:2948,tft:2248,ttov:1148,tpf:1748},
+  {season:"1999-00",team:"IND",wins:56,losses:26,pts:673,trb:149,ast:131,blk:8,stl:46,fga:498,fg:241,fta:187,ft:176,tov:66,pf:63,tblk:318,tstl:568,tpts:9848,ttrb:4248,tast:2548,tfga:7414,tfg:3948,tfta:2948,tft:2248,ttov:1148,tpf:1748}
 ]
 };
 
@@ -2270,6 +2754,28 @@ const playerNames=Object.keys(LIBRARY);
 const COMPUTED={};
 playerNames.forEach(n=>{COMPUTED[n]=LIBRARY[n].map(calcOne);});
 
+// ─── COMPUTE PLAYOFF STATS ─────────────────────────────────────────────────────
+const PLAYOFF_COMPUTED = {};
+playerNames.forEach(n => {
+  const pd = PLAYOFF_LIBRARY[n] || [];
+  PLAYOFF_COMPUTED[n] = pd.map(s => {
+    const blk=s.blk??0, stl=s.stl??0, tblk=s.tblk??0, tstl=s.tstl??0;
+    const tPos = s.tpts+(s.ttrb||0)+(s.tast||0)+tblk+tstl;
+    const tNeg = (s.tfga-s.tfg)+(s.tfta-s.tft)+(s.ttov||0)+(s.tpf||0);
+    const winRate = s.pwins>0 ? tPos/s.pwins : 0;
+    const lossRate = s.plosses>0 ? tNeg/s.plosses : 0;
+    const pPos = s.pts+s.trb+s.ast+blk+stl;
+    const pNeg = (s.fga-s.fg)+(s.fta-s.ft)+s.tov+s.pf;
+    const pWins = winRate>0 ? pPos/winRate : 0;
+    const pLosses = lossRate>0 ? pNeg/lossRate : 0;
+    return {...s, pWins, pLosses, net: pWins-pLosses};
+  });
+});
+
+function getPlayoffTotal(name){
+  return (PLAYOFF_COMPUTED[name]||[]).reduce((a,b)=>a+b.net,0);
+}
+
 function getStats(name){
   const s=COMPUTED[name];
   const tot=s.reduce((a,b)=>a+b.net,0);
@@ -2277,7 +2783,9 @@ function getStats(name){
   const sorted=[...s].sort((a,b)=>b.net-a.net);
   const top3=sorted.slice(0,Math.min(3,sorted.length));
   const top3avg=top3.reduce((a,b)=>a+b.net,0)/top3.length;
-  return {name,seasons:s,total:tot,avg:tot/s.length,peak:best.net,peakSeason:best.season,numSeasons:s.length,top3avg};
+  const playoffTotal=getPlayoffTotal(name);
+  const combined=tot+playoffTotal;
+  return {name,seasons:s,total:tot,avg:tot/s.length,peak:best.net,peakSeason:best.season,numSeasons:s.length,top3avg,playoffTotal,combined};
 }
 
 // ─── FILTER / SEARCH ─────────────────────────────────────────────────────────
@@ -2454,21 +2962,30 @@ function buildAllRankings(){
   });
   const stats=names.map(getStats);
   stats.sort((a,b)=>{
+    if(sort==='combined')return b.combined-a.combined;
     if(sort==='career')return b.total-a.total;
+    if(sort==='playoff')return b.playoffTotal-a.playoffTotal;
     if(sort==='avg')return b.avg-a.avg;
     if(sort==='top3')return b.top3avg-a.top3avg;
     return b.peak-a.peak;
   });
   document.getElementById('allRankContent').innerHTML=`<table class="rank-table">
-    <thead><tr><th>#</th><th>Player</th><th>Pos</th><th>Era</th><th>Career net wins</th><th>Avg/season</th><th>Avg top 3</th><th>Peak</th><th>Seasons</th><th></th></tr></thead>
+    <thead><tr>
+      <th>#</th><th>Player</th><th>Pos</th><th>Era</th>
+      <th>Reg Season</th><th>Playoffs</th><th>Combined</th>
+      <th>Avg/season</th><th>Avg top 3</th><th>Peak</th><th>Seasons</th><th></th>
+    </tr></thead>
     <tbody>${stats.map((p,i)=>{
       const m=PLAYER_META[p.name]||{};
       const onChart=allData.find(d=>d.name===p.name);
+      const hasPlayoff=p.playoffTotal!==0;
       return `<tr><td class="rank-num">${i+1}</td>
         <td style="font-weight:600">${p.name}</td>
         <td><span class="era-badge">${m.pos||'—'}</span></td>
         <td style="font-size:11px;color:#888">${m.era||''}</td>
         <td class="${p.total>=0?'pos':'neg'}">${p.total.toFixed(1)}</td>
+        <td style="color:${hasPlayoff?(p.playoffTotal>=0?'#16a34a':'#dc2626'):'#888'}">${hasPlayoff?p.playoffTotal.toFixed(1):'—'}</td>
+        <td style="font-weight:600;color:${p.combined>=0?'#2563eb':'#dc2626'}">${p.combined.toFixed(1)}</td>
         <td>${p.avg.toFixed(2)}</td>
         <td>${p.top3avg.toFixed(2)}</td>
         <td>${p.peak.toFixed(2)}</td>
