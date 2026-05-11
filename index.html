@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NBA Net Wins Analyzer | Will Fiore</title>
+<title>NBA Net Wins Analyzer | Will Fiore v2.1</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -3256,26 +3256,7 @@ playerNames.forEach(n => {
     const pNeg = (s.fga-s.fg)+(s.fta-s.ft)+s.tov+s.pf;
     const pWins = winRate>0 ? pPos/winRate : 0;
     const pLosses = lossRate>0 ? pNeg/lossRate : 0;
-    return {...s, pWins, pLosses, net: pWins-pLosses},
-  {season:"2025-26",team:"SAC",wins:22,losses:60,pts:971,trb:348,ast:426,blk:12,stl:83,fga:839,fg:358,fta:183,ft:127,tov:209,pf:147,tblk:372,tstl:658,tpts:9102,ttrb:3466,tast:2095,tfga:7299,tfg:3408,tfta:1870,tft:1443,ttov:1175,tpf:1614},
-  {season:"2025-26",team:"BOS",wins:56,losses:26,pts:348,trb:160,ast:85,blk:3,stl:22,fga:287,fg:118,fta:79,ft:65,tov:39,pf:26,tblk:410,tstl:585,tpts:9418,ttrb:3802,tast:2021,tfga:7398,tfg:3456,tfta:1534,tft:1238,ttov:1014,tpf:1562},
-  {season:"2025-26",team:"LAC",wins:42,losses:40,pts:47,trb:28,ast:53,blk:0,stl:11,fga:56,fg:18,fta:2,ft:1,tov:16,pf:23,tblk:400,tstl:738,tpts:9329,ttrb:3329,tast:1947,tfga:6857,tfg:3322,tfta:2025,tft:1666,ttov:1176,tpf:1549},
-  {season:"2025-26",team:"DAL",wins:26,losses:56,pts:407,trb:221,ast:56,blk:33,stl:22,fga:334,fg:169,fta:81,ft:59,tov:41,pf:42,tblk:423,tstl:619,tpts:9358,ttrb:3666,tast:2072,tfga:7366,tfg:3432,tfta:2113,tft:1595,ttov:1193,tpf:1508},
-  {season:"2025-26",team:"PHI",wins:45,losses:37,pts:641,trb:196,ast:133,blk:16,stl:62,fga:513,fg:225,fta:111,ft:91,tov:64,pf:84,tblk:464,tstl:750,tpts:9502,ttrb:3579,tast:2017,tfga:7404,tfg:3422,tfta:2035,tft:1647,ttov:1117,tpf:1667},
-  {season:"2025-26",team:"SAC",wins:22,losses:60,pts:1419,trb:226,ast:316,blk:23,stl:80,fga:1005,fg:499,fta:431,ft:374,tov:96,pf:149,tblk:372,tstl:658,tpts:9102,ttrb:3466,tast:2095,tfga:7299,tfg:3408,tfta:1870,tft:1443,ttov:1175,tpf:1614},
-  {season:"2025-26",team:"PHO",wins:45,losses:37,pts:1668,trb:248,ast:386,blk:18,stl:51,fga:1198,fg:546,fta:520,ft:454,tov:201,pf:168,tblk:347,tstl:781,tpts:9232,ttrb:3535,tast:2021,tfga:7389,tfg:3362,tfta:1663,tft:1298,ttov:1188,tpf:1691},
-  {season:"2025-26",team:"CLE",wins:52,losses:30,pts:1952,trb:316,ast:398,blk:20,stl:104,fga:1403,fg:678,fta:430,ft:372,tov:198,pf:163,tblk:409,tstl:697,tpts:9801,ttrb:3643,tast:2321,tfga:7381,tfg:3554,tfta:1959,tft:1520,ttov:1147,tpf:1605},
-  {season:"2025-26",team:"OKC",wins:64,losses:18,pts:2117,trb:292,ast:448,blk:52,stl:95,fga:1321,fg:731,fta:614,ft:540,tov:151,pf:139,tblk:449,tstl:796,tpts:9760,ttrb:3618,tast:2113,tfga:7307,tfg:3534,tfta:1905,tft:1557,ttov:1031,tpf:1555},
-  {season:"2025-26",team:"GSW",wins:37,losses:45,pts:570,trb:375,ast:376,blk:42,stl:61,fga:491,fg:205,fta:84,ft:59,tov:181,pf:197,tblk:346,tstl:796,tpts:9398,ttrb:3472,tast:2369,tfga:7280,tfg:3357,tfta:1732,tft:1398,ttov:1284,tpf:1608},
-  {season:"2025-26",team:"DAL",wins:26,losses:56,pts:810,trb:143,ast:96,blk:22,stl:33,fga:728,fg:286,fta:47,ft:36,tov:63,pf:70,tblk:423,tstl:619,tpts:9358,ttrb:3666,tast:2072,tfga:7366,tfg:3432,tfta:2113,tft:1595,ttov:1193,tpf:1508},
-  {season:"2025-26",team:"GSW",wins:37,losses:45,pts:760,trb:211,ast:185,blk:8,stl:55,fga:462,fg:240,fta:287,ft:248,tov:60,pf:46,tblk:346,tstl:796,tpts:9398,ttrb:3472,tast:2369,tfga:7280,tfg:3357,tfta:1732,tft:1398,ttov:1284,tpf:1608},
-  {season:"2025-26",team:"2TM",wins:45,losses:37,pts:1652,trb:336,ast:557,blk:28,stl:79,fga:1123,fg:487,fta:524,ft:463,tov:245,pf:137,tblk:397,tstl:690,tpts:9480,ttrb:3589,tast:2193,tfga:7305,tfg:3441,tfta:1926,tft:1507,ttov:1190,tpf:1629},
-  {season:"2025-26",team:"LAC",wins:42,losses:40,pts:1813,trb:413,ast:234,blk:27,stl:122,fga:1258,fg:635,fta:416,ft:371,tov:133,pf:78,tblk:400,tstl:738,tpts:9329,ttrb:3329,tast:1947,tfga:6857,tfg:3322,tfta:2025,tft:1666,ttov:1176,tpf:1549},
-  {season:"2025-26",team:"PHI",wins:45,losses:37,pts:1021,trb:293,ast:150,blk:46,stl:21,fga:697,fg:341,fta:335,ft:286,tov:109,pf:82,tblk:464,tstl:750,tpts:9502,ttrb:3579,tast:2017,tfga:7404,tfg:3422,tfta:2035,tft:1647,ttov:1117,tpf:1667},
-  {season:"2025-26",team:"DEN",wins:54,losses:28,pts:1799,trb:836,ast:697,blk:53,stl:92,fga:1132,fg:644,fta:480,ft:399,tov:243,pf:173,tblk:325,tstl:560,tpts:10010,ttrb:3606,tast:2375,tfga:7196,tfg:3570,tfta:2116,tft:1709,ttov:1057,tpf:1569},
-  {season:"2025-26",team:"MIL",wins:32,losses:50,pts:993,trb:352,ast:196,blk:24,stl:34,fga:598,fg:373,fta:357,ft:232,tov:115,pf:86,tblk:326,tstl:607,tpts:9072,ttrb:3341,tast:2116,tfga:7012,tfg:3345,tfta:1564,tft:1142,ttov:1247,tpf:1617},
-  {season:"2025-26",team:"HOU",wins:52,losses:30,pts:2026,trb:426,ast:372,blk:71,stl:62,fga:1376,fg:716,fta:467,ft:408,tov:246,pf:142,tblk:473,tstl:701,tpts:9449,ttrb:3946,tast:2083,tfga:7361,tfg:3523,tfta:1917,tft:1463,ttov:1261,tpf:1501},
-  {season:"2025-26",team:"GSW",wins:37,losses:45,pts:1142,trb:154,ast:203,blk:17,stl:49,fga:799,fg:374,fta:221,ft:204,tov:121,pf:75,tblk:346,tstl:796,tpts:9398,ttrb:3472,tast:2369,tfga:7280,tfg:3357,tfta:1732,tft:1398,ttov:1284,tpf:1608};
+    return {...s, pWins, pLosses, net: pWins-pLosses};
   });
 });
 
