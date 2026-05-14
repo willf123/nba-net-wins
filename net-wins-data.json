@@ -1,0 +1,1062 @@
+indexhelper.html:1 Unsafe attempt to load URL file:///C:/Users/willf/nba-net-wins/indexhelper.html from frame with URL file:///C:/Users/willf/nba-net-wins/indexhelper.html. 'file:' URLs are treated as unique security origins.
+
+generateAnswerVectors()
+indexhelper.html:4483 [
+  {
+    "player": "Michael Jordan",
+    "net_wins_career": "79.52",
+    "peak_performance": "13.28 in 1995-96",
+    "ranking_logic": "Based on the Net Wins metric, Michael Jordan contributed 79.52 wins over 15 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "LeBron James",
+    "net_wins_career": "107.57",
+    "peak_performance": "11.46 in 2008-09",
+    "ranking_logic": "Based on the Net Wins metric, LeBron James contributed 107.57 wins over 23 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Larry Bird",
+    "net_wins_career": "93.74",
+    "peak_performance": "11.32 in 1985-86",
+    "ranking_logic": "Based on the Net Wins metric, Larry Bird contributed 93.74 wins over 13 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Kobe Bryant",
+    "net_wins_career": "63.01",
+    "peak_performance": "9.47 in 2008-09",
+    "ranking_logic": "Based on the Net Wins metric, Kobe Bryant contributed 63.01 wins over 20 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Magic Johnson",
+    "net_wins_career": "92.23",
+    "peak_performance": "10.22 in 1986-87",
+    "ranking_logic": "Based on the Net Wins metric, Magic Johnson contributed 92.23 wins over 13 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Shaquille ONeal",
+    "net_wins_career": "93.55",
+    "peak_performance": "11.54 in 1999-00",
+    "ranking_logic": "Based on the Net Wins metric, Shaquille ONeal contributed 93.55 wins over 19 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Tim Duncan",
+    "net_wins_career": "133.01",
+    "peak_performance": "10.49 in 2005-06",
+    "ranking_logic": "Based on the Net Wins metric, Tim Duncan contributed 133.01 wins over 19 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Stephen Curry",
+    "net_wins_career": "50.17",
+    "peak_performance": "10.59 in 2015-16",
+    "ranking_logic": "Based on the Net Wins metric, Stephen Curry contributed 50.17 wins over 17 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Kareem Abdul-Jabbar",
+    "net_wins_career": "134.32",
+    "peak_performance": "13.01 in 1970-71",
+    "ranking_logic": "Based on the Net Wins metric, Kareem Abdul-Jabbar contributed 134.32 wins over 20 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Bill Russell",
+    "net_wins_career": "88.58",
+    "peak_performance": "9.17 in 1959-60",
+    "ranking_logic": "Based on the Net Wins metric, Bill Russell contributed 88.58 wins over 13 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Wilt Chamberlain",
+    "net_wins_career": "69.74",
+    "peak_performance": "13.69 in 1966-67",
+    "ranking_logic": "Based on the Net Wins metric, Wilt Chamberlain contributed 69.74 wins over 14 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Cade Cunningham",
+    "net_wins_career": "-6.68",
+    "peak_performance": "6.92 in 2025-26",
+    "ranking_logic": "Based on the Net Wins metric, Cade Cunningham contributed -6.68 wins over 5 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Kevin Durant",
+    "net_wins_career": "63.50",
+    "peak_performance": "8.97 in 2013-14",
+    "ranking_logic": "Based on the Net Wins metric, Kevin Durant contributed 63.50 wins over 18 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Giannis Antetokounmpo",
+    "net_wins_career": "41.79",
+    "peak_performance": "8.93 in 2018-19",
+    "ranking_logic": "Based on the Net Wins metric, Giannis Antetokounmpo contributed 41.79 wins over 13 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Oscar Robertson",
+    "net_wins_career": "42.63",
+    "peak_performance": "7.83 in 1970-71",
+    "ranking_logic": "Based on the Net Wins metric, Oscar Robertson contributed 42.63 wins over 14 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Hakeem Olajuwon",
+    "net_wins_career": "61.56",
+    "peak_performance": "8.02 in 1993-94",
+    "ranking_logic": "Based on the Net Wins metric, Hakeem Olajuwon contributed 61.56 wins over 18 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Kevin Garnett",
+    "net_wins_career": "45.05",
+    "peak_performance": "8.74 in 2003-04",
+    "ranking_logic": "Based on the Net Wins metric, Kevin Garnett contributed 45.05 wins over 17 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Charles Barkley",
+    "net_wins_career": "49.17",
+    "peak_performance": "8.54 in 1992-93",
+    "ranking_logic": "Based on the Net Wins metric, Charles Barkley contributed 49.17 wins over 16 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Jerry West",
+    "net_wins_career": "37.79",
+    "peak_performance": "9.04 in 1971-72",
+    "ranking_logic": "Based on the Net Wins metric, Jerry West contributed 37.79 wins over 14 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Nikola Jokic",
+    "net_wins_career": "54.79",
+    "peak_performance": "8.73 in 2023-24",
+    "ranking_logic": "Based on the Net Wins metric, Nikola Jokic contributed 54.79 wins over 11 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Dirk Nowitzki",
+    "net_wins_career": "70.26",
+    "peak_performance": "8.17 in 2006-07",
+    "ranking_logic": "Based on the Net Wins metric, Dirk Nowitzki contributed 70.26 wins over 21 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Dwyane Wade",
+    "net_wins_career": "36.20",
+    "peak_performance": "7.19 in 2012-13",
+    "ranking_logic": "Based on the Net Wins metric, Dwyane Wade contributed 36.20 wins over 16 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Scottie Pippen",
+    "net_wins_career": "84.83",
+    "peak_performance": "10.63 in 1995-96",
+    "ranking_logic": "Based on the Net Wins metric, Scottie Pippen contributed 84.83 wins over 17 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Karl Malone",
+    "net_wins_career": "94.19",
+    "peak_performance": "9.29 in 1996-97",
+    "ranking_logic": "Based on the Net Wins metric, Karl Malone contributed 94.19 wins over 19 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "John Stockton",
+    "net_wins_career": "86.08",
+    "peak_performance": "7.40 in 1996-97",
+    "ranking_logic": "Based on the Net Wins metric, John Stockton contributed 86.08 wins over 19 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Patrick Ewing",
+    "net_wins_career": "34.84",
+    "peak_performance": "7.15 in 1992-93",
+    "ranking_logic": "Based on the Net Wins metric, Patrick Ewing contributed 34.84 wins over 16 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "David Robinson",
+    "net_wins_career": "76.65",
+    "peak_performance": "8.22 in 1994-95",
+    "ranking_logic": "Based on the Net Wins metric, David Robinson contributed 76.65 wins over 14 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Clyde Drexler",
+    "net_wins_career": "46.43",
+    "peak_performance": "7.49 in 1990-91",
+    "ranking_logic": "Based on the Net Wins metric, Clyde Drexler contributed 46.43 wins over 15 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Isiah Thomas",
+    "net_wins_career": "35.78",
+    "peak_performance": "6.30 in 1988-89",
+    "ranking_logic": "Based on the Net Wins metric, Isiah Thomas contributed 35.78 wins over 13 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Elgin Baylor",
+    "net_wins_career": "22.14",
+    "peak_performance": "11.06 in 1961-62",
+    "ranking_logic": "Based on the Net Wins metric, Elgin Baylor contributed 22.14 wins over 14 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Bob Pettit",
+    "net_wins_career": "12.90",
+    "peak_performance": "5.42 in 1960-61",
+    "ranking_logic": "Based on the Net Wins metric, Bob Pettit contributed 12.90 wins over 11 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Pete Maravich",
+    "net_wins_career": "-23.42",
+    "peak_performance": "0.57 in 1972-73",
+    "ranking_logic": "Based on the Net Wins metric, Pete Maravich contributed -23.42 wins over 10 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Reggie Miller",
+    "net_wins_career": "22.86",
+    "peak_performance": "3.83 in 1997-98",
+    "ranking_logic": "Based on the Net Wins metric, Reggie Miller contributed 22.86 wins over 18 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Gary Payton",
+    "net_wins_career": "51.30",
+    "peak_performance": "7.22 in 1995-96",
+    "ranking_logic": "Based on the Net Wins metric, Gary Payton contributed 51.30 wins over 16 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Elvin Hayes",
+    "net_wins_career": "0.60",
+    "peak_performance": "6.99 in 1974-75",
+    "ranking_logic": "Based on the Net Wins metric, Elvin Hayes contributed 0.60 wins over 16 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Rick Barry",
+    "net_wins_career": "6.17",
+    "peak_performance": "5.60 in 1975-76",
+    "ranking_logic": "Based on the Net Wins metric, Rick Barry contributed 6.17 wins over 9 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Willis Reed",
+    "net_wins_career": "15.14",
+    "peak_performance": "6.30 in 1969-70",
+    "ranking_logic": "Based on the Net Wins metric, Willis Reed contributed 15.14 wins over 10 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Luka Doncic",
+    "net_wins_career": "19.55",
+    "peak_performance": "4.80 in 2023-24",
+    "ranking_logic": "Based on the Net Wins metric, Luka Doncic contributed 19.55 wins over 8 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Joel Embiid",
+    "net_wins_career": "27.44",
+    "peak_performance": "5.78 in 2022-23",
+    "ranking_logic": "Based on the Net Wins metric, Joel Embiid contributed 27.44 wins over 10 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Kawhi Leonard",
+    "net_wins_career": "48.86",
+    "peak_performance": "9.13 in 2015-16",
+    "ranking_logic": "Based on the Net Wins metric, Kawhi Leonard contributed 48.86 wins over 13 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Anthony Davis",
+    "net_wins_career": "23.03",
+    "peak_performance": "6.27 in 2019-20",
+    "ranking_logic": "Based on the Net Wins metric, Anthony Davis contributed 23.03 wins over 14 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "James Harden",
+    "net_wins_career": "49.23",
+    "peak_performance": "8.59 in 2017-18",
+    "ranking_logic": "Based on the Net Wins metric, James Harden contributed 49.23 wins over 17 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Chris Paul",
+    "net_wins_career": "72.98",
+    "peak_performance": "6.75 in 2017-18",
+    "ranking_logic": "Based on the Net Wins metric, Chris Paul contributed 72.98 wins over 21 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Russell Westbrook",
+    "net_wins_career": "41.69",
+    "peak_performance": "9.27 in 2012-13",
+    "ranking_logic": "Based on the Net Wins metric, Russell Westbrook contributed 41.69 wins over 15 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Damian Lillard",
+    "net_wins_career": "17.00",
+    "peak_performance": "4.36 in 2013-14",
+    "ranking_logic": "Based on the Net Wins metric, Damian Lillard contributed 17.00 wins over 13 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Jayson Tatum",
+    "net_wins_career": "33.51",
+    "peak_performance": "7.92 in 2023-24",
+    "ranking_logic": "Based on the Net Wins metric, Jayson Tatum contributed 33.51 wins over 9 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Jaylen Brown",
+    "net_wins_career": "32.86",
+    "peak_performance": "7.00 in 2023-24",
+    "ranking_logic": "Based on the Net Wins metric, Jaylen Brown contributed 32.86 wins over 9 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Paul George",
+    "net_wins_career": "36.07",
+    "peak_performance": "5.15 in 2024-25",
+    "ranking_logic": "Based on the Net Wins metric, Paul George contributed 36.07 wins over 15 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Jimmy Butler",
+    "net_wins_career": "29.29",
+    "peak_performance": "3.92 in 2021-22",
+    "ranking_logic": "Based on the Net Wins metric, Jimmy Butler contributed 29.29 wins over 15 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "John Havlicek",
+    "net_wins_career": "41.54",
+    "peak_performance": "8.72 in 1972-73",
+    "ranking_logic": "Based on the Net Wins metric, John Havlicek contributed 41.54 wins over 16 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Bob Cousy",
+    "net_wins_career": "27.60",
+    "peak_performance": "5.72 in 1959-60",
+    "ranking_logic": "Based on the Net Wins metric, Bob Cousy contributed 27.60 wins over 14 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Moses Malone",
+    "net_wins_career": "38.42",
+    "peak_performance": "10.31 in 1982-83",
+    "ranking_logic": "Based on the Net Wins metric, Moses Malone contributed 38.42 wins over 16 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Allen Iverson",
+    "net_wins_career": "-13.28",
+    "peak_performance": "4.13 in 2000-01",
+    "ranking_logic": "Based on the Net Wins metric, Allen Iverson contributed -13.28 wins over 14 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Julius Erving",
+    "net_wins_career": "48.78",
+    "peak_performance": "7.55 in 1980-81",
+    "ranking_logic": "Based on the Net Wins metric, Julius Erving contributed 48.78 wins over 11 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Ray Allen",
+    "net_wins_career": "16.32",
+    "peak_performance": "4.72 in 2007-08",
+    "ranking_logic": "Based on the Net Wins metric, Ray Allen contributed 16.32 wins over 18 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Jason Kidd",
+    "net_wins_career": "34.59",
+    "peak_performance": "5.45 in 1999-00",
+    "ranking_logic": "Based on the Net Wins metric, Jason Kidd contributed 34.59 wins over 17 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Dominique Wilkins",
+    "net_wins_career": "18.24",
+    "peak_performance": "5.58 in 1986-87",
+    "ranking_logic": "Based on the Net Wins metric, Dominique Wilkins contributed 18.24 wins over 14 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Steve Nash",
+    "net_wins_career": "47.72",
+    "peak_performance": "6.77 in 2004-05",
+    "ranking_logic": "Based on the Net Wins metric, Steve Nash contributed 47.72 wins over 15 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Kevin McHale",
+    "net_wins_career": "69.19",
+    "peak_performance": "9.37 in 1985-86",
+    "ranking_logic": "Based on the Net Wins metric, Kevin McHale contributed 69.19 wins over 12 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Carmelo Anthony",
+    "net_wins_career": "17.83",
+    "peak_performance": "3.91 in 2008-09",
+    "ranking_logic": "Based on the Net Wins metric, Carmelo Anthony contributed 17.83 wins over 15 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "George Gervin",
+    "net_wins_career": "16.40",
+    "peak_performance": "3.97 in 1977-78",
+    "ranking_logic": "Based on the Net Wins metric, George Gervin contributed 16.40 wins over 10 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Kyrie Irving",
+    "net_wins_career": "17.69",
+    "peak_performance": "4.76 in 2015-16",
+    "ranking_logic": "Based on the Net Wins metric, Kyrie Irving contributed 17.69 wins over 14 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Dwight Howard",
+    "net_wins_career": "46.60",
+    "peak_performance": "7.07 in 2008-09",
+    "ranking_logic": "Based on the Net Wins metric, Dwight Howard contributed 46.60 wins over 15 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Tony Parker",
+    "net_wins_career": "91.53",
+    "peak_performance": "7.85 in 2005-06",
+    "ranking_logic": "Based on the Net Wins metric, Tony Parker contributed 91.53 wins over 17 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Klay Thompson",
+    "net_wins_career": "36.87",
+    "peak_performance": "8.80 in 2015-16",
+    "ranking_logic": "Based on the Net Wins metric, Klay Thompson contributed 36.87 wins over 13 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Dennis Rodman",
+    "net_wins_career": "61.81",
+    "peak_performance": "6.70 in 1997-98",
+    "ranking_logic": "Based on the Net Wins metric, Dennis Rodman contributed 61.81 wins over 13 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Walt Frazier",
+    "net_wins_career": "17.23",
+    "peak_performance": "5.18 in 1969-70",
+    "ranking_logic": "Based on the Net Wins metric, Walt Frazier contributed 17.23 wins over 13 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Robert Parish",
+    "net_wins_career": "77.45",
+    "peak_performance": "8.26 in 1985-86",
+    "ranking_logic": "Based on the Net Wins metric, Robert Parish contributed 77.45 wins over 20 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "James Worthy",
+    "net_wins_career": "50.47",
+    "peak_performance": "7.72 in 1986-87",
+    "ranking_logic": "Based on the Net Wins metric, James Worthy contributed 50.47 wins over 11 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Tracy McGrady",
+    "net_wins_career": "16.41",
+    "peak_performance": "4.17 in 2007-08",
+    "ranking_logic": "Based on the Net Wins metric, Tracy McGrady contributed 16.41 wins over 12 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Dave Cowens",
+    "net_wins_career": "44.76",
+    "peak_performance": "10.43 in 1972-73",
+    "ranking_logic": "Based on the Net Wins metric, Dave Cowens contributed 44.76 wins over 11 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Nate Archibald",
+    "net_wins_career": "-3.00",
+    "peak_performance": "5.12 in 1980-81",
+    "ranking_logic": "Based on the Net Wins metric, Nate Archibald contributed -3.00 wins over 13 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Wes Unseld",
+    "net_wins_career": "34.05",
+    "peak_performance": "6.09 in 1968-69",
+    "ranking_logic": "Based on the Net Wins metric, Wes Unseld contributed 34.05 wins over 12 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Grant Hill",
+    "net_wins_career": "20.54",
+    "peak_performance": "5.53 in 1996-97",
+    "ranking_logic": "Based on the Net Wins metric, Grant Hill contributed 20.54 wins over 15 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Bob McAdoo",
+    "net_wins_career": "12.17",
+    "peak_performance": "5.18 in 1974-75",
+    "ranking_logic": "Based on the Net Wins metric, Bob McAdoo contributed 12.17 wins over 11 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Earl Monroe",
+    "net_wins_career": "-1.50",
+    "peak_performance": "3.21 in 1968-69",
+    "ranking_logic": "Based on the Net Wins metric, Earl Monroe contributed -1.50 wins over 12 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Artis Gilmore",
+    "net_wins_career": "25.32",
+    "peak_performance": "4.80 in 1982-83",
+    "ranking_logic": "Based on the Net Wins metric, Artis Gilmore contributed 25.32 wins over 12 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Dave Bing",
+    "net_wins_career": "-28.59",
+    "peak_performance": "2.50 in 1973-74",
+    "ranking_logic": "Based on the Net Wins metric, Dave Bing contributed -28.59 wins over 12 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Bernard King",
+    "net_wins_career": "-12.84",
+    "peak_performance": "2.78 in 1983-84",
+    "ranking_logic": "Based on the Net Wins metric, Bernard King contributed -12.84 wins over 11 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Joe Dumars",
+    "net_wins_career": "19.31",
+    "peak_performance": "5.59 in 1988-89",
+    "ranking_logic": "Based on the Net Wins metric, Joe Dumars contributed 19.31 wins over 13 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Dave DeBusschere",
+    "net_wins_career": "4.68",
+    "peak_performance": "4.95 in 1969-70",
+    "ranking_logic": "Based on the Net Wins metric, Dave DeBusschere contributed 4.68 wins over 11 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Bill Sharman",
+    "net_wins_career": "14.25",
+    "peak_performance": "4.40 in 1959-60",
+    "ranking_logic": "Based on the Net Wins metric, Bill Sharman contributed 14.25 wins over 11 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Lenny Wilkens",
+    "net_wins_career": "-11.31",
+    "peak_performance": "3.15 in 1967-68",
+    "ranking_logic": "Based on the Net Wins metric, Lenny Wilkens contributed -11.31 wins over 15 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Chauncey Billups",
+    "net_wins_career": "35.26",
+    "peak_performance": "6.38 in 2005-06",
+    "ranking_logic": "Based on the Net Wins metric, Chauncey Billups contributed 35.26 wins over 14 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Chris Webber",
+    "net_wins_career": "24.18",
+    "peak_performance": "7.36 in 2001-02",
+    "ranking_logic": "Based on the Net Wins metric, Chris Webber contributed 24.18 wins over 11 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Draymond Green",
+    "net_wins_career": "40.24",
+    "peak_performance": "8.43 in 2015-16",
+    "ranking_logic": "Based on the Net Wins metric, Draymond Green contributed 40.24 wins over 13 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Dikembe Mutombo",
+    "net_wins_career": "28.88",
+    "peak_performance": "4.89 in 1996-97",
+    "ranking_logic": "Based on the Net Wins metric, Dikembe Mutombo contributed 28.88 wins over 14 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Paul Pierce",
+    "net_wins_career": "11.20",
+    "peak_performance": "5.62 in 2007-08",
+    "ranking_logic": "Based on the Net Wins metric, Paul Pierce contributed 11.20 wins over 15 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Vince Carter",
+    "net_wins_career": "5.01",
+    "peak_performance": "3.07 in 2009-10",
+    "ranking_logic": "Based on the Net Wins metric, Vince Carter contributed 5.01 wins over 12 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Alonzo Mourning",
+    "net_wins_career": "33.83",
+    "peak_performance": "6.75 in 1996-97",
+    "ranking_logic": "Based on the Net Wins metric, Alonzo Mourning contributed 33.83 wins over 11 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Manu Ginobili",
+    "net_wins_career": "53.14",
+    "peak_performance": "5.43 in 2005-06",
+    "ranking_logic": "Based on the Net Wins metric, Manu Ginobili contributed 53.14 wins over 15 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Nate Thurmond",
+    "net_wins_career": "13.57",
+    "peak_performance": "3.97 in 1972-73",
+    "ranking_logic": "Based on the Net Wins metric, Nate Thurmond contributed 13.57 wins over 14 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Bob Lanier",
+    "net_wins_career": "23.50",
+    "peak_performance": "6.02 in 1973-74",
+    "ranking_logic": "Based on the Net Wins metric, Bob Lanier contributed 23.50 wins over 12 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Jerry Lucas",
+    "net_wins_career": "24.10",
+    "peak_performance": "5.92 in 1963-64",
+    "ranking_logic": "Based on the Net Wins metric, Jerry Lucas contributed 24.10 wins over 10 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Dolph Schayes",
+    "net_wins_career": "1.14",
+    "peak_performance": "1.98 in 1957-58",
+    "ranking_logic": "Based on the Net Wins metric, Dolph Schayes contributed 1.14 wins over 10 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Hal Greer",
+    "net_wins_career": "10.65",
+    "peak_performance": "7.40 in 1966-67",
+    "ranking_logic": "Based on the Net Wins metric, Hal Greer contributed 10.65 wins over 15 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Sam Jones",
+    "net_wins_career": "36.43",
+    "peak_performance": "4.74 in 1964-65",
+    "ranking_logic": "Based on the Net Wins metric, Sam Jones contributed 36.43 wins over 12 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Bill Walton",
+    "net_wins_career": "15.84",
+    "peak_performance": "6.48 in 1977-78",
+    "ranking_logic": "Based on the Net Wins metric, Bill Walton contributed 15.84 wins over 5 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Pau Gasol",
+    "net_wins_career": "49.54",
+    "peak_performance": "8.10 in 2008-09",
+    "ranking_logic": "Based on the Net Wins metric, Pau Gasol contributed 49.54 wins over 16 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Chris Bosh",
+    "net_wins_career": "20.60",
+    "peak_performance": "5.75 in 2012-13",
+    "ranking_logic": "Based on the Net Wins metric, Chris Bosh contributed 20.60 wins over 13 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Gail Goodrich",
+    "net_wins_career": "3.14",
+    "peak_performance": "8.49 in 1971-72",
+    "ranking_logic": "Based on the Net Wins metric, Gail Goodrich contributed 3.14 wins over 11 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Alex English",
+    "net_wins_career": "23.32",
+    "peak_performance": "5.37 in 1987-88",
+    "ranking_logic": "Based on the Net Wins metric, Alex English contributed 23.32 wins over 14 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Adrian Dantley",
+    "net_wins_career": "8.53",
+    "peak_performance": "3.62 in 1986-87",
+    "ranking_logic": "Based on the Net Wins metric, Adrian Dantley contributed 8.53 wins over 14 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Dennis Johnson",
+    "net_wins_career": "37.11",
+    "peak_performance": "4.76 in 1985-86",
+    "ranking_logic": "Based on the Net Wins metric, Dennis Johnson contributed 37.11 wins over 14 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Jo Jo White",
+    "net_wins_career": "18.72",
+    "peak_performance": "6.99 in 1972-73",
+    "ranking_logic": "Based on the Net Wins metric, Jo Jo White contributed 18.72 wins over 10 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Shai Gilgeous-Alexander",
+    "net_wins_career": "26.75",
+    "peak_performance": "10.19 in 2024-25",
+    "ranking_logic": "Based on the Net Wins metric, Shai Gilgeous-Alexander contributed 26.75 wins over 8 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Donovan Mitchell",
+    "net_wins_career": "24.12",
+    "peak_performance": "5.84 in 2024-25",
+    "ranking_logic": "Based on the Net Wins metric, Donovan Mitchell contributed 24.12 wins over 9 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Blake Griffin",
+    "net_wins_career": "28.95",
+    "peak_performance": "5.88 in 2013-14",
+    "ranking_logic": "Based on the Net Wins metric, Blake Griffin contributed 28.95 wins over 10 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Devin Booker",
+    "net_wins_career": "-3.36",
+    "peak_performance": "6.73 in 2021-22",
+    "ranking_logic": "Based on the Net Wins metric, Devin Booker contributed -3.36 wins over 11 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Ben Wallace",
+    "net_wins_career": "25.28",
+    "peak_performance": "5.59 in 2005-06",
+    "ranking_logic": "Based on the Net Wins metric, Ben Wallace contributed 25.28 wins over 10 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Yao Ming",
+    "net_wins_career": "19.23",
+    "peak_performance": "5.92 in 2007-08",
+    "ranking_logic": "Based on the Net Wins metric, Yao Ming contributed 19.23 wins over 7 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Sidney Moncrief",
+    "net_wins_career": "28.82",
+    "peak_performance": "5.48 in 1984-85",
+    "ranking_logic": "Based on the Net Wins metric, Sidney Moncrief contributed 28.82 wins over 10 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Mitch Richmond",
+    "net_wins_career": "-18.11",
+    "peak_performance": "1.09 in 2001-02",
+    "ranking_logic": "Based on the Net Wins metric, Mitch Richmond contributed -18.11 wins over 11 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Tim Hardaway",
+    "net_wins_career": "21.05",
+    "peak_performance": "6.05 in 1996-97",
+    "ranking_logic": "Based on the Net Wins metric, Tim Hardaway contributed 21.05 wins over 12 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Anfernee Hardaway",
+    "net_wins_career": "18.24",
+    "peak_performance": "6.16 in 1995-96",
+    "ranking_logic": "Based on the Net Wins metric, Anfernee Hardaway contributed 18.24 wins over 7 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Derrick Rose",
+    "net_wins_career": "8.93",
+    "peak_performance": "6.51 in 2010-11",
+    "ranking_logic": "Based on the Net Wins metric, Derrick Rose contributed 8.93 wins over 10 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "DeMar DeRozan",
+    "net_wins_career": "14.82",
+    "peak_performance": "5.99 in 2017-18",
+    "ranking_logic": "Based on the Net Wins metric, DeMar DeRozan contributed 14.82 wins over 16 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Chris Mullin",
+    "net_wins_career": "10.31",
+    "peak_performance": "5.20 in 1991-92",
+    "ranking_logic": "Based on the Net Wins metric, Chris Mullin contributed 10.31 wins over 12 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Billy Cunningham",
+    "net_wins_career": "11.55",
+    "peak_performance": "7.10 in 1966-67",
+    "ranking_logic": "Based on the Net Wins metric, Billy Cunningham contributed 11.55 wins over 10 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Bob Dandridge",
+    "net_wins_career": "44.28",
+    "peak_performance": "6.44 in 1970-71",
+    "ranking_logic": "Based on the Net Wins metric, Bob Dandridge contributed 44.28 wins over 12 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Spencer Haywood",
+    "net_wins_career": "-0.20",
+    "peak_performance": "3.16 in 1971-72",
+    "ranking_logic": "Based on the Net Wins metric, Spencer Haywood contributed -0.20 wins over 11 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Connie Hawkins",
+    "net_wins_career": "8.93",
+    "peak_performance": "2.90 in 1970-71",
+    "ranking_logic": "Based on the Net Wins metric, Connie Hawkins contributed 8.93 wins over 5 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Walt Bellamy",
+    "net_wins_career": "-19.50",
+    "peak_performance": "2.17 in 1969-70",
+    "ranking_logic": "Based on the Net Wins metric, Walt Bellamy contributed -19.50 wins over 11 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Tom Heinsohn",
+    "net_wins_career": "32.33",
+    "peak_performance": "6.23 in 1959-60",
+    "ranking_logic": "Based on the Net Wins metric, Tom Heinsohn contributed 32.33 wins over 9 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Jamaal Wilkes",
+    "net_wins_career": "42.01",
+    "peak_performance": "6.78 in 1979-80",
+    "ranking_logic": "Based on the Net Wins metric, Jamaal Wilkes contributed 42.01 wins over 11 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Maurice Cheeks",
+    "net_wins_career": "44.60",
+    "peak_performance": "6.63 in 1982-83",
+    "ranking_logic": "Based on the Net Wins metric, Maurice Cheeks contributed 44.60 wins over 14 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Paul Arizin",
+    "net_wins_career": "6.29",
+    "peak_performance": "2.78 in 1961-62",
+    "ranking_logic": "Based on the Net Wins metric, Paul Arizin contributed 6.29 wins over 10 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Walter Davis",
+    "net_wins_career": "13.14",
+    "peak_performance": "3.76 in 1980-81",
+    "ranking_logic": "Based on the Net Wins metric, Walter Davis contributed 13.14 wins over 13 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Amare Stoudemire",
+    "net_wins_career": "29.09",
+    "peak_performance": "7.65 in 2004-05",
+    "ranking_logic": "Based on the Net Wins metric, Amare Stoudemire contributed 29.09 wins over 11 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "George Mikan",
+    "net_wins_career": "25.66",
+    "peak_performance": "7.49 in 1949-50",
+    "ranking_logic": "Based on the Net Wins metric, George Mikan contributed 25.66 wins over 7 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Neil Johnston",
+    "net_wins_career": "-5.57",
+    "peak_performance": "2.90 in 1955-56",
+    "ranking_logic": "Based on the Net Wins metric, Neil Johnston contributed -5.57 wins over 8 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Joe Fulks",
+    "net_wins_career": "-6.34",
+    "peak_performance": "1.37 in 1946-47",
+    "ranking_logic": "Based on the Net Wins metric, Joe Fulks contributed -6.34 wins over 7 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Zelmo Beaty",
+    "net_wins_career": "23.30",
+    "peak_performance": "6.26 in 1971-72",
+    "ranking_logic": "Based on the Net Wins metric, Zelmo Beaty contributed 23.30 wins over 10 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Ed Macauley",
+    "net_wins_career": "6.96",
+    "peak_performance": "2.76 in 1952-53",
+    "ranking_logic": "Based on the Net Wins metric, Ed Macauley contributed 6.96 wins over 9 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Chet Walker",
+    "net_wins_career": "32.92",
+    "peak_performance": "6.15 in 1966-67",
+    "ranking_logic": "Based on the Net Wins metric, Chet Walker contributed 32.92 wins over 12 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Bailey Howell",
+    "net_wins_career": "1.38",
+    "peak_performance": "5.66 in 1966-67",
+    "ranking_logic": "Based on the Net Wins metric, Bailey Howell contributed 1.38 wins over 10 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Dan Issel",
+    "net_wins_career": "21.48",
+    "peak_performance": "4.52 in 1976-77",
+    "ranking_logic": "Based on the Net Wins metric, Dan Issel contributed 21.48 wins over 11 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Victor Wembanyama",
+    "net_wins_career": "2.30",
+    "peak_performance": "7.52 in 2025-26",
+    "ranking_logic": "Based on the Net Wins metric, Victor Wembanyama contributed 2.30 wins over 3 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Anthony Edwards",
+    "net_wins_career": "7.77",
+    "peak_performance": "5.29 in 2023-24",
+    "ranking_logic": "Based on the Net Wins metric, Anthony Edwards contributed 7.77 wins over 6 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Jalen Brunson",
+    "net_wins_career": "19.72",
+    "peak_performance": "3.79 in 2025-26",
+    "ranking_logic": "Based on the Net Wins metric, Jalen Brunson contributed 19.72 wins over 8 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Desmond Bane",
+    "net_wins_career": "4.69",
+    "peak_performance": "3.84 in 2021-22",
+    "ranking_logic": "Based on the Net Wins metric, Desmond Bane contributed 4.69 wins over 6 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Scottie Barnes",
+    "net_wins_career": "0.75",
+    "peak_performance": "2.45 in 2025-26",
+    "ranking_logic": "Based on the Net Wins metric, Scottie Barnes contributed 0.75 wins over 5 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Tyrese Maxey",
+    "net_wins_career": "8.19",
+    "peak_performance": "4.20 in 2022-23",
+    "ranking_logic": "Based on the Net Wins metric, Tyrese Maxey contributed 8.19 wins over 6 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Derrick White",
+    "net_wins_career": "21.64",
+    "peak_performance": "4.85 in 2023-24",
+    "ranking_logic": "Based on the Net Wins metric, Derrick White contributed 21.64 wins over 9 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Jamal Murray",
+    "net_wins_career": "22.70",
+    "peak_performance": "4.76 in 2025-26",
+    "ranking_logic": "Based on the Net Wins metric, Jamal Murray contributed 22.70 wins over 9 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Cooper Flagg",
+    "net_wins_career": "-3.93",
+    "peak_performance": "-3.93 in 2025-26",
+    "ranking_logic": "Based on the Net Wins metric, Cooper Flagg contributed -3.93 wins over 1 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Rudy Gobert",
+    "net_wins_career": "45.44",
+    "peak_performance": "5.40 in 2023-24",
+    "ranking_logic": "Based on the Net Wins metric, Rudy Gobert contributed 45.44 wins over 13 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Brandon Ingram",
+    "net_wins_career": "-3.42",
+    "peak_performance": "2.60 in 2023-24",
+    "ranking_logic": "Based on the Net Wins metric, Brandon Ingram contributed -3.42 wins over 10 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "George Yardley",
+    "net_wins_career": "-2.78",
+    "peak_performance": "1.42 in 1954-55",
+    "ranking_logic": "Based on the Net Wins metric, George Yardley contributed -2.78 wins over 7 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "David Thompson",
+    "net_wins_career": "6.73",
+    "peak_performance": "3.44 in 1976-77",
+    "ranking_logic": "Based on the Net Wins metric, David Thompson contributed 6.73 wins over 7 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Maurice Stokes",
+    "net_wins_career": "1.07",
+    "peak_performance": "1.03 in 1957-58",
+    "ranking_logic": "Based on the Net Wins metric, Maurice Stokes contributed 1.07 wins over 3 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Jack Sikma",
+    "net_wins_career": "36.29",
+    "peak_performance": "5.92 in 1985-86",
+    "ranking_logic": "Based on the Net Wins metric, Jack Sikma contributed 36.29 wins over 11 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Charlie Scott",
+    "net_wins_career": "18.00",
+    "peak_performance": "4.52 in 1974-75",
+    "ranking_logic": "Based on the Net Wins metric, Charlie Scott contributed 18.00 wins over 8 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Arvydas Sabonis",
+    "net_wins_career": "17.03",
+    "peak_performance": "3.68 in 1999-00",
+    "ranking_logic": "Based on the Net Wins metric, Arvydas Sabonis contributed 17.03 wins over 7 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Guy Rodgers",
+    "net_wins_career": "-9.31",
+    "peak_performance": "1.82 in 1961-62",
+    "ranking_logic": "Based on the Net Wins metric, Guy Rodgers contributed -9.31 wins over 10 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Frank Ramsey",
+    "net_wins_career": "19.15",
+    "peak_performance": "3.74 in 1959-60",
+    "ranking_logic": "Based on the Net Wins metric, Frank Ramsey contributed 19.15 wins over 9 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Dino Radja",
+    "net_wins_career": "-5.38",
+    "peak_performance": "-0.55 in 1994-95",
+    "ranking_logic": "Based on the Net Wins metric, Dino Radja contributed -5.38 wins over 4 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Jim Pollard",
+    "net_wins_career": "17.24",
+    "peak_performance": "3.91 in 1949-50",
+    "ranking_logic": "Based on the Net Wins metric, Jim Pollard contributed 17.24 wins over 8 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Andy Phillip",
+    "net_wins_career": "6.68",
+    "peak_performance": "1.63 in 1948-49",
+    "ranking_logic": "Based on the Net Wins metric, Andy Phillip contributed 6.68 wins over 10 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Drazen Petrovic",
+    "net_wins_career": "-0.49",
+    "peak_performance": "1.11 in 1992-93",
+    "ranking_logic": "Based on the Net Wins metric, Drazen Petrovic contributed -0.49 wins over 4 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Calvin Murphy",
+    "net_wins_career": "-5.05",
+    "peak_performance": "2.35 in 1976-77",
+    "ranking_logic": "Based on the Net Wins metric, Calvin Murphy contributed -5.05 wins over 11 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Vern Mikkelsen",
+    "net_wins_career": "9.93",
+    "peak_performance": "3.28 in 1949-50",
+    "ranking_logic": "Based on the Net Wins metric, Vern Mikkelsen contributed 9.93 wins over 9 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Slater Martin",
+    "net_wins_career": "8.38",
+    "peak_performance": "2.08 in 1949-50",
+    "ranking_logic": "Based on the Net Wins metric, Slater Martin contributed 8.38 wins over 10 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Clyde Lovellette",
+    "net_wins_career": "13.86",
+    "peak_performance": "2.97 in 1958-59",
+    "ranking_logic": "Based on the Net Wins metric, Clyde Lovellette contributed 13.86 wins over 9 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Cliff Hagan",
+    "net_wins_career": "10.73",
+    "peak_performance": "4.01 in 1958-59",
+    "ranking_logic": "Based on the Net Wins metric, Cliff Hagan contributed 10.73 wins over 10 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Toni Kukoc",
+    "net_wins_career": "21.68",
+    "peak_performance": "7.52 in 1995-96",
+    "ranking_logic": "Based on the Net Wins metric, Toni Kukoc contributed 21.68 wins over 9 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "KC Jones",
+    "net_wins_career": "19.04",
+    "peak_performance": "2.95 in 1964-65",
+    "ranking_logic": "Based on the Net Wins metric, KC Jones contributed 19.04 wins over 8 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Bobby Jones",
+    "net_wins_career": "42.45",
+    "peak_performance": "4.91 in 1982-83",
+    "ranking_logic": "Based on the Net Wins metric, Bobby Jones contributed 42.45 wins over 11 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Lou Hudson",
+    "net_wins_career": "0.70",
+    "peak_performance": "2.57 in 1967-68",
+    "ranking_logic": "Based on the Net Wins metric, Lou Hudson contributed 0.70 wins over 12 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Harry Gallatin",
+    "net_wins_career": "7.67",
+    "peak_performance": "2.35 in 1952-53",
+    "ranking_logic": "Based on the Net Wins metric, Harry Gallatin contributed 7.67 wins over 10 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Vlade Divac",
+    "net_wins_career": "35.10",
+    "peak_performance": "5.19 in 2001-02",
+    "ranking_logic": "Based on the Net Wins metric, Vlade Divac contributed 35.10 wins over 15 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Mel Daniels",
+    "net_wins_career": "-0.03",
+    "peak_performance": "-0.03 in 1975-76",
+    "ranking_logic": "Based on the Net Wins metric, Mel Daniels contributed -0.03 wins over 1 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Roger Brown",
+    "net_wins_career": "-0.10",
+    "peak_performance": "-0.10 in 1975-76",
+    "ranking_logic": "Based on the Net Wins metric, Roger Brown contributed -0.10 wins over 1 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Bill Bradley",
+    "net_wins_career": "11.20",
+    "peak_performance": "3.41 in 1969-70",
+    "ranking_logic": "Based on the Net Wins metric, Bill Bradley contributed 11.20 wins over 10 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Dick Barnett",
+    "net_wins_career": "-3.30",
+    "peak_performance": "2.11 in 1961-62",
+    "ranking_logic": "Based on the Net Wins metric, Dick Barnett contributed -3.30 wins over 13 seasons, normalizing individual production against league-wide win costs."
+  },
+  {
+    "player": "Tom Gola",
+    "net_wins_career": "-6.00",
+    "peak_performance": "2.17 in 1959-60",
+    "ranking_logic": "Based on the Net Wins metric, Tom Gola contributed -6.00 wins over 10 seasons, normalizing individual production against league-wide win costs."
+  }
+]
+undefined
