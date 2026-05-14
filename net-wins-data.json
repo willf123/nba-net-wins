@@ -1,7 +1,4 @@
-indexhelper.html:1 Unsafe attempt to load URL file:///C:/Users/willf/nba-net-wins/indexhelper.html from frame with URL file:///C:/Users/willf/nba-net-wins/indexhelper.html. 'file:' URLs are treated as unique security origins.
-
-generateAnswerVectors()
-indexhelper.html:4483 [
+[
   {
     "player": "Michael Jordan",
     "net_wins_career": "79.52",
@@ -1059,4 +1056,3 @@ indexhelper.html:4483 [
     "ranking_logic": "Based on the Net Wins metric, Tom Gola contributed -6.00 wins over 10 seasons, normalizing individual production against league-wide win costs."
   }
 ]
-undefined
