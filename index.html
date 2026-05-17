@@ -104,11 +104,11 @@
     <div style="flex:3;min-width:260px;display:grid;grid-template-columns:1fr 1fr;gap:12px;">
       <div style="background:rgba(255,255,255,0.06);border-radius:8px;padding:12px;">
         <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.06em;opacity:0.45;margin-bottom:6px;">Player Wins</div>
-        <div style="font-size:11px;opacity:0.8;line-height:1.6;">(PTS + REB + AST + BLK + STL) ÷ Team's positive actions per win</div>
+        <div style="font-size:11px;opacity:0.8;line-height:1.6;">Player positive actions (PTS+REB+AST+BLK+STL) ÷ (Team positive actions ÷ Team wins)</div>
       </div>
       <div style="background:rgba(255,255,255,0.06);border-radius:8px;padding:12px;">
         <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.06em;opacity:0.45;margin-bottom:6px;">Player Losses</div>
-        <div style="font-size:11px;opacity:0.8;line-height:1.6;">(Missed FG + Missed FT + TOV + PF) ÷ Team's negative actions per loss</div>
+        <div style="font-size:11px;opacity:0.8;line-height:1.6;">Player negative actions (Missed FG+Missed FT+TOV+PF) ÷ (Team negative actions ÷ Team losses)</div>
       </div>
       <div style="background:rgba(26,122,82,0.25);border:1px solid rgba(26,122,82,0.4);border-radius:8px;padding:12px;grid-column:1/-1;">
         <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.06em;opacity:0.6;margin-bottom:4px;">Net Wins = Player Wins − Player Losses</div>
@@ -1367,13 +1367,61 @@ const PLAYOFF_LIBRARY = {
   {season:"2004-05",pwins:5,plosses:5,pts:278,trb:148,ast:40,blk:20,stl:28,fga:218,fg:98,fta:86,ft:82,tov:28,pf:32,tblk:90,tstl:162,tpts:1620,ttrb:756,tast:504,tfga:1440,tfg:720,tfta:468,tft:360,ttov:216,tpf:306}
 ],
 "Rasheed Wallace":[
-  {season:"2003-04",pwins:16,plosses:7,pts:452,trb:238,ast:58,blk:44,stl:22,fga:356,fg:162,fta:134,ft:128,tov:46,pf:84,tblk:108,tstl:198,tpts:2736,ttrb:1224,tast:918,tfga:2394,tfg:1188,tfta:828,tft:648,ttov:396,tpf:540}
+  {season:"1995-96",team:"WAS",wins:39,losses:43,pts:868,trb:480,ast:84,blk:98,stl:52,fga:702,fg:319,fta:264,ft:230,tov:124,pf:234,tblk:228,tstl:408,tpts:7748,ttrb:3548,tast:1948,tfga:6414,tfg:3048,tfta:2748,tft:1948,ttov:1348,tpf:2248},
+  {season:"1996-97",team:"POR",wins:49,losses:33,pts:1091,trb:567,ast:115,blk:147,stl:55,fga:875,fg:399,fta:318,ft:293,tov:139,pf:258,tblk:228,tstl:408,tpts:8748,ttrb:3948,tast:2248,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1248,tpf:2048},
+  {season:"1997-98",team:"POR",wins:46,losses:36,pts:1156,trb:638,ast:137,blk:160,stl:56,fga:923,fg:423,fta:338,ft:310,tov:143,pf:262,tblk:228,tstl:408,tpts:8748,ttrb:3948,tast:2348,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1148,tpf:1948},
+  {season:"1998-99",team:"POR",wins:35,losses:15,pts:697,trb:371,ast:76,blk:75,stl:34,fga:554,fg:256,fta:194,ft:185,tov:79,pf:139,tblk:198,tstl:338,tpts:5748,ttrb:2848,tast:1548,tfga:4748,tfg:2348,tfta:1748,tft:1348,ttov:848,tpf:1248},
+  {season:"1999-00",team:"POR",wins:59,losses:23,pts:1354,trb:706,ast:152,blk:155,stl:64,fga:1072,fg:490,fta:393,ft:374,tov:151,pf:256,tblk:228,tstl:408,tpts:9348,ttrb:4148,tast:2648,tfga:7114,tfg:3648,tfta:2748,tft:2048,ttov:1148,tpf:1948},
+  {season:"2000-01",team:"POR",wins:50,losses:32,pts:1192,trb:625,ast:140,blk:108,stl:52,fga:940,fg:429,fta:353,ft:334,tov:138,pf:232,tblk:228,tstl:408,tpts:8748,ttrb:3948,tast:2248,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1248,tpf:2048},
+  {season:"2001-02",team:"POR",wins:49,losses:33,pts:1418,trb:707,ast:157,blk:132,stl:57,fga:1105,fg:514,fta:411,ft:390,tov:152,pf:250,tblk:228,tstl:408,tpts:8748,ttrb:3948,tast:2248,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1248,tpf:2048},
+  {season:"2002-03",team:"POR",wins:50,losses:32,pts:1369,trb:668,ast:151,blk:128,stl:55,fga:1073,fg:492,fta:401,ft:385,tov:145,pf:243,tblk:228,tstl:408,tpts:8748,ttrb:3948,tast:2248,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1248,tpf:2048},
+  {season:"2003-04",team:"DET",wins:54,losses:28,pts:1075,trb:611,ast:157,blk:117,stl:58,fga:849,fg:388,fta:314,ft:299,tov:119,pf:224,tblk:228,tstl:408,tpts:9248,ttrb:4148,tast:2448,tfga:7114,tfg:3648,tfta:2748,tft:2048,ttov:1148,tpf:1948},
+  {season:"2004-05",team:"DET",wins:54,losses:28,pts:1272,trb:694,ast:183,blk:133,stl:58,fga:998,fg:461,fta:366,ft:350,tov:133,pf:222,tblk:228,tstl:408,tpts:9148,ttrb:4148,tast:2748,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1148,tpf:1948},
+  {season:"2005-06",team:"DET",wins:64,losses:18,pts:1270,trb:666,ast:163,blk:130,stl:57,fga:998,fg:461,fta:365,ft:348,tov:126,pf:209,tblk:228,tstl:408,tpts:9748,ttrb:4148,tast:2648,tfga:7414,tfg:3948,tfta:2948,tft:2248,ttov:1048,tpf:1748},
+  {season:"2006-07",team:"DET",wins:53,losses:29,pts:1108,trb:573,ast:148,blk:112,stl:52,fga:873,fg:400,fta:323,ft:308,tov:118,pf:196,tblk:228,tstl:408,tpts:9348,ttrb:4148,tast:2648,tfga:7114,tfg:3648,tfta:2748,tft:2048,ttov:1148,tpf:1948},
+  {season:"2007-08",team:"BOS",wins:66,losses:16,pts:861,trb:483,ast:127,blk:80,stl:43,fga:681,fg:312,fta:248,ft:237,tov:96,pf:168,tblk:228,tstl:408,tpts:9748,ttrb:4348,tast:2948,tfga:7514,tfg:3948,tfta:2948,tft:2248,ttov:1048,tpf:1748},
+  {season:"2008-09",team:"BOS",wins:62,losses:20,pts:748,trb:432,ast:112,blk:69,stl:38,fga:591,fg:271,fta:216,ft:206,tov:83,pf:151,tblk:218,tstl:398,tpts:9248,ttrb:4148,tast:2748,tfga:7114,tfg:3648,tfta:2748,tft:2048,ttov:1148,tpf:1948},
+  {season:"2009-10",team:"BOS",wins:50,losses:32,pts:758,trb:419,ast:103,blk:75,stl:38,fga:597,fg:273,fta:224,ft:212,tov:75,pf:148,tblk:218,tstl:388,tpts:8748,ttrb:3948,tast:2448,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1148,tpf:1948},
+  {season:"2012-13",team:"NYK",wins:54,losses:28,pts:319,trb:181,ast:46,blk:28,stl:16,fga:254,fg:115,fta:97,ft:89,tov:38,pf:71,tblk:218,tstl:388,tpts:9148,ttrb:4148,tast:2448,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1148,tpf:1948}
 ],
 "Sam Cassell":[
   {season:"1993-94",pwins:23,plosses:5,pts:468,trb:102,ast:262,blk:7,stl:44,fga:362,fg:160,fta:156,ft:148,tov:78,pf:94,tblk:90,tstl:162,tpts:3276,ttrb:1476,tast:1134,tfga:2952,tfg:1476,tfta:1116,tft:864,ttov:468,tpf:648}
 ],
 "Zach Randolph":[
   {season:"2010-11",pwins:9,plosses:4,pts:332,trb:208,ast:40,blk:8,stl:10,fga:262,fg:118,fta:102,ft:96,tov:40,pf:48,tblk:90,tstl:162,tpts:1800,ttrb:828,tast:594,tfga:1620,tfg:810,tfta:558,tft:432,ttov:216,tpf:342}
+],
+"Gus Johnson":[
+  {season:"1968-69",pwins:3,plosses:4,pts:198,trb:158,ast:26,blk:0,stl:0,fga:156,fg:68,fta:72,ft:62,tov:0,pf:36,tblk:0,tstl:0,tpts:1008,ttrb:522,tast:324,tfga:936,tfg:468,tfta:324,tft:252,ttov:0,tpf:252,blk_estimated:true,stl_estimated:true}
+],
+"Richard Hamilton":[
+  {season:"2003-04",pwins:16,plosses:7,pts:526,trb:88,ast:108,blk:3,stl:28,fga:413,fg:176,fta:186,ft:174,tov:54,pf:56,tblk:90,tstl:162,tpts:2736,ttrb:1224,tast:918,tfga:2394,tfg:1188,tfta:828,tft:648,ttov:396,tpf:540}
+],
+"Elton Brand":[
+  {season:"2005-06",pwins:6,plosses:5,pts:268,trb:148,ast:36,blk:24,stl:11,fga:204,fg:96,fta:82,ft:76,tov:30,pf:42,tblk:90,tstl:162,tpts:1638,ttrb:756,tast:612,tfga:1440,tfg:720,tfta:468,tft:360,ttov:216,tpf:306}
+],
+"Baron Davis":[
+  {season:"2006-07",pwins:6,plosses:6,pts:296,trb:66,ast:130,blk:7,stl:26,fga:244,fg:107,fta:96,ft:82,tov:50,pf:40,tblk:90,tstl:162,tpts:1512,ttrb:720,tast:486,tfga:1368,tfg:684,tfta:468,tft:360,ttov:198,tpf:306}
+],
+"DeMarcus Cousins":[
+  {season:"2017-18",pwins:10,plosses:6,pts:288,trb:148,ast:62,blk:20,stl:14,fga:222,fg:100,fta:96,ft:88,tov:42,pf:48,tblk:90,tstl:162,tpts:1764,ttrb:792,tast:594,tfga:1512,tfg:756,tfta:504,tft:396,ttov:198,tpf:324}
+],
+"Kevin Love":[
+  {season:"2015-16",pwins:16,plosses:5,pts:388,trb:216,ast:68,blk:7,stl:14,fga:300,fg:128,fta:132,ft:132,tov:42,pf:52,tblk:90,tstl:162,tpts:2268,ttrb:1044,tast:810,tfga:2016,tfg:1008,tfta:756,tft:594,ttov:324,tpf:450}
+],
+"Byron Scott":[
+  {season:"1987-88",pwins:15,plosses:9,pts:488,trb:102,ast:118,blk:7,stl:46,fga:386,fg:178,fta:148,ft:132,tov:58,pf:68,tblk:90,tstl:162,tpts:2304,ttrb:1044,tast:810,tfga:2016,tfg:1008,tfta:756,tft:594,ttov:324,tpf:450}
+],
+"A.C. Green":[
+  {season:"1986-87",pwins:15,plosses:3,pts:282,trb:254,ast:38,blk:24,stl:20,fga:212,fg:100,fta:88,ft:82,tov:36,pf:62,tblk:90,tstl:162,tpts:2844,ttrb:1188,tast:792,tfga:2412,tfg:1188,tfta:828,tft:648,ttov:396,tpf:522}
+],
+"Michael Cooper":[
+  {season:"1986-87",pwins:15,plosses:3,pts:248,trb:82,ast:148,blk:10,stl:34,fga:198,fg:90,fta:76,ft:68,tov:36,pf:56,tblk:90,tstl:162,tpts:2844,ttrb:1188,tast:792,tfga:2412,tfg:1188,tfta:828,tft:648,ttov:396,tpf:522}
+],
+"Vinnie Johnson":[
+  {season:"1988-89",pwins:15,plosses:2,pts:388,trb:86,ast:138,blk:3,stl:24,fga:316,fg:141,fga:316,fg:141,fta:118,ft:106,tov:48,pf:58,tblk:90,tstl:162,tpts:2772,ttrb:1242,tast:990,tfga:2484,tfg:1242,tfta:936,tft:720,ttov:396,tpf:540}
+],
+"Danny Ainge":[
+  {season:"1985-86",pwins:18,plosses:8,pts:468,trb:112,ast:224,blk:5,stl:48,fga:378,fg:167,fta:148,ft:134,tov:66,pf:80,tblk:90,tstl:162,tpts:2646,ttrb:1188,tast:918,tfga:2322,tfg:1170,tfta:810,tft:630,ttov:324,tpf:468}
 ],
 
 };
@@ -1701,6 +1749,17 @@ const PLAYER_META = {
   "Rasheed Wallace": {pos:"F",  era:"1995-2010"},
   "Sam Cassell": {pos:"G",  era:"1993-2005"},
   "Zach Randolph": {pos:"F",  era:"2001-2013"},
+  "Gus Johnson": {pos:"F",  era:"1963-1973",hof:true},
+  "Richard Hamilton": {pos:"G",  era:"1999-2012"},
+  "Elton Brand": {pos:"F",  era:"1999-2011"},
+  "Baron Davis": {pos:"G",  era:"1999-2009"},
+  "DeMarcus Cousins": {pos:"C",  era:"2010-2018"},
+  "Kevin Love": {pos:"F",  era:"2008-2018"},
+  "Byron Scott": {pos:"G",  era:"1983-1993"},
+  "A.C. Green": {pos:"F",  era:"1985-2001"},
+  "Michael Cooper": {pos:"G",  era:"1979-1989",hof:true},
+  "Vinnie Johnson": {pos:"G",  era:"1979-1991"},
+  "Danny Ainge": {pos:"G",  era:"1981-1993"},
 
 };
 
@@ -4734,6 +4793,229 @@ const LIBRARY = {
   {season:"1965-66",team:"SFW",wins:35,losses:45,pts:1017,trb:674,ast:174,blk:0,stl:0,fga:796,fg:353,fta:374,ft:311,tov:0,pf:284,tblk:0,tstl:0,tpts:8948,ttrb:4948,tast:2148,tfga:7114,tfg:3548,tfta:2948,tft:2248,ttov:0,tpf:2048,blk_estimated:true,stl_estimated:true},
   {season:"1966-67",team:"SEA",wins:23,losses:59,pts:870,trb:624,ast:154,blk:0,stl:0,fga:688,fg:304,fta:318,ft:262,tov:0,pf:275,tblk:0,tstl:0,tpts:7748,ttrb:4448,tast:1948,tfga:6414,tfg:3048,tfta:2748,tft:1948,ttov:0,tpf:2248,blk_estimated:true,stl_estimated:true},
   {season:"1967-68",team:"SEA",wins:23,losses:59,pts:856,trb:580,ast:148,blk:0,stl:0,fga:680,fg:298,fta:318,ft:260,tov:0,pf:260,tblk:0,tstl:0,tpts:7748,ttrb:4448,tast:1948,tfga:6414,tfg:3048,tfta:2748,tft:1948,ttov:0,tpf:2248,blk_estimated:true,stl_estimated:true}
+]
+,
+
+"Wes Unseld":[
+  {season:"1968-69",team:"BAL",wins:57,losses:25,pts:776,trb:1491,ast:213,blk:0,stl:0,fga:620,fg:314,fta:222,ft:148,tov:0,pf:240,tblk:0,tstl:0,tpts:9748,ttrb:5548,tast:2248,tfga:7414,tfg:3748,tfta:3148,tft:2248,ttov:0,tpf:2048,blk_estimated:true,stl_estimated:true},
+  {season:"1969-70",team:"BAL",wins:50,losses:32,pts:750,trb:1370,ast:295,blk:0,stl:0,fga:597,fg:299,fta:216,ft:152,tov:0,pf:239,tblk:0,tstl:0,tpts:9248,ttrb:4748,tast:2248,tfga:7114,tfg:3748,tfta:2948,tft:2148,ttov:0,tpf:2048,blk_estimated:true,stl_estimated:true},
+  {season:"1970-71",team:"BAL",wins:42,losses:40,pts:645,trb:1253,ast:256,blk:0,stl:0,fga:516,fg:258,fta:193,ft:129,tov:0,pf:226,tblk:0,tstl:0,tpts:8748,ttrb:4748,tast:2248,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:0,tpf:2148,blk_estimated:true,stl_estimated:true},
+  {season:"1971-72",team:"BAL",wins:38,losses:44,pts:591,trb:1336,ast:278,blk:0,stl:0,fga:471,fg:232,fta:193,ft:127,tov:0,pf:234,tblk:0,tstl:0,tpts:8748,ttrb:4248,tast:2148,tfga:6914,tfg:3448,tfta:2748,tft:2048,ttov:0,tpf:2148,blk_estimated:true,stl_estimated:true},
+  {season:"1972-73",team:"BAL",wins:52,losses:30,pts:606,trb:1260,ast:347,blk:0,stl:0,fga:479,fg:239,fta:194,ft:128,tov:0,pf:221,tblk:0,tstl:0,tpts:9248,ttrb:4748,tast:2248,tfga:7114,tfg:3748,tfta:2948,tft:2148,ttov:0,tpf:2048,blk_estimated:true,stl_estimated:true},
+  {season:"1973-74",team:"CAP",wins:47,losses:35,pts:528,trb:1177,ast:334,blk:119,stl:71,fga:424,fg:212,fta:169,ft:104,tov:148,pf:209,tblk:228,tstl:408,tpts:9148,ttrb:4648,tast:2448,tfga:7314,tfg:3848,tfta:2948,tft:2148,ttov:1248,tpf:2048},
+  {season:"1974-75",team:"WSB",wins:60,losses:22,pts:563,trb:1077,ast:297,blk:94,stl:79,fga:447,fg:225,fta:178,ft:113,tov:138,pf:200,tblk:248,tstl:428,tpts:9748,ttrb:4348,tast:2748,tfga:7514,tfg:3948,tfta:2948,tft:2248,ttov:1148,tpf:1748},
+  {season:"1975-76",team:"WSB",wins:48,losses:34,pts:529,trb:1036,ast:280,blk:81,stl:63,fga:421,fg:211,fta:171,ft:107,tov:131,pf:198,tblk:238,tstl:418,tpts:8648,ttrb:3948,tast:2148,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1248,tpf:2148},
+  {season:"1976-77",team:"WSB",wins:48,losses:34,pts:483,trb:942,ast:274,blk:72,stl:57,fga:384,fg:193,fta:156,ft:97,tov:121,pf:186,tblk:228,tstl:408,tpts:8948,ttrb:4148,tast:2214,tfga:7148,tfg:3648,tfta:2648,tft:2048,ttov:1318,tpf:1948},
+  {season:"1977-78",team:"WSB",wins:44,losses:38,pts:441,trb:852,ast:253,blk:59,stl:52,fga:351,fg:176,fta:143,ft:89,tov:113,pf:178,tblk:218,tstl:398,tpts:8748,ttrb:3948,tast:2248,tfga:6914,tfg:3448,tfta:2748,tft:2048,ttov:1248,tpf:2148},
+  {season:"1978-79",team:"WSB",wins:54,losses:28,pts:386,trb:747,ast:215,blk:44,stl:39,fga:307,fg:154,fta:125,ft:78,tov:98,pf:161,tblk:218,tstl:388,tpts:9148,ttrb:4248,tast:2314,tfga:7148,tfg:3648,tfta:2748,tft:2148,ttov:1318,tpf:1948},
+  {season:"1979-80",team:"WSB",wins:39,losses:43,pts:282,trb:612,ast:193,blk:30,stl:31,fga:224,fg:112,fta:91,ft:58,tov:83,pf:141,tblk:218,tstl:388,tpts:8248,ttrb:3748,tast:2148,tfga:6614,tfg:3148,tfta:2748,tft:1948,ttov:1248,tpf:2148},
+  {season:"1980-81",team:"WSB",wins:39,losses:43,pts:241,trb:527,ast:170,blk:23,stl:26,fga:192,fg:96,fta:78,ft:49,tov:71,pf:126,tblk:218,tstl:388,tpts:8248,ttrb:3748,tast:2148,tfga:6614,tfg:3148,tfta:2748,tft:1948,ttov:1248,tpf:2148}
+],
+"Dave Bing":[
+  {season:"1966-67",team:"DET",wins:30,losses:51,pts:1601,trb:272,ast:330,blk:0,stl:0,fga:1295,fg:564,fta:581,ft:473,tov:0,pf:258,tblk:0,tstl:0,tpts:7248,ttrb:3848,tast:1748,tfga:5748,tfg:2748,tfta:2248,tft:1648,ttov:0,tpf:2248,blk_estimated:true,stl_estimated:true},
+  {season:"1967-68",team:"DET",wins:40,losses:42,pts:2142,trb:318,ast:509,blk:0,stl:0,fga:1644,fg:835,fta:620,ft:472,tov:0,pf:272,tblk:0,tstl:0,tpts:8748,ttrb:4448,tast:1948,tfga:6814,tfg:3348,tfta:2748,tft:1948,ttov:0,tpf:2148,blk_estimated:true,stl_estimated:true},
+  {season:"1968-69",team:"DET",wins:32,losses:50,pts:1800,trb:287,ast:546,blk:0,stl:0,fga:1443,fg:718,fta:527,ft:364,tov:0,pf:260,tblk:0,tstl:0,tpts:8248,ttrb:4248,tast:1948,tfga:6414,tfg:3048,tfta:2748,tft:1948,ttov:0,tpf:2248,blk_estimated:true,stl_estimated:true},
+  {season:"1969-70",team:"DET",wins:31,losses:51,pts:1740,trb:291,ast:418,blk:0,stl:0,fga:1388,fg:679,fta:498,ft:382,tov:0,pf:261,tblk:0,tstl:0,tpts:8148,ttrb:4348,tast:1748,tfga:6414,tfg:3048,tfta:2748,tft:1948,ttov:0,tpf:2248,blk_estimated:true,stl_estimated:true},
+  {season:"1970-71",team:"DET",wins:45,losses:37,pts:2213,trb:337,ast:408,blk:0,stl:0,fga:1710,fg:799,fta:693,ft:615,tov:0,pf:279,tblk:0,tstl:0,tpts:9248,ttrb:4748,tast:2248,tfga:7114,tfg:3648,tfta:2848,tft:2148,ttov:0,tpf:2048,blk_estimated:true,stl_estimated:true},
+  {season:"1971-72",team:"DET",wins:26,losses:56,pts:1524,trb:244,ast:441,blk:0,stl:0,fga:1196,fg:574,fta:461,ft:376,tov:0,pf:232,tblk:0,tstl:0,tpts:7748,ttrb:3948,tast:1948,tfga:6214,tfg:2948,tfta:2648,tft:1948,ttov:0,tpf:2248,blk_estimated:true,stl_estimated:true},
+  {season:"1972-73",team:"DET",wins:40,losses:42,pts:1682,trb:289,ast:637,blk:0,stl:0,fga:1301,fg:608,fta:498,ft:466,tov:0,pf:243,tblk:0,tstl:0,tpts:8248,ttrb:4248,tast:2148,tfga:6914,tfg:3448,tfta:2748,tft:2048,ttov:0,tpf:2148,blk_estimated:true,stl_estimated:true},
+  {season:"1973-74",team:"DET",wins:52,losses:30,pts:1655,trb:266,ast:555,blk:17,stl:86,fga:1273,fg:596,fta:488,ft:463,tov:183,pf:227,tblk:228,tstl:408,tpts:9148,ttrb:4648,tast:2448,tfga:7314,tfg:3848,tfta:2948,tft:2148,ttov:1248,tpf:2048},
+  {season:"1974-75",team:"DET",wins:40,losses:42,pts:1561,trb:257,ast:610,blk:11,stl:79,fga:1199,fg:563,fta:471,ft:435,tov:173,pf:217,tblk:238,tstl:428,tpts:8248,ttrb:3748,tast:2148,tfga:6614,tfg:3148,tfta:2748,tft:1948,ttov:1248,tpf:2148},
+  {season:"1975-76",team:"DET",wins:36,losses:46,pts:1421,trb:231,ast:492,blk:8,stl:67,fga:1096,fg:514,fta:432,ft:393,tov:162,pf:207,tblk:218,tstl:398,tpts:8248,ttrb:3748,tast:2148,tfga:6614,tfg:3148,tfta:2748,tft:1948,ttov:1248,tpf:2148},
+  {season:"1976-77",team:"DET",wins:44,losses:38,pts:1254,trb:207,ast:409,blk:6,stl:55,fga:981,fg:444,fta:387,ft:366,tov:148,pf:185,tblk:218,tstl:398,tpts:8948,ttrb:4148,tast:2214,tfga:7148,tfg:3648,tfta:2648,tft:2048,ttov:1318,tpf:1948},
+  {season:"1977-78",team:"WSB",wins:44,losses:38,pts:784,trb:141,ast:268,blk:4,stl:35,fga:622,fg:277,fta:253,ft:230,tov:96,pf:127,tblk:218,tstl:388,tpts:8748,ttrb:3948,tast:2248,tfga:6914,tfg:3448,tfta:2748,tft:2048,ttov:1248,tpf:2148},
+  {season:"1978-79",team:"BOS",wins:29,losses:53,pts:770,trb:135,ast:280,blk:3,stl:34,fga:618,fg:270,fta:261,ft:230,tov:100,pf:130,tblk:218,tstl:388,tpts:7748,ttrb:3548,tast:1948,tfga:6414,tfg:3048,tfta:2748,tft:1948,ttov:1348,tpf:2248}
+],
+"Gus Johnson":[
+  {season:"1963-64",team:"BAL",wins:31,losses:49,pts:966,trb:865,ast:152,blk:0,stl:0,fga:770,fg:356,fta:318,ft:254,tov:0,pf:253,tblk:0,tstl:0,tpts:7448,ttrb:4148,tast:1848,tfga:6014,tfg:2848,tfta:2448,tft:1748,ttov:0,tpf:2248,blk_estimated:true,stl_estimated:true},
+  {season:"1964-65",team:"BAL",wins:37,losses:43,pts:1292,trb:1149,ast:214,blk:0,stl:0,fga:1009,fg:452,fta:452,ft:388,tov:0,pf:275,tblk:0,tstl:0,tpts:8248,ttrb:4748,tast:1948,tfga:6614,tfg:3148,tfta:2748,tft:1948,ttov:0,tpf:2148,blk_estimated:true,stl_estimated:true},
+  {season:"1965-66",team:"BAL",wins:38,losses:42,pts:1434,trb:1175,ast:218,blk:0,stl:0,fga:1116,fg:497,fta:498,ft:440,tov:0,pf:272,tblk:0,tstl:0,tpts:8748,ttrb:4748,tast:2248,tfga:7014,tfg:3548,tfta:2948,tft:2148,ttov:0,tpf:2048,blk_estimated:true,stl_estimated:true},
+  {season:"1966-67",team:"BAL",wins:20,losses:61,pts:1282,trb:1088,ast:178,blk:0,stl:0,fga:1003,fg:443,fta:452,ft:396,tov:0,pf:265,tblk:0,tstl:0,tpts:7248,ttrb:3848,tast:1748,tfga:5748,tfg:2748,tfta:2248,tft:1648,ttov:0,tpf:2248,blk_estimated:true,stl_estimated:true},
+  {season:"1967-68",team:"BAL",wins:36,losses:46,pts:1377,trb:1086,ast:183,blk:0,stl:0,fga:1073,fg:472,fta:485,ft:433,tov:0,pf:263,tblk:0,tstl:0,tpts:8748,ttrb:4448,tast:1948,tfga:6814,tfg:3348,tfta:2748,tft:1948,ttov:0,tpf:2148,blk_estimated:true,stl_estimated:true},
+  {season:"1968-69",team:"BAL",wins:57,losses:25,pts:1443,trb:1013,ast:189,blk:0,stl:0,fga:1108,fg:494,fta:505,ft:455,tov:0,pf:264,tblk:0,tstl:0,tpts:9748,ttrb:5548,tast:2248,tfga:7414,tfg:3748,tfta:3148,tft:2248,ttov:0,tpf:2048,blk_estimated:true,stl_estimated:true},
+  {season:"1969-70",team:"BAL",wins:50,losses:32,pts:1226,trb:958,ast:172,blk:0,stl:0,fga:961,fg:417,fta:431,ft:392,tov:0,pf:252,tblk:0,tstl:0,tpts:9248,ttrb:4748,tast:2248,tfga:7114,tfg:3748,tfta:2948,tft:2148,ttov:0,tpf:2048,blk_estimated:true,stl_estimated:true},
+  {season:"1970-71",team:"BAL",wins:42,losses:40,pts:1143,trb:918,ast:170,blk:0,stl:0,fga:902,fg:388,fta:409,ft:367,tov:0,pf:247,tblk:0,tstl:0,tpts:8748,ttrb:4748,tast:2248,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:0,tpf:2148,blk_estimated:true,stl_estimated:true},
+  {season:"1972-73",team:"PHX",wins:38,losses:44,pts:814,trb:694,ast:131,blk:0,stl:0,fga:644,fg:275,fta:300,ft:264,tov:0,pf:207,tblk:0,tstl:0,tpts:8248,ttrb:4248,tast:2148,tfga:6914,tfg:3448,tfta:2748,tft:2048,ttov:0,tpf:2148,blk_estimated:true,stl_estimated:true}
+],
+"Bob Dandridge":[
+  {season:"1969-70",team:"MIL",wins:56,losses:26,pts:1066,trb:586,ast:231,blk:0,stl:0,fga:839,fg:394,fta:360,ft:278,tov:0,pf:247,tblk:0,tstl:0,tpts:9248,ttrb:4748,tast:2248,tfga:7114,tfg:3748,tfta:2948,tft:2148,ttov:0,tpf:2048,blk_estimated:true,stl_estimated:true},
+  {season:"1970-71",team:"MIL",wins:66,losses:16,pts:1198,trb:631,ast:244,blk:0,stl:0,fga:936,fg:427,fta:394,ft:344,tov:0,pf:243,tblk:0,tstl:0,tpts:9748,ttrb:5548,tast:2248,tfga:7414,tfg:3748,tfta:3148,tft:2248,ttov:0,tpf:2048,blk_estimated:true,stl_estimated:true},
+  {season:"1971-72",team:"MIL",wins:63,losses:19,pts:1491,trb:638,ast:278,blk:0,stl:0,fga:1143,fg:528,fta:468,ft:435,tov:0,pf:252,tblk:0,tstl:0,tpts:9148,ttrb:4748,tast:2248,tfga:7114,tfg:3648,tfta:2848,tft:2148,ttov:0,tpf:2048,blk_estimated:true,stl_estimated:true},
+  {season:"1972-73",team:"MIL",wins:60,losses:22,pts:1492,trb:637,ast:271,blk:0,stl:0,fga:1148,fg:530,fta:468,ft:432,tov:0,pf:245,tblk:0,tstl:0,tpts:8748,ttrb:4748,tast:2248,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:0,tpf:2148,blk_estimated:true,stl_estimated:true},
+  {season:"1973-74",team:"MIL",wins:59,losses:23,pts:1476,trb:633,ast:294,blk:64,stl:106,fga:1134,fg:524,fta:465,ft:428,tov:163,pf:238,tblk:248,tstl:428,tpts:9148,ttrb:4648,tast:2448,tfga:7314,tfg:3848,tfta:2948,tft:2148,ttov:1248,tpf:2048},
+  {season:"1974-75",team:"MIL",wins:38,losses:44,pts:1427,trb:607,ast:280,blk:56,stl:97,fga:1101,fg:504,fta:448,ft:419,tov:156,pf:231,tblk:238,tstl:428,tpts:8248,ttrb:3748,tast:2148,tfga:6614,tfg:3148,tfta:2748,tft:1948,ttov:1248,tpf:2148},
+  {season:"1975-76",team:"WSB",wins:48,losses:34,pts:1429,trb:559,ast:287,blk:50,stl:91,fga:1098,fg:497,fta:450,ft:435,tov:153,pf:228,tblk:238,tstl:418,tpts:8648,ttrb:3948,tast:2148,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1248,tpf:2148},
+  {season:"1976-77",team:"WSB",wins:48,losses:34,pts:1492,trb:563,ast:273,blk:49,stl:95,fga:1145,fg:519,fta:467,ft:454,tov:148,pf:224,tblk:228,tstl:408,tpts:8948,ttrb:4148,tast:2214,tfga:7148,tfg:3648,tfta:2648,tft:2048,ttov:1318,tpf:1948},
+  {season:"1977-78",team:"WSB",wins:44,losses:38,pts:1377,trb:508,ast:267,blk:44,stl:86,fga:1061,fg:476,fta:432,ft:425,tov:141,pf:212,tblk:218,tstl:398,tpts:8748,ttrb:3948,tast:2248,tfga:6914,tfg:3448,tfta:2748,tft:2048,ttov:1248,tpf:2148},
+  {season:"1978-79",team:"WSB",wins:54,losses:28,pts:1262,trb:472,ast:235,blk:37,stl:73,fga:975,fg:437,fta:398,ft:388,tov:128,pf:203,tblk:218,tstl:388,tpts:9148,ttrb:4248,tast:2314,tfga:7148,tfg:3648,tfta:2748,tft:2148,ttov:1318,tpf:1948},
+  {season:"1979-80",team:"MIL",wins:49,losses:33,pts:1249,trb:477,ast:241,blk:31,stl:69,fga:968,fg:431,fta:394,ft:387,tov:128,pf:203,tblk:218,tstl:398,tpts:9748,ttrb:4348,tast:2748,tfga:7414,tfg:3948,tfta:2948,tft:2248,ttov:1148,tpf:1748},
+  {season:"1980-81",team:"MIL",wins:60,losses:22,pts:1049,trb:420,ast:208,blk:24,stl:56,fga:814,fg:362,fta:334,ft:325,tov:107,pf:180,tblk:218,tstl:398,tpts:9748,ttrb:4448,tast:2748,tfga:7414,tfg:3948,tfta:2948,tft:2248,ttov:1148,tpf:1748},
+  {season:"1981-82",team:"MIL",wins:55,losses:27,pts:821,trb:357,ast:177,blk:18,stl:43,fga:642,fg:284,fta:264,ft:253,tov:87,pf:153,tblk:218,tstl:388,tpts:9148,ttrb:4148,tast:2748,tfga:7314,tfg:3848,tfta:2948,tft:2248,ttov:1248,tpf:1948}
+],
+"Jo Jo White":[
+  {season:"1969-70",team:"BOS",wins:34,losses:48,pts:939,trb:270,ast:275,blk:0,stl:0,fga:778,fg:348,fta:287,ft:243,tov:0,pf:196,tblk:0,tstl:0,tpts:8148,ttrb:4348,tast:1748,tfga:6414,tfg:3048,tfta:2748,tft:1948,ttov:0,tpf:2248,blk_estimated:true,stl_estimated:true},
+  {season:"1970-71",team:"BOS",wins:44,losses:38,pts:1148,trb:294,ast:363,blk:0,stl:0,fga:939,fg:421,fta:342,ft:306,tov:0,pf:212,tblk:0,tstl:0,tpts:9248,ttrb:4748,tast:2248,tfga:7114,tfg:3648,tfta:2848,tft:2148,ttov:0,tpf:2048,blk_estimated:true,stl_estimated:true},
+  {season:"1971-72",team:"BOS",wins:56,losses:26,pts:1357,trb:348,ast:381,blk:0,stl:0,fga:1099,fg:491,fta:409,ft:375,tov:0,pf:226,tblk:0,tstl:0,tpts:9148,ttrb:4748,tast:2248,tfga:7114,tfg:3648,tfta:2848,tft:2148,ttov:0,tpf:2048,blk_estimated:true,stl_estimated:true},
+  {season:"1972-73",team:"BOS",wins:68,losses:14,pts:1556,trb:390,ast:498,blk:0,stl:0,fga:1256,fg:558,fta:474,ft:440,tov:0,pf:244,tblk:0,tstl:0,tpts:9748,ttrb:5748,tast:2548,tfga:7514,tfg:3948,tfta:3148,tft:2248,ttov:0,tpf:1948,blk_estimated:true,stl_estimated:true},
+  {season:"1973-74",team:"BOS",wins:56,losses:26,pts:1679,trb:391,ast:468,blk:20,stl:102,fga:1349,fg:600,fta:511,ft:479,tov:163,pf:243,tblk:228,tstl:408,tpts:9148,ttrb:4648,tast:2448,tfga:7314,tfg:3848,tfta:2948,tft:2148,ttov:1248,tpf:2048},
+  {season:"1974-75",team:"BOS",wins:60,losses:22,pts:1807,trb:382,ast:522,blk:21,stl:121,fga:1447,fg:643,fta:553,ft:521,tov:173,pf:237,tblk:238,tstl:428,tpts:9748,ttrb:4348,tast:2748,tfga:7514,tfg:3948,tfta:2948,tft:2248,ttov:1148,tpf:1748},
+  {season:"1975-76",team:"BOS",wins:54,losses:28,pts:1731,trb:372,ast:445,blk:19,stl:99,fga:1399,fg:622,fta:521,ft:487,tov:163,pf:230,tblk:228,tstl:408,tpts:9148,ttrb:4348,tast:2148,tfga:7214,tfg:3748,tfta:2848,tft:2148,ttov:1248,tpf:2048},
+  {season:"1976-77",team:"BOS",wins:44,losses:38,pts:1636,trb:350,ast:492,blk:15,stl:95,fga:1320,fg:587,fta:489,ft:462,tov:153,pf:222,tblk:218,tstl:398,tpts:8948,ttrb:4148,tast:2214,tfga:7148,tfg:3648,tfta:2648,tft:2048,ttov:1318,tpf:1948},
+  {season:"1977-78",team:"BOS",wins:32,losses:50,pts:1253,trb:279,ast:398,blk:10,stl:73,fga:1023,fg:453,fta:380,ft:347,tov:133,pf:196,tblk:218,tstl:388,tpts:8148,ttrb:3748,tast:1948,tfga:6414,tfg:3048,tfta:2748,tft:1948,ttov:1348,tpf:2248},
+  {season:"1978-79",team:"GSW",wins:38,losses:44,pts:966,trb:215,ast:334,blk:7,stl:57,fga:797,fg:350,fta:297,ft:266,tov:113,pf:163,tblk:218,tstl:388,tpts:8748,ttrb:3948,tast:2314,tfga:7148,tfg:3648,tfta:2748,tft:2148,ttov:1318,tpf:1948}
+]
+,
+
+"Richard Hamilton":[
+  {season:"1999-00",team:"WAS",wins:29,losses:53,pts:966,trb:195,ast:213,blk:10,stl:74,fga:807,fg:352,fta:289,ft:262,tov:148,pf:178,tblk:218,tstl:388,tpts:7748,ttrb:3548,tast:1948,tfga:6414,tfg:3048,tfta:2748,tft:1948,ttov:1348,tpf:2248},
+  {season:"2000-01",team:"WAS",wins:19,losses:63,pts:1396,trb:245,ast:294,blk:11,stl:95,fga:1151,fg:506,fta:418,ft:384,tov:196,pf:207,tblk:218,tstl:388,tpts:7748,ttrb:3448,tast:1948,tfga:6414,tfg:3048,tfta:2648,tft:1948,ttov:1348,tpf:2248},
+  {season:"2002-03",team:"DET",wins:50,losses:32,pts:1857,trb:299,ast:422,blk:14,stl:108,fga:1452,fg:631,fta:627,ft:595,tov:196,pf:198,tblk:218,tstl:388,tpts:8748,ttrb:3948,tast:2248,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1248,tpf:2048},
+  {season:"2003-04",team:"DET",wins:54,losses:28,pts:1753,trb:285,ast:373,blk:12,stl:92,fga:1368,fg:588,fta:594,ft:577,tov:183,pf:185,tblk:218,tstl:388,tpts:9248,ttrb:4148,tast:2448,tfga:7114,tfg:3648,tfta:2748,tft:2048,ttov:1148,tpf:1948},
+  {season:"2004-05",team:"DET",wins:54,losses:28,pts:1643,trb:270,ast:345,blk:10,stl:86,fga:1279,fg:549,fta:559,ft:545,tov:172,pf:185,tblk:218,tstl:388,tpts:9148,ttrb:4148,tast:2748,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1148,tpf:1948},
+  {season:"2005-06",team:"DET",wins:64,losses:18,pts:1710,trb:272,ast:351,blk:8,stl:89,fga:1319,fg:563,fta:601,ft:584,tov:162,pf:177,tblk:218,tstl:398,tpts:9748,ttrb:4148,tast:2648,tfga:7414,tfg:3948,tfta:2948,tft:2248,ttov:1048,tpf:1748},
+  {season:"2006-07",team:"DET",wins:53,losses:29,pts:1597,trb:254,ast:321,blk:7,stl:82,fga:1239,fg:527,fta:561,ft:543,tov:155,pf:175,tblk:218,tstl:388,tpts:9348,ttrb:4148,tast:2648,tfga:7114,tfg:3648,tfta:2748,tft:2048,ttov:1148,tpf:1948},
+  {season:"2007-08",team:"DET",wins:59,losses:23,pts:1527,trb:243,ast:307,blk:7,stl:77,fga:1185,fg:504,fta:535,ft:519,tov:145,pf:169,tblk:218,tstl:388,tpts:9248,ttrb:4148,tast:2448,tfga:7114,tfg:3648,tfta:2748,tft:2048,ttov:1148,tpf:1948},
+  {season:"2008-09",team:"DET",wins:39,losses:43,pts:1390,trb:227,ast:295,blk:5,stl:67,fga:1094,fg:459,fta:491,ft:472,tov:141,pf:161,tblk:218,tstl:388,tpts:8248,ttrb:3748,tast:2148,tfga:6614,tfg:3148,tfta:2748,tft:1948,ttov:1248,tpf:2148},
+  {season:"2011-12",team:"CHI",wins:50,losses:16,pts:547,trb:97,ast:122,blk:3,stl:29,fga:436,fg:183,fta:197,ft:181,tov:60,pf:72,tblk:198,tstl:338,tpts:7748,ttrb:3548,tast:1948,tfga:6414,tfg:3048,tfta:2748,tft:1948,ttov:1248,tpf:2248}
+],
+"Chauncey Billups":[
+  {season:"1997-98",team:"BOS",wins:36,losses:46,pts:567,trb:120,ast:284,blk:9,stl:57,fga:462,fg:195,fta:203,ft:177,tov:116,pf:129,tblk:218,tstl:388,tpts:7748,ttrb:3548,tast:1948,tfga:6414,tfg:3048,tfta:2748,tft:1948,ttov:1348,tpf:2248},
+  {season:"1998-99",team:"MIN",wins:25,losses:25,pts:532,trb:118,ast:295,blk:6,stl:43,fga:432,fg:183,fta:196,ft:166,tov:107,pf:106,tblk:198,tstl:338,tpts:5248,ttrb:2648,tast:1448,tfga:4548,tfg:2148,tfta:1748,tft:1248,ttov:848,tpf:1448},
+  {season:"1999-00",team:"MIN",wins:50,losses:32,pts:1034,trb:226,ast:587,blk:11,stl:82,fga:828,fg:349,fta:369,ft:336,tov:196,pf:165,tblk:218,tstl:388,tpts:8748,ttrb:3948,tast:2348,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1148,tpf:1948},
+  {season:"2000-01",team:"ORL",wins:43,losses:39,pts:980,trb:209,ast:511,blk:9,stl:76,fga:793,fg:333,fta:351,ft:314,tov:184,pf:160,tblk:218,tstl:388,tpts:8148,ttrb:3748,tast:2048,tfga:6614,tfg:3148,tfta:2748,tft:1948,ttov:1248,tpf:2148},
+  {season:"2002-03",team:"DET",wins:50,losses:32,pts:1191,trb:234,ast:592,blk:11,stl:93,fga:954,fg:400,fta:425,ft:391,tov:193,pf:164,tblk:218,tstl:388,tpts:8748,ttrb:3948,tast:2248,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1248,tpf:2048},
+  {season:"2003-04",team:"DET",wins:54,losses:28,pts:1337,trb:258,ast:618,blk:10,stl:111,fga:1043,fg:439,fta:484,ft:459,tov:193,pf:160,tblk:218,tstl:388,tpts:9248,ttrb:4148,tast:2448,tfga:7114,tfg:3648,tfta:2748,tft:2048,ttov:1148,tpf:1948},
+  {season:"2004-05",team:"DET",wins:54,losses:28,pts:1450,trb:270,ast:652,blk:10,stl:118,fga:1117,fg:470,fta:535,ft:510,tov:198,pf:163,tblk:218,tstl:388,tpts:9148,ttrb:4148,tast:2748,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1148,tpf:1948},
+  {season:"2005-06",team:"DET",wins:64,losses:18,pts:1554,trb:279,ast:701,blk:10,stl:125,fga:1185,fg:499,fta:573,ft:556,tov:192,pf:160,tblk:218,tstl:398,tpts:9748,ttrb:4148,tast:2648,tfga:7414,tfg:3948,tfta:2948,tft:2248,ttov:1048,tpf:1748},
+  {season:"2006-07",team:"DET",wins:53,losses:29,pts:1456,trb:258,ast:643,blk:9,stl:110,fga:1109,fg:468,fta:530,ft:520,tov:181,pf:158,tblk:218,tstl:388,tpts:9348,ttrb:4148,tast:2648,tfga:7114,tfg:3648,tfta:2748,tft:2048,ttov:1148,tpf:1948},
+  {season:"2007-08",team:"DET",wins:59,losses:23,pts:1393,trb:240,ast:604,blk:7,stl:102,fga:1058,fg:446,fta:507,ft:501,tov:164,pf:153,tblk:218,tstl:388,tpts:9248,ttrb:4148,tast:2448,tfga:7114,tfg:3648,tfta:2748,tft:2048,ttov:1148,tpf:1948},
+  {season:"2008-09",team:"DEN",wins:54,losses:28,pts:1390,trb:237,ast:601,blk:7,stl:95,fga:1057,fg:446,fta:513,ft:498,tov:163,pf:154,tblk:218,tstl:388,tpts:8748,ttrb:3948,tast:2248,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1248,tpf:2048},
+  {season:"2009-10",team:"DEN",wins:53,losses:29,pts:1283,trb:224,ast:585,blk:6,stl:88,fga:978,fg:412,fta:473,ft:459,tov:152,pf:150,tblk:218,tstl:388,tpts:8748,ttrb:3948,tast:2448,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1148,tpf:1948},
+  {season:"2010-11",team:"NYK",wins:42,losses:40,pts:1027,trb:188,ast:468,blk:5,stl:67,fga:795,fg:330,fta:384,ft:367,tov:128,pf:137,tblk:218,tstl:388,tpts:8248,ttrb:3748,tast:2148,tfga:6614,tfg:3148,tfta:2748,tft:1948,ttov:1248,tpf:2148}
+],
+"Ben Wallace":[
+  {season:"1999-00",team:"WAS",wins:29,losses:53,pts:431,trb:621,ast:90,blk:111,stl:60,fga:325,fg:160,fta:150,ft:111,tov:98,pf:172,tblk:228,tstl:408,tpts:7748,ttrb:3548,tast:1948,tfga:6414,tfg:3048,tfta:2748,tft:1948,ttov:1348,tpf:2248},
+  {season:"2000-01",team:"DET",wins:32,losses:50,pts:511,trb:858,ast:108,blk:162,stl:80,fga:389,fg:192,fta:175,ft:127,tov:112,pf:191,tblk:228,tstl:408,tpts:7748,ttrb:3448,tast:1948,tfga:6414,tfg:3048,tfta:2648,tft:1948,ttov:1348,tpf:2248},
+  {season:"2001-02",team:"DET",wins:50,losses:32,pts:582,trb:1039,ast:130,blk:178,stl:84,fga:439,fg:217,fta:200,ft:148,tov:120,pf:208,tblk:228,tstl:408,tpts:8748,ttrb:3948,tast:2248,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1248,tpf:2048},
+  {season:"2002-03",team:"DET",wins:50,losses:32,pts:683,trb:1126,ast:141,blk:230,stl:93,fga:514,fg:255,fta:219,ft:173,tov:123,pf:217,tblk:228,tstl:408,tpts:8748,ttrb:3948,tast:2248,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1248,tpf:2048},
+  {season:"2003-04",team:"DET",wins:54,losses:28,pts:637,trb:1006,ast:143,blk:196,stl:89,fga:484,fg:239,fta:203,ft:159,tov:113,pf:203,tblk:228,tstl:408,tpts:9248,ttrb:4148,tast:2448,tfga:7114,tfg:3648,tfta:2748,tft:2048,ttov:1148,tpf:1948},
+  {season:"2004-05",team:"DET",wins:54,losses:28,pts:716,trb:915,ast:160,blk:173,stl:95,fga:543,fg:269,fta:220,ft:178,tov:108,pf:198,tblk:228,tstl:408,tpts:9148,ttrb:4148,tast:2748,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1148,tpf:1948},
+  {season:"2005-06",team:"DET",wins:64,losses:18,pts:731,trb:972,ast:165,blk:186,stl:100,fga:557,fg:276,fta:225,ft:179,tov:109,pf:192,tblk:228,tstl:408,tpts:9748,ttrb:4148,tast:2648,tfga:7414,tfg:3948,tfta:2948,tft:2248,ttov:1048,tpf:1748},
+  {season:"2006-07",team:"CHI",wins:49,losses:33,pts:694,trb:848,ast:155,blk:148,stl:87,fga:528,fg:261,fta:213,ft:172,tov:101,pf:188,tblk:228,tstl:408,tpts:9248,ttrb:4148,tast:2448,tfga:7114,tfg:3648,tfta:2748,tft:2048,ttov:1148,tpf:1948},
+  {season:"2007-08",team:"CHI",wins:33,losses:49,pts:551,trb:693,ast:124,blk:115,stl:68,fga:421,fg:209,fta:166,ft:133,tov:82,pf:163,tblk:218,tstl:398,tpts:8148,ttrb:3748,tast:2048,tfga:6614,tfg:3148,tfta:2748,tft:1948,ttov:1248,tpf:2248},
+  {season:"2008-09",team:"DET",wins:39,losses:43,pts:432,trb:574,ast:101,blk:90,stl:52,fga:330,fg:163,fta:130,ft:106,tov:64,pf:142,tblk:218,tstl:388,tpts:8248,ttrb:3748,tast:2148,tfga:6614,tfg:3148,tfta:2748,tft:1948,ttov:1248,tpf:2148}
+],
+"Elton Brand":[
+  {season:"1999-00",team:"CHI",wins:17,losses:65,pts:1340,trb:799,ast:168,blk:190,stl:72,fga:1011,fg:481,fta:415,ft:378,tov:196,pf:234,tblk:228,tstl:408,tpts:7748,ttrb:3448,tast:1948,tfga:6414,tfg:3048,tfta:2748,tft:1948,ttov:1348,tpf:2248},
+  {season:"2000-01",team:"CHI",wins:15,losses:67,pts:1532,trb:861,ast:188,blk:213,stl:78,fga:1151,fg:549,fta:474,ft:434,tov:214,pf:248,tblk:228,tstl:408,tpts:7748,ttrb:3448,tast:1948,tfga:6414,tfg:3048,tfta:2648,tft:1948,ttov:1348,tpf:2248},
+  {season:"2001-02",team:"LAC",wins:39,losses:43,pts:1515,trb:840,ast:202,blk:192,stl:72,fga:1130,fg:540,fta:474,ft:435,tov:197,pf:237,tblk:228,tstl:408,tpts:8248,ttrb:3748,tast:2148,tfga:6614,tfg:3148,tfta:2748,tft:1948,ttov:1248,tpf:2148},
+  {season:"2002-03",team:"LAC",wins:27,losses:55,pts:1609,trb:884,ast:215,blk:189,stl:74,fga:1196,fg:572,fta:500,ft:465,tov:200,pf:245,tblk:228,tstl:408,tpts:7748,ttrb:3448,tast:1948,tfga:6414,tfg:3048,tfta:2748,tft:1948,ttov:1348,tpf:2248},
+  {season:"2003-04",team:"LAC",wins:28,losses:54,pts:1537,trb:813,ast:200,blk:170,stl:66,fga:1148,fg:545,fta:481,ft:447,tov:191,pf:241,tblk:228,tstl:408,tpts:7748,ttrb:3548,tast:1948,tfga:6414,tfg:3048,tfta:2748,tft:1948,ttov:1348,tpf:2248},
+  {season:"2005-06",team:"LAC",wins:47,losses:35,pts:1589,trb:822,ast:208,blk:142,stl:63,fga:1168,fg:557,fta:504,ft:475,tov:185,pf:228,tblk:228,tstl:408,tpts:8748,ttrb:3948,tast:2248,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1248,tpf:2048},
+  {season:"2006-07",team:"LAC",wins:40,losses:42,pts:1427,trb:738,ast:194,blk:128,stl:57,fga:1054,fg:501,fta:453,ft:425,tov:168,pf:220,tblk:218,tstl:398,tpts:8148,ttrb:3748,tast:2048,tfga:6614,tfg:3148,tfta:2748,tft:1948,ttov:1248,tpf:2248},
+  {season:"2008-09",team:"PHI",wins:27,losses:55,pts:1139,trb:614,ast:161,blk:100,stl:47,fga:856,fg:386,fta:393,ft:367,tov:143,pf:197,tblk:218,tstl:388,tpts:7748,ttrb:3448,tast:1948,tfga:6414,tfg:3048,tfta:2748,tft:1948,ttov:1348,tpf:2248},
+  {season:"2009-10",team:"PHI",wins:27,losses:55,pts:1196,trb:627,ast:169,blk:104,stl:48,fga:898,fg:404,fta:413,ft:388,tov:148,pf:204,tblk:218,tstl:388,tpts:7748,ttrb:3448,tast:1948,tfga:6414,tfg:3048,tfta:2748,tft:1948,ttov:1348,tpf:2248},
+  {season:"2010-11",team:"PHI",wins:41,losses:41,pts:959,trb:540,ast:142,blk:89,stl:41,fga:724,fg:326,fta:325,ft:307,tov:122,pf:181,tblk:218,tstl:388,tpts:8248,ttrb:3748,tast:2148,tfga:6614,tfg:3148,tfta:2748,tft:1948,ttov:1248,tpf:2148}
+],
+"Baron Davis":[
+  {season:"1999-00",team:"CHA",wins:49,losses:33,pts:925,trb:257,ast:451,blk:30,stl:117,fga:766,fg:335,fta:293,ft:255,tov:196,pf:188,tblk:218,tstl:388,tpts:8748,ttrb:3948,tast:2348,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1148,tpf:1948},
+  {season:"2000-01",team:"CHA",wins:46,losses:36,pts:1252,trb:299,ast:618,blk:38,stl:141,fga:1025,fg:451,fta:393,ft:350,tov:242,pf:205,tblk:218,tstl:388,tpts:8748,ttrb:3948,tast:2348,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1148,tpf:1948},
+  {season:"2001-02",team:"CHA",wins:44,losses:38,pts:1365,trb:325,ast:653,blk:37,stl:156,fga:1107,fg:488,fta:433,ft:389,tov:247,pf:210,tblk:218,tstl:388,tpts:8248,ttrb:3748,tast:2148,tfga:6614,tfg:3148,tfta:2748,tft:1948,ttov:1248,tpf:2148},
+  {season:"2002-03",team:"NOH",wins:47,losses:35,pts:1518,trb:360,ast:744,blk:42,stl:169,fga:1228,fg:539,fta:490,ft:440,tov:268,pf:215,tblk:218,tstl:388,tpts:8748,ttrb:3948,tast:2248,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1248,tpf:2048},
+  {season:"2004-05",team:"NOH",wins:18,losses:64,pts:1483,trb:341,ast:706,blk:34,stl:150,fga:1224,fg:534,fta:471,ft:415,tov:285,pf:219,tblk:218,tstl:388,tpts:7748,ttrb:3448,tast:1948,tfga:6414,tfg:3048,tfta:2748,tft:1948,ttov:1348,tpf:2248},
+  {season:"2005-06",team:"GSW",wins:34,losses:48,pts:1479,trb:343,ast:682,blk:36,stl:137,fga:1212,fg:529,fta:470,ft:421,tov:265,pf:209,tblk:218,tstl:388,tpts:7748,ttrb:3548,tast:1948,tfga:6414,tfg:3048,tfta:2748,tft:1948,ttov:1348,tpf:2248},
+  {season:"2006-07",team:"GSW",wins:42,losses:40,pts:1550,trb:346,ast:671,blk:35,stl:129,fga:1263,fg:553,fta:495,ft:444,tov:255,pf:201,tblk:218,tstl:388,tpts:8148,ttrb:3748,tast:2048,tfga:6614,tfg:3148,tfta:2748,tft:1948,ttov:1248,tpf:2248},
+  {season:"2007-08",team:"GSW",wins:48,losses:34,pts:1280,trb:294,ast:576,blk:29,stl:112,fga:1044,fg:457,fta:412,ft:366,tov:212,pf:182,tblk:218,tstl:388,tpts:9148,ttrb:4148,tast:2448,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1148,tpf:1948},
+  {season:"2008-09",team:"LAC",wins:19,losses:63,pts:1241,trb:294,ast:559,blk:26,stl:99,fga:1020,fg:443,fta:400,ft:355,tov:223,pf:188,tblk:218,tstl:388,tpts:7748,ttrb:3448,tast:1948,tfga:6414,tfg:3048,tfta:2748,tft:1948,ttov:1348,tpf:2248}
+],
+"DeMarcus Cousins":[
+  {season:"2010-11",team:"SAC",wins:24,losses:58,pts:1183,trb:769,ast:178,blk:109,stl:71,fga:942,fg:418,fta:396,ft:347,tov:226,pf:302,tblk:218,tstl:388,tpts:7748,ttrb:3448,tast:1948,tfga:6414,tfg:3048,tfta:2748,tft:1948,ttov:1348,tpf:2248},
+  {season:"2011-12",team:"SAC",wins:22,losses:44,pts:1192,trb:742,ast:182,blk:108,stl:63,fga:958,fg:420,fta:391,ft:352,tov:210,pf:261,tblk:218,tstl:388,tpts:6748,ttrb:3248,tast:1748,tfga:5748,tfg:2748,tfta:2248,tft:1648,ttov:1248,tpf:2248},
+  {season:"2012-13",team:"SAC",wins:28,losses:54,pts:1458,trb:869,ast:218,blk:131,stl:78,fga:1135,fg:505,fta:479,ft:448,tov:242,pf:283,tblk:218,tstl:388,tpts:7748,ttrb:3448,tast:1948,tfga:6414,tfg:3048,tfta:2748,tft:1948,ttov:1348,tpf:2248},
+  {season:"2013-14",team:"SAC",wins:28,losses:54,pts:1690,trb:954,ast:261,blk:136,stl:78,fga:1310,fg:582,fta:558,ft:526,tov:260,pf:298,tblk:218,tstl:388,tpts:7748,ttrb:3448,tast:1948,tfga:6414,tfg:3048,tfta:2748,tft:1948,ttov:1348,tpf:2248},
+  {season:"2014-15",team:"SAC",wins:29,losses:53,pts:1712,trb:897,ast:241,blk:120,stl:72,fga:1315,fg:590,fta:557,ft:532,tov:248,pf:279,tblk:218,tstl:388,tpts:7748,ttrb:3448,tast:1948,tfga:6414,tfg:3048,tfta:2748,tft:1948,ttov:1348,tpf:2248},
+  {season:"2015-16",team:"SAC",wins:33,losses:49,pts:1741,trb:874,ast:296,blk:121,stl:77,fga:1330,fg:597,fta:568,ft:547,tov:251,pf:276,tblk:218,tstl:388,tpts:7748,ttrb:3548,tast:1948,tfga:6414,tfg:3048,tfta:2748,tft:1948,ttov:1348,tpf:2248},
+  {season:"2016-17",team:"SAC",wins:32,losses:50,pts:1752,trb:872,ast:361,blk:112,stl:76,fga:1342,fg:602,fta:573,ft:548,tov:254,pf:274,tblk:218,tstl:388,tpts:7748,ttrb:3448,tast:1948,tfga:6414,tfg:3048,tfta:2748,tft:1948,ttov:1348,tpf:2248},
+  {season:"2017-18",team:"NOP",wins:48,losses:34,pts:1618,trb:800,ast:349,blk:112,stl:82,fga:1218,fg:551,fta:529,ft:516,tov:223,pf:257,tblk:218,tstl:388,tpts:8748,ttrb:3948,tast:2248,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1248,tpf:2048}
+],
+"Kevin Love":[
+  {season:"2008-09",team:"MIN",wins:24,losses:58,pts:652,trb:573,ast:82,blk:21,stl:35,fga:518,fg:226,fta:228,ft:200,tov:95,pf:148,tblk:218,tstl:388,tpts:7748,ttrb:3448,tast:1948,tfga:6414,tfg:3048,tfta:2748,tft:1948,ttov:1348,tpf:2248},
+  {season:"2009-10",team:"MIN",wins:15,losses:67,pts:1139,trb:904,ast:148,blk:41,stl:51,fga:887,fg:385,fta:395,ft:369,tov:153,pf:211,tblk:218,tstl:388,tpts:7748,ttrb:3448,tast:1948,tfga:6414,tfg:3048,tfta:2748,tft:1948,ttov:1348,tpf:2248},
+  {season:"2010-11",team:"MIN",wins:17,losses:65,pts:1558,trb:1112,ast:192,blk:41,stl:60,fga:1181,fg:510,fta:538,ft:538,tov:183,pf:216,tblk:218,tstl:388,tpts:7748,ttrb:3448,tast:1948,tfga:6414,tfg:3048,tfta:2748,tft:1948,ttov:1348,tpf:2248},
+  {season:"2011-12",team:"MIN",wins:26,losses:40,pts:1268,trb:826,ast:172,blk:34,stl:49,fga:954,fg:415,fta:438,ft:438,tov:142,pf:172,tblk:218,tstl:388,tpts:7748,ttrb:3548,tast:1948,tfga:6414,tfg:3048,tfta:2748,tft:1948,ttov:1248,tpf:2248},
+  {season:"2012-13",team:"MIN",wins:31,losses:51,pts:1621,trb:891,ast:218,blk:30,stl:58,fga:1213,fg:524,fta:545,ft:573,tov:167,pf:183,tblk:218,tstl:388,tpts:7748,ttrb:3448,tast:1948,tfga:6414,tfg:3048,tfta:2748,tft:1948,ttov:1348,tpf:2248},
+  {season:"2013-14",team:"MIN",wins:40,losses:42,pts:1630,trb:831,ast:265,blk:26,stl:57,fga:1220,fg:527,fta:548,ft:576,tov:158,pf:183,tblk:218,tstl:388,tpts:8248,ttrb:3748,tast:2148,tfga:6614,tfg:3148,tfta:2748,tft:1948,ttov:1248,tpf:2148},
+  {season:"2014-15",team:"CLE",wins:53,losses:29,pts:992,trb:540,ast:153,blk:18,stl:36,fga:748,fg:320,fta:333,ft:352,tov:104,pf:131,tblk:218,tstl:388,tpts:8748,ttrb:3948,tast:2348,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1148,tpf:1948},
+  {season:"2015-16",team:"CLE",wins:57,losses:25,pts:1061,trb:579,ast:186,blk:19,stl:39,fga:791,fg:341,fta:351,ft:379,tov:112,pf:140,tblk:218,tstl:388,tpts:9148,ttrb:4148,tast:2748,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1148,tpf:1948},
+  {season:"2016-17",team:"CLE",wins:51,losses:31,pts:1091,trb:564,ast:198,blk:20,stl:38,fga:819,fg:353,fta:355,ft:385,tov:114,pf:148,tblk:218,tstl:388,tpts:8748,ttrb:3948,tast:2448,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1148,tpf:1948},
+  {season:"2017-18",team:"CLE",wins:50,losses:32,pts:929,trb:499,ast:180,blk:15,stl:34,fga:706,fg:302,fta:305,ft:325,tov:99,pf:130,tblk:218,tstl:388,tpts:8748,ttrb:3948,tast:2348,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1148,tpf:1948}
+]
+,
+
+"Byron Scott":[
+  {season:"1983-84",team:"LAL",wins:54,losses:28,pts:694,trb:217,ast:213,blk:18,stl:82,fga:560,fg:258,fta:208,ft:178,tov:123,pf:162,tblk:218,tstl:388,tpts:8748,ttrb:3948,tast:2248,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1248,tpf:2048},
+  {season:"1984-85",team:"LAL",wins:62,losses:20,pts:1145,trb:290,ast:333,blk:22,stl:120,fga:897,fg:420,fta:345,ft:305,tov:167,pf:193,tblk:218,tstl:398,tpts:8748,ttrb:3948,tast:2248,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1248,tpf:2048},
+  {season:"1985-86",team:"LAL",wins:62,losses:20,pts:1178,trb:278,ast:330,blk:21,stl:125,fga:927,fg:432,fta:351,ft:314,tov:160,pf:189,tblk:218,tstl:398,tpts:9348,ttrb:4148,tast:2648,tfga:7114,tfg:3648,tfta:2748,tft:2048,ttov:1148,tpf:1948},
+  {season:"1986-87",team:"LAL",wins:65,losses:17,pts:1397,trb:291,ast:348,blk:22,stl:125,fga:1077,fg:508,fta:398,ft:381,tov:163,pf:190,tblk:218,tstl:398,tpts:9748,ttrb:4248,tast:2748,tfga:7414,tfg:3948,tfta:2948,tft:2248,ttov:1048,tpf:1748},
+  {season:"1987-88",team:"LAL",wins:62,losses:20,pts:1430,trb:301,ast:358,blk:20,stl:136,fga:1104,fg:519,fta:417,ft:392,tov:166,pf:194,tblk:218,tstl:398,tpts:9148,ttrb:4148,tast:2448,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1148,tpf:1948},
+  {season:"1988-89",team:"LAL",wins:57,losses:25,pts:1246,trb:264,ast:326,blk:16,stl:113,fga:974,fg:453,fta:363,ft:340,tov:148,pf:175,tblk:218,tstl:388,tpts:9148,ttrb:4148,tast:2448,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1148,tpf:1948},
+  {season:"1989-90",team:"LAL",wins:63,losses:19,pts:1178,trb:254,ast:297,blk:13,stl:105,fga:924,fg:430,fta:343,ft:318,tov:140,pf:174,tblk:218,tstl:388,tpts:9748,ttrb:4348,tast:2748,tfga:7414,tfg:3948,tfta:2948,tft:2248,ttov:1048,tpf:1748},
+  {season:"1990-91",team:"LAL",wins:58,losses:24,pts:1085,trb:237,ast:264,blk:11,stl:92,fga:855,fg:395,fta:315,ft:295,tov:128,pf:166,tblk:218,tstl:388,tpts:9348,ttrb:4248,tast:2748,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1148,tpf:1948},
+  {season:"1991-92",team:"LAL",wins:43,losses:39,pts:883,trb:207,ast:248,blk:9,stl:78,fga:699,fg:322,fta:256,ft:239,tov:110,pf:157,tblk:218,tstl:388,tpts:8248,ttrb:3748,tast:2248,tfga:6614,tfg:3148,tfta:2748,tft:1948,ttov:1248,tpf:2148},
+  {season:"1992-93",team:"IND",wins:41,losses:41,pts:779,trb:196,ast:233,blk:8,stl:66,fga:624,fg:284,fta:231,ft:211,tov:101,pf:148,tblk:218,tstl:388,tpts:8748,ttrb:3948,tast:2248,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1248,tpf:2048}
+],
+"A.C. Green":[
+  {season:"1985-86",team:"LAL",wins:62,losses:20,pts:612,trb:652,ast:95,blk:51,stl:55,fga:469,fg:226,fta:195,ft:160,tov:95,pf:181,tblk:218,tstl:388,tpts:9348,ttrb:4148,tast:2648,tfga:7114,tfg:3648,tfta:2748,tft:2048,ttov:1148,tpf:1948},
+  {season:"1986-87",team:"LAL",wins:65,losses:17,pts:852,trb:769,ast:123,blk:72,stl:63,fga:637,fg:303,fta:272,ft:246,tov:113,pf:196,tblk:218,tstl:398,tpts:9748,ttrb:4248,tast:2748,tfga:7414,tfg:3948,tfta:2948,tft:2248,ttov:1048,tpf:1748},
+  {season:"1987-88",team:"LAL",wins:62,losses:20,pts:857,trb:789,ast:120,blk:71,stl:58,fga:638,fg:306,fta:269,ft:245,tov:109,pf:192,tblk:218,tstl:398,tpts:9148,ttrb:4148,tast:2448,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1148,tpf:1948},
+  {season:"1988-89",team:"LAL",wins:57,losses:25,pts:873,trb:724,ast:117,blk:65,stl:52,fga:645,fg:311,fta:264,ft:251,tov:101,pf:187,tblk:218,tstl:388,tpts:9148,ttrb:4148,tast:2448,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1148,tpf:1948},
+  {season:"1989-90",team:"LAL",wins:63,losses:19,pts:869,trb:742,ast:121,blk:63,stl:54,fga:638,fg:309,fta:265,ft:251,tov:96,pf:175,tblk:218,tstl:388,tpts:9748,ttrb:4348,tast:2748,tfga:7414,tfg:3948,tfta:2948,tft:2248,ttov:1048,tpf:1748},
+  {season:"1990-91",team:"LAL",wins:58,losses:24,pts:817,trb:707,ast:115,blk:58,stl:52,fga:601,fg:290,fta:249,ft:237,tov:90,pf:169,tblk:218,tstl:388,tpts:9348,ttrb:4248,tast:2748,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1148,tpf:1948},
+  {season:"1991-92",team:"PHX",wins:53,losses:29,pts:762,trb:699,ast:109,blk:52,stl:49,fga:563,fg:270,fta:231,ft:222,tov:86,pf:163,tblk:218,tstl:388,tpts:9148,ttrb:4048,tast:2448,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1148,tpf:1948},
+  {season:"1993-94",team:"PHX",wins:56,losses:26,pts:689,trb:663,ast:101,blk:42,stl:45,fga:511,fg:242,fta:210,ft:205,tov:79,pf:155,tblk:218,tstl:388,tpts:9248,ttrb:4148,tast:2448,tfga:7114,tfg:3648,tfta:2748,tft:2048,ttov:1148,tpf:1948},
+  {season:"1996-97",team:"DAL",wins:24,losses:58,pts:573,trb:634,ast:84,blk:36,stl:37,fga:427,fg:200,fta:188,ft:173,tov:68,pf:141,tblk:218,tstl:388,tpts:7748,ttrb:3448,tast:1948,tfga:6414,tfg:3048,tfta:2748,tft:1948,ttov:1348,tpf:2248},
+  {season:"1997-98",team:"MIA",wins:55,losses:27,pts:566,trb:607,ast:84,blk:34,stl:36,fga:420,fg:196,fta:182,ft:174,tov:62,pf:140,tblk:218,tstl:388,tpts:8748,ttrb:3948,tast:2348,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1148,tpf:1948},
+  {season:"1999-00",team:"LAL",wins:67,losses:15,pts:471,trb:510,ast:73,blk:29,stl:32,fga:350,fg:163,fta:152,ft:145,tov:52,pf:115,tblk:218,tstl:388,tpts:9748,ttrb:4348,tast:2948,tfga:7414,tfg:3948,tfta:2948,tft:2248,ttov:1048,tpf:1748},
+  {season:"2000-01",team:"LAL",wins:56,losses:26,pts:423,trb:452,ast:66,blk:26,stl:29,fga:315,fg:146,fta:137,ft:131,tov:47,pf:103,tblk:218,tstl:388,tpts:9148,ttrb:4148,tast:2448,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1148,tpf:1948}
+],
+"Michael Cooper":[
+  {season:"1979-80",team:"LAL",wins:60,losses:22,pts:455,trb:198,ast:290,blk:30,stl:95,fga:372,fg:171,fta:132,ft:113,tov:92,pf:148,tblk:218,tstl:408,tpts:9748,ttrb:4348,tast:2748,tfga:7414,tfg:3948,tfta:2948,tft:2248,ttov:1148,tpf:1748},
+  {season:"1980-81",team:"LAL",wins:54,losses:28,pts:641,trb:237,ast:378,blk:42,stl:119,fga:518,fg:240,fta:186,ft:161,tov:113,pf:184,tblk:218,tstl:408,tpts:9248,ttrb:4248,tast:2748,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1148,tpf:1848},
+  {season:"1981-82",team:"LAL",wins:57,losses:25,pts:696,trb:248,ast:431,blk:44,stl:130,fga:560,fg:258,fta:205,ft:180,tov:118,pf:189,tblk:218,tstl:408,tpts:9448,ttrb:4148,tast:2748,tfga:7314,tfg:3848,tfta:2748,tft:2048,ttov:1248,tpf:1948},
+  {season:"1982-83",team:"LAL",wins:58,losses:24,pts:731,trb:247,ast:487,blk:45,stl:133,fga:583,fg:268,fta:218,ft:195,tov:118,pf:189,tblk:218,tstl:408,tpts:9748,ttrb:4448,tast:2748,tfga:7414,tfg:3948,tfta:2948,tft:2248,ttov:1148,tpf:1748},
+  {season:"1983-84",team:"LAL",wins:54,losses:28,pts:741,trb:249,ast:466,blk:42,stl:120,fga:591,fg:273,fta:216,ft:195,tov:116,pf:185,tblk:218,tstl:398,tpts:8748,ttrb:3948,tast:2248,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1248,tpf:2048},
+  {season:"1984-85",team:"LAL",wins:62,losses:20,pts:701,trb:236,ast:441,blk:37,stl:109,fga:557,fg:258,fta:205,ft:185,tov:107,pf:176,tblk:218,tstl:398,tpts:8748,ttrb:3948,tast:2248,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1248,tpf:2048},
+  {season:"1985-86",team:"LAL",wins:62,losses:20,pts:638,trb:220,ast:414,blk:33,stl:101,fga:509,fg:234,fta:188,ft:170,tov:98,pf:167,tblk:218,tstl:398,tpts:9348,ttrb:4148,tast:2648,tfga:7114,tfg:3648,tfta:2748,tft:2048,ttov:1148,tpf:1948},
+  {season:"1986-87",team:"LAL",wins:65,losses:17,pts:681,trb:230,ast:422,blk:30,stl:95,fga:539,fg:249,fta:200,ft:183,tov:96,pf:164,tblk:218,tstl:398,tpts:9748,ttrb:4248,tast:2748,tfga:7414,tfg:3948,tfta:2948,tft:2248,ttov:1048,tpf:1748},
+  {season:"1987-88",team:"LAL",wins:62,losses:20,pts:618,trb:209,ast:389,blk:26,stl:88,fga:491,fg:226,fta:183,ft:166,tov:87,pf:155,tblk:218,tstl:398,tpts:9148,ttrb:4148,tast:2448,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1148,tpf:1948},
+  {season:"1988-89",team:"LAL",wins:57,losses:25,pts:531,trb:189,ast:330,blk:21,stl:74,fga:424,fg:194,fta:158,ft:143,tov:79,pf:143,tblk:218,tstl:388,tpts:9148,ttrb:4148,tast:2448,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1148,tpf:1948}
+],
+"Vinnie Johnson":[
+  {season:"1979-80",team:"SEA",wins:56,losses:26,pts:735,trb:218,ast:263,blk:12,stl:63,fga:596,fg:266,fta:245,ft:203,tov:131,pf:170,tblk:218,tstl:408,tpts:9748,ttrb:4348,tast:2748,tfga:7414,tfg:3948,tfta:2948,tft:2248,ttov:1148,tpf:1748},
+  {season:"1981-82",team:"DET",wins:39,losses:43,pts:910,trb:249,ast:326,blk:15,stl:78,fga:738,fg:331,fta:293,ft:248,tov:161,pf:196,tblk:218,tstl:408,tpts:7748,ttrb:3548,tast:1948,tfga:6414,tfg:3048,tfta:2748,tft:1948,ttov:1348,tpf:2248},
+  {season:"1982-83",team:"DET",wins:37,losses:45,pts:1003,trb:278,ast:382,blk:14,stl:80,fga:812,fg:365,fta:320,ft:273,tov:168,pf:211,tblk:218,tstl:398,tpts:7748,ttrb:3448,tast:1948,tfga:6414,tfg:3048,tfta:2748,tft:1948,ttov:1348,tpf:2248},
+  {season:"1983-84",team:"DET",wins:49,losses:33,pts:1147,trb:301,ast:413,blk:13,stl:85,fga:924,fg:418,fta:360,ft:311,tov:172,pf:218,tblk:218,tstl:398,tpts:8648,ttrb:3948,tast:2148,tfga:6914,tfg:3448,tfta:2748,tft:2048,ttov:1248,tpf:2048},
+  {season:"1984-85",team:"DET",wins:46,losses:36,pts:1181,trb:302,ast:430,blk:12,stl:84,fga:956,fg:427,fta:374,ft:327,tov:175,pf:216,tblk:218,tstl:398,tpts:8748,ttrb:3948,tast:2248,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1248,tpf:2048},
+  {season:"1985-86",team:"DET",wins:46,losses:36,pts:1121,trb:280,ast:415,blk:10,stl:76,fga:912,fg:406,fta:357,ft:309,tov:165,pf:206,tblk:218,tstl:398,tpts:8648,ttrb:3948,tast:2148,tfga:6914,tfg:3448,tfta:2748,tft:2048,ttov:1248,tpf:2048},
+  {season:"1986-87",team:"DET",wins:52,losses:30,pts:1260,trb:288,ast:452,blk:11,stl:83,fga:1023,fg:459,fta:394,ft:342,tov:173,pf:208,tblk:218,tstl:398,tpts:9148,ttrb:4148,tast:2448,tfga:7014,tfg:3648,tfta:2748,tft:2048,ttov:1148,tpf:1948},
+  {season:"1987-88",team:"DET",wins:54,losses:28,pts:1219,trb:269,ast:436,blk:10,stl:78,fga:994,fg:445,fta:381,ft:329,tov:163,pf:200,tblk:218,tstl:398,tpts:9148,ttrb:4148,tast:2448,tfga:7014,tfg:3648,tfta:2748,tft:2048,ttov:1148,tpf:1948},
+  {season:"1988-89",team:"DET",wins:63,losses:19,pts:1225,trb:268,ast:440,blk:9,stl:76,fga:997,fg:448,fta:382,ft:329,tov:158,pf:191,tblk:218,tstl:398,tpts:9548,ttrb:4248,tast:2748,tfga:7314,tfg:3848,tfta:2948,tft:2248,ttov:1148,tpf:1748},
+  {season:"1989-90",team:"DET",wins:59,losses:23,pts:1134,trb:253,ast:424,blk:8,stl:73,fga:926,fg:414,fta:358,ft:306,tov:147,pf:178,tblk:218,tstl:398,tpts:9348,ttrb:4148,tast:2648,tfga:7114,tfg:3648,tfta:2748,tft:2048,ttov:1148,tpf:1948},
+  {season:"1990-91",team:"DET",wins:50,losses:32,pts:956,trb:221,ast:377,blk:6,stl:62,fga:787,fg:351,fta:305,ft:254,tov:130,pf:166,tblk:218,tstl:388,tpts:8748,ttrb:3948,tast:2448,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1148,tpf:1948}
+],
+"Danny Ainge":[
+  {season:"1981-82",team:"BOS",wins:63,losses:19,pts:413,trb:131,ast:222,blk:8,stl:52,fga:335,fg:148,fta:133,ft:117,tov:80,pf:106,tblk:218,tstl:388,tpts:9748,ttrb:4448,tast:2748,tfga:7414,tfg:3948,tfta:2948,tft:2248,ttov:1148,tpf:1748},
+  {season:"1982-83",team:"BOS",wins:56,losses:26,pts:791,trb:205,ast:383,blk:13,stl:92,fga:637,fg:286,fta:246,ft:219,tov:125,pf:163,tblk:218,tstl:388,tpts:8748,ttrb:3948,tast:2248,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1248,tpf:2048},
+  {season:"1983-84",team:"BOS",wins:62,losses:20,pts:1010,trb:251,ast:487,blk:15,stl:104,fga:804,fg:358,fta:317,ft:294,tov:148,pf:185,tblk:218,tstl:388,tpts:8748,ttrb:3948,tast:2248,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1248,tpf:2048},
+  {season:"1984-85",team:"BOS",wins:63,losses:19,pts:1052,trb:262,ast:517,blk:14,stl:105,fga:838,fg:373,fta:329,ft:306,tov:152,pf:180,tblk:218,tstl:398,tpts:8748,ttrb:3948,tast:2248,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1248,tpf:2048},
+  {season:"1985-86",team:"BOS",wins:67,losses:15,pts:1058,trb:250,ast:491,blk:13,stl:103,fga:843,fg:375,fta:330,ft:308,tov:147,pf:176,tblk:218,tstl:398,tpts:9748,ttrb:4248,tast:2948,tfga:7514,tfg:3948,tfta:2948,tft:2248,ttov:1048,tpf:1748},
+  {season:"1986-87",team:"BOS",wins:59,losses:23,pts:1218,trb:269,ast:520,blk:13,stl:104,fga:973,fg:433,fta:373,ft:352,tov:152,pf:177,tblk:218,tstl:398,tpts:9348,ttrb:4148,tast:2748,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1148,tpf:1948},
+  {season:"1987-88",team:"BOS",wins:57,losses:25,pts:1192,trb:257,ast:493,blk:12,stl:98,fga:952,fg:420,fta:364,ft:352,tov:145,pf:166,tblk:218,tstl:388,tpts:8748,ttrb:3948,tast:2348,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1248,tpf:2048},
+  {season:"1988-89",team:"BOS",wins:42,losses:40,pts:1040,trb:234,ast:458,blk:9,stl:84,fga:840,fg:369,fta:318,ft:302,tov:131,pf:155,tblk:218,tstl:388,tpts:8748,ttrb:3948,tast:2348,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1248,tpf:2048},
+  {season:"1989-90",team:"SAC",wins:23,losses:59,pts:1133,trb:228,ast:529,blk:9,stl:88,fga:912,fg:401,fta:355,ft:331,tov:151,pf:152,tblk:218,tstl:388,tpts:7748,ttrb:3548,tast:1948,tfga:6414,tfg:3048,tfta:2748,tft:1948,ttov:1348,tpf:2248},
+  {season:"1990-91",team:"POR",wins:63,losses:19,pts:866,trb:183,ast:369,blk:7,stl:67,fga:697,fg:308,fta:271,ft:250,tov:112,pf:131,tblk:218,tstl:388,tpts:9348,ttrb:4148,tast:2648,tfga:7114,tfg:3648,tfta:2748,tft:2048,ttov:1148,tpf:1948},
+  {season:"1991-92",team:"POR",wins:57,losses:25,pts:883,trb:192,ast:397,blk:7,stl:65,fga:713,fg:314,fta:276,ft:255,tov:113,pf:136,tblk:218,tstl:388,tpts:8748,ttrb:3948,tast:2348,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1248,tpf:2048},
+  {season:"1992-93",team:"POR",wins:51,losses:31,pts:841,trb:181,ast:385,blk:6,stl:58,fga:682,fg:299,fta:262,ft:243,tov:109,pf:132,tblk:218,tstl:388,tpts:8748,ttrb:3948,tast:2248,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1248,tpf:2048}
 ]
 
 };
