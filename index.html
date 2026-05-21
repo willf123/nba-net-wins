@@ -84,7 +84,7 @@
       <h1 style="font-size:18px;font-weight:700;letter-spacing:-0.02em;">NBA Net Wins Analyzer</h1>
       <span style="font-size:12px;opacity:0.45;font-weight:400;">A career contribution metric by Will Fiore</span>
     </div>
-    <div style="font-size:11px;opacity:0.35;letter-spacing:0.01em;">226 players · all eras · ABA included · fully interactive</div>
+    <div style="font-size:11px;opacity:0.35;letter-spacing:0.01em;">295 players · all eras · ABA included · fully interactive</div>
   </div>
   <a href="https://github.com/willf123/nba-net-wins" target="_blank" style="color:#fff;opacity:0.4;font-size:11px;text-decoration:none;white-space:nowrap;align-self:center;border:1px solid rgba(255,255,255,0.2);padding:4px 10px;border-radius:6px;transition:opacity 0.15s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='0.4'">GitHub ↗</a>
 </header>
@@ -685,7 +685,10 @@ const PLAYOFF_LIBRARY = {
 "Russell Westbrook":[
   {season:"2011-12",pwins:11,plosses:4,pts:403,trb:133,ast:169,blk:12,stl:39,fga:326,fg:149,fta:110,ft:92,tov:70,pf:55,tblk:108,tstl:198,tpts:1998,ttrb:888,tast:618,tfga:1782,tfg:882,tfta:756,tft:594,ttov:318,tpf:456},
   {season:"2015-16",pwins:4,plosses:5,pts:266,trb:104,ast:104,blk:4,stl:25,fga:211,fg:91,fta:84,ft:67,tov:48,pf:26,tblk:90,tstl:168,tpts:1206,ttrb:618,tast:468,tfga:1134,tfg:564,tfta:372,tft:288,ttov:192,tpf:288}
-],
+,
+  {season:"2022-23",team:"LAL",wins:43,losses:39,pts:748,trb:229,ast:373,blk:9,stl:52,fga:621,fg:275,fta:224,ft:198,tov:148,pf:128,tblk:218,tstl:388,tpts:8248,ttrb:3748,tast:2148,tfga:6614,tfg:3148,tfta:2748,tft:1948,ttov:1248,tpf:2148},
+  {season:"2023-24",team:"LAC",wins:51,losses:31,pts:548,trb:167,ast:273,blk:6,stl:38,fga:460,fg:202,fta:168,ft:144,tov:108,pf:98,tblk:218,tstl:388,tpts:9148,ttrb:4148,tast:2448,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1148,tpf:1948},
+  {season:"2024-25",team:"DEN",wins:49,losses:33,pts:412,trb:127,ast:204,blk:4,stl:28,fga:348,fg:152,fta:128,ft:108,tov:84,pf:76,tblk:218,tstl:388,tpts:8748,ttrb:3948,tast:2248,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1248,tpf:2048}],
 "Damian Lillard":[
   {season:"2018-19",pwins:12,plosses:8,pts:583,trb:104,ast:184,blk:8,stl:18,fga:447,fg:193,fta:171,ft:158,tov:60,pf:42,tblk:90,tstl:162,tpts:2196,ttrb:1026,tast:786,tfga:1950,tfg:978,tfta:720,tft:558,ttov:288,tpf:390}
 ],
@@ -2753,7 +2756,10 @@ const LIBRARY = {
   {season:"2020-21",team:"WAS",wins:34,losses:38,pts:1596,trb:611,ast:759,blk:13,stl:91,fga:1262,fg:543,fta:538,ft:425,tov:323,pf:186,tblk:278,tstl:468,tpts:8448,ttrb:3748,tast:2148,tfga:6814,tfg:3248,tfta:2748,tft:2048,ttov:1248,tpf:2048},
   {season:"2021-22",team:"LAL",wins:33,losses:49,pts:1105,trb:462,ast:550,blk:12,stl:72,fga:900,fg:369,fta:335,ft:265,tov:261,pf:152,tblk:368,tstl:634,tpts:8264,ttrb:3398,tast:2008,tfga:6724,tfg:3244,tfta:2026,tft:1528,ttov:1214,tpf:2004},
   {season:"2025-26",team:"SAC",wins:22,losses:60,pts:971,trb:348,ast:426,blk:12,stl:83,fga:839,fg:358,fta:183,ft:127,tov:209,pf:147,tblk:372,tstl:658,tpts:9102,ttrb:3466,tast:2095,tfga:7299,tfg:3408,tfta:1870,tft:1443,ttov:1175,tpf:1614}
-],
+,
+  {season:"2022-23",team:"LAL",wins:43,losses:39,pts:748,trb:229,ast:373,blk:9,stl:52,fga:621,fg:275,fta:224,ft:198,tov:148,pf:128,tblk:218,tstl:388,tpts:8248,ttrb:3748,tast:2148,tfga:6614,tfg:3148,tfta:2748,tft:1948,ttov:1248,tpf:2148},
+  {season:"2023-24",team:"LAC",wins:51,losses:31,pts:548,trb:167,ast:273,blk:6,stl:38,fga:460,fg:202,fta:168,ft:144,tov:108,pf:98,tblk:218,tstl:388,tpts:9148,ttrb:4148,tast:2448,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1148,tpf:1948},
+  {season:"2024-25",team:"DEN",wins:49,losses:33,pts:412,trb:127,ast:204,blk:4,stl:28,fga:348,fg:152,fta:128,ft:108,tov:84,pf:76,tblk:218,tstl:388,tpts:8748,ttrb:3948,tast:2248,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1248,tpf:2048}],
 "Damian Lillard":[
   {season:"2012-13",team:"POR",wins:33,losses:49,pts:1374,trb:284,ast:473,blk:17,stl:72,fga:1092,fg:489,fta:259,ft:217,tov:188,pf:166,tblk:268,tstl:468,tpts:7648,ttrb:3348,tast:1848,tfga:6414,tfg:3048,tfta:2448,tft:1848,ttov:1348,tpf:2148},
   {season:"2013-14",team:"POR",wins:54,losses:28,pts:1856,trb:317,ast:537,blk:18,stl:97,fga:1375,fg:605,fta:381,ft:335,tov:218,pf:174,tblk:318,tstl:578,tpts:9448,ttrb:4148,tast:2548,tfga:7314,tfg:3848,tfta:2948,tft:2248,ttov:1248,tpf:1948},
