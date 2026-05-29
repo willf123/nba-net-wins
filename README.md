@@ -4,7 +4,7 @@ A career comparison tool built around an original basketball statistic.
 
 **[🔗 Live site →](https://willf123.github.io/nba-net-wins)**  
 **[📬 Weekly player profiles on Substack →](https://netwins.substack.com)**  
-**[🎙 Net Wins Podcast on Substack →](https://api.substack.com/feed/podcast/8996083.rss)**
+**[🎙 Net Wins Podcast on Substack →](https://netwins.substack.com/podcast)**
 
 ---
 
@@ -130,7 +130,7 @@ Created by Will Fiore as an original analytics project exploring player value th
 
 - **Live tool:** [willf123.github.io/nba-net-wins](https://willf123.github.io/nba-net-wins)
 - **Substack:** [netwins.substack.com](https://netwins.substack.com) — weekly player profiles and formula breakdowns
-- **Podcast:** [Net Wins on Substack](https://api.substack.com/feed/podcast/8996083.rss) — audio companion to the Substack
+- **Podcast:** [Net Wins on Substack](https://netwins.substack.com/podcast) — audio companion to the Substack
 - **GitHub:** [github.com/willf123](https://github.com/willf123)
 
 Net Wins is an original statistic. Feedback, corrections, and pull requests welcome.
