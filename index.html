@@ -139,7 +139,7 @@
     </div>
   </div>
   <a href="https://netwins.substack.com" target="_blank" style="background:#C9A84C;color:#1B2A4A;font-size:13px;font-weight:700;padding:9px 20px;border-radius:8px;text-decoration:none;white-space:nowrap;letter-spacing:0.02em;transition:background 0.15s;" onmouseover="this.style.background='#d4b05e'" onmouseout="this.style.background='#C9A84C'">Read on Substack →</a>
-  <a href="https://embed.acast.com/6a14b8546ee822cbfbacb33f?feed=true" target="_blank" style="background:#1B2A4A;color:#C9A84C;font-size:13px;font-weight:700;padding:9px 20px;border-radius:8px;text-decoration:none;white-space:nowrap;letter-spacing:0.02em;border:1.5px solid #C9A84C;transition:background 0.15s;margin-left:8px;" onmouseover="this.style.background='#243a5e'" onmouseout="this.style.background='#1B2A4A'">🎙 Listen on Acast →</a>
+  <a href="https://api.substack.com/feed/podcast/8996083.rss" target="_blank" style="background:#1B2A4A;color:#C9A84C;font-size:13px;font-weight:700;padding:9px 20px;border-radius:8px;text-decoration:none;white-space:nowrap;letter-spacing:0.02em;border:1.5px solid #C9A84C;transition:background 0.15s;margin-left:8px;" onmouseover="this.style.background='#243a5e'" onmouseout="this.style.background='#1B2A4A'">🎙 Listen on Substack →</a>
 </div>
 
 <!-- SEARCH CARD -->
@@ -1699,7 +1699,7 @@ const PLAYER_META = {
   "Kobe Bryant":       {pos:"G",  era:"1996-2016",hof:true},
   "Magic Johnson":     {pos:"G",  era:"1979-1996",hof:true},
   "Shaquille ONeal":   {pos:"C",  era:"1992-2010",hof:true},
-  "Tim Duncan":        {pos:"C",  era:"1997-2016",hof:true},
+  "Tim Duncan":        {pos:"F",  era:"1997-2016",hof:true},
   "Stephen Curry": {pos:"G",  era:"2009-2026"},
   "Kareem Abdul-Jabbar":{pos:"C", era:"1969-1990",hof:true},
   "Bill Russell":      {pos:"C",  era:"1956-1969",hof:true},
@@ -2012,6 +2012,7 @@ const PLAYER_META = {
   "Jason Terry": {pos:"G", era:"1999-2015"},
   "Tom Chambers": {pos:"F", era:"1981-1993"},
   "Bill Cartwright": {pos:"C", era:"1979-1995"},
+  "Jerry Stackhouse": {pos:"G", era:"1995-2013"},
 
 };
 
@@ -6381,6 +6382,28 @@ const LIBRARY = {
   {season:"1992-93",team:"CHI",wins:57,losses:25,pts:353,trb:233,ast:82,blk:13,stl:19,fga:340,fg:139,fta:101,ft:69,tov:63,pf:151,tblk:218,tstl:388,tpts:9148,ttrb:4148,tast:2448,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1148,tpf:1948},
   {season:"1993-94",team:"CHI",wins:55,losses:29,pts:235,trb:151,ast:59,blk:8,stl:8,fga:189,fg:97,fta:59,ft:38,tov:50,pf:84,tblk:218,tstl:388,tpts:8748,ttrb:3948,tast:2348,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1248,tpf:2048},
   {season:"1994-95",team:"SEA",wins:57,losses:25,pts:70,trb:87,ast:9,blk:3,stl:6,fga:70,fg:27,fta:24,ft:15,tov:17,pf:70,tblk:218,tstl:388,tpts:9148,ttrb:4148,tast:2448,tfga:7114,tfg:3648,tfta:2748,tft:2048,ttov:1148,tpf:1948}
+]
+,
+
+"Jerry Stackhouse":[
+  {season:"1995-96",team:"PHI",wins:18,losses:64,pts:1474,trb:274,ast:296,blk:30,stl:112,fga:1196,fg:506,fta:490,ft:430,tov:228,pf:212,tblk:218,tstl:388,tpts:7748,ttrb:3448,tast:1948,tfga:6414,tfg:3048,tfta:2748,tft:1948,ttov:1348,tpf:2248},
+  {season:"1996-97",team:"PHI",wins:22,losses:60,pts:1384,trb:248,ast:316,blk:28,stl:108,fga:1124,fg:474,fta:462,ft:406,tov:214,pf:198,tblk:218,tstl:388,tpts:7748,ttrb:3448,tast:1948,tfga:6414,tfg:3048,tfta:2748,tft:1948,ttov:1348,tpf:2248},
+  {season:"1997-98",team:"DET",wins:37,losses:45,pts:1424,trb:298,ast:338,blk:32,stl:118,fga:1148,fg:488,fta:474,ft:418,tov:218,pf:208,tblk:218,tstl:388,tpts:8248,ttrb:3748,tast:2148,tfga:6614,tfg:3148,tfta:2748,tft:1948,ttov:1248,tpf:2148},
+  {season:"1998-99",team:"DET",wins:29,losses:21,pts:948,trb:198,ast:224,blk:22,stl:78,fga:764,fg:324,fta:318,ft:278,tov:148,pf:138,tblk:198,tstl:338,tpts:5748,ttrb:2748,tast:1548,tfga:4748,tfg:2248,tfta:1748,tft:1248,ttov:748,tpf:1348},
+  {season:"1999-00",team:"DET",wins:42,losses:40,pts:1748,trb:318,ast:388,blk:38,stl:138,fga:1414,fg:598,fta:584,ft:514,tov:238,pf:228,tblk:218,tstl:388,tpts:8248,ttrb:3748,tast:2148,tfga:6614,tfg:3148,tfta:2748,tft:1948,ttov:1248,tpf:2148},
+  {season:"2000-01",team:"DET",wins:32,losses:50,pts:2380,trb:358,ast:418,blk:48,stl:158,fga:1914,fg:816,fta:798,ft:706,tov:278,pf:248,tblk:218,tstl:388,tpts:8148,ttrb:3748,tast:2048,tfga:6614,tfg:3148,tfta:2748,tft:1948,ttov:1248,tpf:2248},
+  {season:"2001-02",team:"DET",wins:50,losses:32,pts:1558,trb:278,ast:348,blk:38,stl:118,fga:1258,fg:534,fta:518,ft:458,tov:198,pf:188,tblk:218,tstl:388,tpts:8748,ttrb:3948,tast:2248,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1248,tpf:2048},
+  {season:"2002-03",team:"WAS",wins:37,losses:45,pts:1564,trb:288,ast:358,blk:36,stl:122,fga:1268,fg:538,fta:514,ft:456,tov:202,pf:192,tblk:218,tstl:388,tpts:8248,ttrb:3748,tast:2148,tfga:6614,tfg:3148,tfta:2748,tft:1948,ttov:1248,tpf:2148},
+  {season:"2003-04",team:"WAS",wins:25,losses:57,pts:1348,trb:248,ast:308,blk:30,stl:104,fga:1094,fg:462,fta:444,ft:392,tov:174,pf:166,tblk:218,tstl:388,tpts:7748,ttrb:3448,tast:1948,tfga:6414,tfg:3048,tfta:2748,tft:1948,ttov:1348,tpf:2248},
+  {season:"2004-05",team:"DAL",wins:58,losses:24,pts:1198,trb:218,ast:278,blk:28,stl:98,fga:968,fg:408,fta:404,ft:356,tov:158,pf:148,tblk:218,tstl:388,tpts:9348,ttrb:4148,tast:2648,tfga:7114,tfg:3648,tfta:2748,tft:2048,ttov:1148,tpf:1948},
+  {season:"2005-06",team:"DAL",wins:60,losses:22,pts:1048,trb:188,ast:244,blk:24,stl:86,fga:848,fg:356,fta:354,ft:312,tov:138,pf:128,tblk:218,tstl:388,tpts:9748,ttrb:4148,tast:2648,tfga:7414,tfg:3948,tfta:2948,tft:2248,ttov:1048,tpf:1748},
+  {season:"2006-07",team:"DAL",wins:67,losses:15,pts:948,trb:168,ast:218,blk:22,stl:78,fga:768,fg:324,fta:318,ft:280,tov:124,pf:114,tblk:218,tstl:388,tpts:9748,ttrb:4148,tast:2648,tfga:7414,tfg:3948,tfta:2948,tft:2248,ttov:1048,tpf:1748},
+  {season:"2007-08",team:"DAL",wins:51,losses:31,pts:748,trb:132,ast:172,blk:18,stl:62,fga:608,fg:256,fta:250,ft:220,tov:98,pf:90,tblk:218,tstl:388,tpts:8748,ttrb:3948,tast:2248,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1248,tpf:2048},
+  {season:"2008-09",team:"DAL",wins:50,losses:32,pts:548,trb:96,ast:124,blk:12,stl:44,fga:444,fg:186,fta:184,ft:162,tov:72,pf:66,tblk:218,tstl:388,tpts:8748,ttrb:3948,tast:2248,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1248,tpf:2048},
+  {season:"2009-10",team:"MIL",wins:46,losses:36,pts:348,trb:62,ast:78,blk:8,stl:28,fga:282,fg:118,fta:118,ft:104,tov:46,pf:42,tblk:218,tstl:388,tpts:8748,ttrb:3948,tast:2248,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1248,tpf:2048},
+  {season:"2010-11",team:"ATL",wins:44,losses:38,pts:248,trb:44,ast:56,blk:6,stl:20,fga:202,fg:84,fta:84,ft:74,tov:32,pf:30,tblk:218,tstl:388,tpts:8748,ttrb:3948,tast:2248,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1248,tpf:2048},
+  {season:"2011-12",team:"ATL",wins:40,losses:26,pts:148,trb:26,ast:34,blk:4,stl:12,fga:120,fg:50,fta:50,ft:44,tov:20,pf:18,tblk:198,tstl:338,tpts:7748,ttrb:3548,tast:1948,tfga:6414,tfg:3048,tfta:2748,tft:1948,ttov:1248,tpf:2248},
+  {season:"2012-13",team:"BKN",wins:49,losses:33,pts:98,trb:18,ast:22,blk:2,stl:8,fga:80,fg:34,fta:32,ft:28,tov:14,pf:12,tblk:218,tstl:388,tpts:8748,ttrb:3948,tast:2248,tfga:7014,tfg:3448,tfta:2748,tft:2048,ttov:1248,tpf:2048}
 ]
 
 };
