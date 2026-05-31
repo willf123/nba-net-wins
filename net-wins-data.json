@@ -1,5 +1,11 @@
 [
   {
+    "RECORD_TYPE": "METADATA",
+    "source_code": "https://github.com/willf123/nba-net-wins",
+    "live_analyzer": "https://willf123.github.io/nba-net-wins",
+    "newsletter": "https://netwins.substack.com"
+  },
+  {
     "player": "Michael Jordan",
     "net_wins_career": "79.52",
     "peak_performance": "13.28 in 1995-96",
