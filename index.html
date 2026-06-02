@@ -6943,17 +6943,41 @@ function buildWeightSliders(){
 
 function onWeightChange(idx,val){
   _weights[idx]=val;
-  // Clamp so the locked index doesn't go negative
-  const others=_weights.reduce((s,v,i)=>i===_lockIdx?s:s+v,0);
-  const remain=Math.max(0,100-others);
-  _weights[_lockIdx]=remain;
-  // Update locked slider display
-  const lockedSlider=document.getElementById(`wSlider${_lockIdx}`);
-  const lockedVal=document.getElementById(`wVal${_lockIdx}`);
-  if(lockedSlider) lockedSlider.value=remain;
-  if(lockedVal) lockedVal.textContent=remain+'%';
+  // How much is left for all OTHER free sliders (not the moved one, not the locked one)
+  const remaining=100-val;
+  // Sum of the other free sliders (excluding moved idx and locked idx)
+  const freeIdxs=WEIGHT_KEYS.map((_,i)=>i).filter(i=>i!==idx&&i!==_lockIdx);
+  const freeSum=freeIdxs.reduce((s,i)=>s+_weights[i],0);
+  // Scale the other free sliders proportionally to fill remaining space
+  // locked index gets whatever is left over
+  if(freeSum===0){
+    // Distribute evenly among free sliders
+    const each=Math.floor(remaining/freeIdxs.length);
+    freeIdxs.forEach(i=>{ _weights[i]=each; });
+    // Any rounding remainder goes to first free slider
+    const distributed=each*freeIdxs.length;
+    if(freeIdxs.length>0) _weights[freeIdxs[0]]+=remaining-distributed;
+  } else {
+    freeIdxs.forEach(i=>{
+      _weights[i]=Math.round(_weights[i]/freeSum*remaining);
+    });
+    // Fix any rounding drift so total of free+moved = 100 before locked
+    const drift=remaining-freeIdxs.reduce((s,i)=>s+_weights[i],0);
+    if(freeIdxs.length>0) _weights[freeIdxs[0]]+=drift;
+  }
+  // Clamp all free weights >=0
+  freeIdxs.forEach(i=>{ _weights[i]=Math.max(0,_weights[i]); });
+  // Locked index always = 0 (it auto-fills whatever is left, here always 0 since the 3 free sum to 100)
+  _weights[_lockIdx]=Math.max(0,100-val-freeIdxs.reduce((s,i)=>s+_weights[i],0));
+  // Update all slider displays
+  _weights.forEach((w,i)=>{
+    const sl=document.getElementById('wSlider'+i);
+    const vl=document.getElementById('wVal'+i);
+    if(sl) sl.value=w;
+    if(vl) vl.textContent=w+'%';
+  });
   updateWeightNote();
-  buildAllRankings();
+  buildAllRankingsTable();
 }
 
 function updateWeightNote(){
@@ -6968,8 +6992,70 @@ function getWeightedScore(p){
 }
 // ---- End composite weight state ----
 
+function _renderAllRankingsTable(stats, sort, discount){
+  document.getElementById('allRankContent').innerHTML=`<table class="rank-table">
+    <thead><tr>
+      <th>#</th><th>Player</th><th>Pos</th><th>Era</th>
+      <th>Reg Season</th><th>Playoffs</th>
+      <th style="color:#b8940a">ABA (×${Math.round(discount*100)}%)</th>
+      <th style="color:#4a7fd4">Pre-77 adj.</th>
+      <th style="color:#2563eb">Combined</th>
+      <th>Avg/season</th><th>Avg top 3</th><th>Peak</th>
+      ${sort==='weighted'?'<th style="color:#6741d9">&#9889; Score</th>':''}
+      <th>Seasons</th><th></th>
+    </tr></thead>
+    <tbody>${stats.map((p,i)=>{
+      const m=PLAYER_META[p.name]||{};
+      const onChart=allData.find(d=>d.name===p.name);
+      const hasPlayoff=p.playoffTotal!==0;
+      const hasABA=p.abaRaw!==0;
+      return `<tr><td class="rank-num">${i+1}</td>
+        <td style="font-weight:600">${p.name}${m.hof?'<span title="Hall of Fame" style="display:inline-block;font-size:9px;font-weight:800;color:#fff;background:#b8940a;border-radius:3px;padding:1px 4px;margin-left:5px;letter-spacing:0.03em;vertical-align:middle;line-height:1.4;">HOF</span>':''}</td>
+        <td><span class="era-badge">${m.pos||'—'}</span></td>
+        <td style="font-size:11px;color:#888">${m.era||''}</td>
+        <td class="${p.total>=0?'pos':'neg'}">${p.total.toFixed(1)}</td>
+        <td style="color:${hasPlayoff?(p.playoffTotal>=0?'#16a34a':'#dc2626'):'#888'}">${hasPlayoff?p.playoffTotal.toFixed(1):'—'}</td>
+        <td style="color:${hasABA?(p.abaRaw>=0?'#b8940a':'#dc2626'):'#ccc'}">${hasABA?p.abaTotal.toFixed(1)+'<span style="font-size:10px;color:#ccc;margin-left:2px;">('+p.abaRaw.toFixed(1)+')</span>':'—'}</td>
+        <td style="color:#4a7fd4;font-size:12px;">${(()=>{const pre77count=p.seasons.filter(s=>s.pre77corrected).length;return pre77count>0?pre77count+' ssn adj.':'—';})()}</td>
+        <td style="font-weight:600;color:${p.combined>=0?'#2563eb':'#dc2626'}">${p.combined.toFixed(1)}</td>
+        <td>${p.avg.toFixed(2)}</td>
+        <td>${p.top3avg.toFixed(2)}</td>
+        <td>${p.peak.toFixed(2)}</td>
+        ${sort==='weighted'?`<td style="font-weight:700;color:#6741d9">${getWeightedScore(p).toFixed(2)}</td>`:''}
+        <td>${p.numSeasons}</td>
+        <td>${onChart?'<span style="font-size:11px;color:#888">on chart</span>':`<button onclick="addPlayer('${p.name}')" style="font-size:11px;padding:2px 8px;">+ Add</button>`}</td>
+      </tr>`;
+    }).join('')}</tbody></table>`;
+}
+
+function buildAllRankingsTable(){
+  const sort=document.getElementById('allSort').value;
+  const filter=document.getElementById('allFilter').value;
+  const discount=getABADiscount();
+  let names=playerNames.filter(n=>{
+    const m=PLAYER_META[n]||{};
+    if(filter==='guards')return m.pos==='G';
+    if(filter==='forwards')return m.pos==='F';
+    if(filter==='centers')return m.pos==='C';
+    if(filter==='pre74'){const s=getStats(n);return s.seasons[0]&&parseInt(s.seasons[0].season)<1974;}
+    if(filter==='modern'){const s=getStats(n);return s.seasons[0]&&parseInt(s.seasons[0].season)>=1979;}
+    return true;
+  });
+  const stats=names.map(getStats);
+  stats.sort((a,b)=>{
+    if(sort==='combined')return b.combined-a.combined;
+    if(sort==='career')return b.total-a.total;
+    if(sort==='playoff')return b.playoffTotal-a.playoffTotal;
+    if(sort==='aba')return b.abaRaw-a.abaRaw;
+    if(sort==='avg')return b.avg-a.avg;
+    if(sort==='top3')return b.top3avg-a.top3avg;
+    if(sort==='weighted')return getWeightedScore(b)-getWeightedScore(a);
+    return b.peak-a.peak;
+  });
+  _renderAllRankingsTable(stats, sort, discount);
+}
+
 function buildAllRankings(){
-  // Show/hide weight panel
   const sort=document.getElementById('allSort').value;
   const panel=document.getElementById('weightPanel');
   if(sort==='weighted'){
@@ -7000,39 +7086,7 @@ function buildAllRankings(){
     if(sort==='weighted')return getWeightedScore(b)-getWeightedScore(a);
     return b.peak-a.peak;
   });
-  document.getElementById('allRankContent').innerHTML=`<table class="rank-table">
-    <thead><tr>
-      <th>#</th><th>Player</th><th>Pos</th><th>Era</th>
-      <th>Reg Season</th><th>Playoffs</th>
-      <th style="color:#b8940a">ABA (×${Math.round(discount*100)}%)</th>
-      <th style="color:#4a7fd4">Pre-77 adj.</th>
-      <th style="color:#2563eb">Combined</th>
-      <th>Avg/season</th><th>Avg top 3</th><th>Peak</th>
-      ${sort==='weighted'?'<th style="color:#6741d9">⚡ Score</th>':''}
-      <th>Seasons</th><th></th>
-    </tr></thead>
-    <tbody>${stats.map((p,i)=>{
-      const m=PLAYER_META[p.name]||{};
-      const onChart=allData.find(d=>d.name===p.name);
-      const hasPlayoff=p.playoffTotal!==0;
-      const hasABA=p.abaRaw!==0;
-      return `<tr><td class="rank-num">${i+1}</td>
-        <td style="font-weight:600">${p.name}${m.hof?'<span title="Hall of Fame" style="display:inline-block;font-size:9px;font-weight:800;color:#fff;background:#b8940a;border-radius:3px;padding:1px 4px;margin-left:5px;letter-spacing:0.03em;vertical-align:middle;line-height:1.4;">HOF</span>':''}</td>
-        <td><span class="era-badge">${m.pos||'—'}</span></td>
-        <td style="font-size:11px;color:#888">${m.era||''}</td>
-        <td class="${p.total>=0?'pos':'neg'}">${p.total.toFixed(1)}</td>
-        <td style="color:${hasPlayoff?(p.playoffTotal>=0?'#16a34a':'#dc2626'):'#888'}">${hasPlayoff?p.playoffTotal.toFixed(1):'—'}</td>
-        <td style="color:${hasABA?(p.abaRaw>=0?'#b8940a':'#dc2626'):'#ccc'}">${hasABA?p.abaTotal.toFixed(1)+'<span style="font-size:10px;color:#ccc;margin-left:2px;">('+p.abaRaw.toFixed(1)+')</span>':'—'}</td>
-        <td style="color:#4a7fd4;font-size:12px;">${(()=>{const pre77count=p.seasons.filter(s=>s.pre77corrected).length;return pre77count>0?pre77count+' ssn adj.':'—';})()}</td>
-        <td style="font-weight:600;color:${p.combined>=0?'#2563eb':'#dc2626'}">${p.combined.toFixed(1)}</td>
-        <td>${p.avg.toFixed(2)}</td>
-        <td>${p.top3avg.toFixed(2)}</td>
-        <td>${p.peak.toFixed(2)}</td>
-        ${sort==='weighted'?`<td style="font-weight:700;color:#6741d9">${getWeightedScore(p).toFixed(2)}</td>`:''}
-        <td>${p.numSeasons}</td>
-        <td>${onChart?'<span style="font-size:11px;color:#888">on chart</span>':`<button onclick="addPlayer('${p.name}')" style="font-size:11px;padding:2px 8px;">+ Add</button>`}</td>
-      </tr>`;
-    }).join('')}</tbody></table>`;
+  _renderAllRankingsTable(stats, sort, discount);
 }
 
 document.addEventListener('click',e=>{
