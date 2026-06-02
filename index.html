@@ -408,7 +408,7 @@
       </div>
       <div id="weightPanel" style="display:none;flex-direction:column;gap:6px;background:#f3f0ff;border:1px solid #b197fc;border-radius:8px;padding:8px 12px;min-width:300px;max-width:400px;">
         <div style="font-size:11px;color:#6741d9;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;">⚡ Composite Score Weights</div>
-        <div style="font-size:11px;color:#555;line-height:1.5;">Set the percentage weight for each metric. The fourth slider auto-adjusts so weights always sum to 100%.</div>
+        <div style="font-size:11px;color:#555;line-height:1.5;">Drag any slider — the others scale proportionally so weights always sum to 100%.</div>
         <div id="weightRows" style="display:flex;flex-direction:column;gap:5px;margin-top:2px;"></div>
         <div style="font-size:10px;color:#888;margin-top:2px;" id="weightSumNote"></div>
       </div>
@@ -6917,8 +6917,7 @@ function buildRankTable(){
 // ---- Composite weight state ----
 const WEIGHT_LABELS=['Combined','Avg/Season','Top 3 Avg','Peak'];
 const WEIGHT_KEYS=['combined','avg','top3avg','peak'];
-let _weights=[25,25,25,25]; // percentages, auto-locked index = 3
-let _lockIdx=3; // index that auto-fills to 100%
+let _weights=[25,25,25,25]; // percentages, always sum to 100
 
 function buildWeightSliders(){
   const container=document.getElementById('weightRows');
@@ -6926,15 +6925,12 @@ function buildWeightSliders(){
   WEIGHT_LABELS.forEach((label,i)=>{
     const row=document.createElement('div');
     row.style.cssText='display:flex;align-items:center;gap:6px;margin-bottom:2px;';
-    const isLocked=(i===_lockIdx);
     row.innerHTML=`
       <span style="font-size:11px;color:#555;width:76px;flex-shrink:0;">${label}</span>
       <input type="range" id="wSlider${i}" min="0" max="100" step="1" value="${_weights[i]}"
-        ${isLocked?'disabled':''}
-        style="width:90px;accent-color:#6741d9;${isLocked?'opacity:0.4;':''}"
+        style="width:90px;accent-color:#6741d9;"
         oninput="onWeightChange(${i},+this.value)">
-      <span id="wVal${i}" style="font-size:12px;font-weight:700;color:${isLocked?'#aaa':'#6741d9'};min-width:34px;">${_weights[i]}%</span>
-      ${isLocked?'<span style="font-size:10px;color:#aaa;">(auto)</span>':''}
+      <span id="wVal${i}" style="font-size:12px;font-weight:700;color:#6741d9;min-width:34px;">${_weights[i]}%</span>
     `;
     container.appendChild(row);
   });
@@ -6942,34 +6938,32 @@ function buildWeightSliders(){
 }
 
 function onWeightChange(idx,val){
-  _weights[idx]=val;
-  // How much is left for all OTHER free sliders (not the moved one, not the locked one)
-  const remaining=100-val;
-  // Sum of the other free sliders (excluding moved idx and locked idx)
-  const freeIdxs=WEIGHT_KEYS.map((_,i)=>i).filter(i=>i!==idx&&i!==_lockIdx);
-  const freeSum=freeIdxs.reduce((s,i)=>s+_weights[i],0);
-  // Scale the other free sliders proportionally to fill remaining space
-  // locked index gets whatever is left over
-  if(freeSum===0){
-    // Distribute evenly among free sliders
-    const each=Math.floor(remaining/freeIdxs.length);
-    freeIdxs.forEach(i=>{ _weights[i]=each; });
-    // Any rounding remainder goes to first free slider
-    const distributed=each*freeIdxs.length;
-    if(freeIdxs.length>0) _weights[freeIdxs[0]]+=remaining-distributed;
+  // Pin the moved slider; scale all others proportionally to fill the rest
+  const remainder=100-val;
+  const otherIdxs=WEIGHT_KEYS.map((_,i)=>i).filter(i=>i!==idx);
+  const otherSum=otherIdxs.reduce((s,i)=>s+_weights[i],0);
+  if(otherSum===0){
+    // Others are all zero — split remainder evenly
+    const each=Math.floor(remainder/otherIdxs.length);
+    otherIdxs.forEach(i=>{ _weights[i]=each; });
+    // Give rounding leftover to the first other
+    _weights[otherIdxs[0]]+=remainder-(each*otherIdxs.length);
   } else {
-    freeIdxs.forEach(i=>{
-      _weights[i]=Math.round(_weights[i]/freeSum*remaining);
+    // Scale others proportionally
+    let assigned=0;
+    otherIdxs.forEach((i,pos)=>{
+      if(pos===otherIdxs.length-1){
+        // Last one gets whatever is left to avoid rounding drift
+        _weights[i]=Math.max(0,remainder-assigned);
+      } else {
+        const v=Math.round(_weights[i]/otherSum*remainder);
+        _weights[i]=Math.max(0,v);
+        assigned+=_weights[i];
+      }
     });
-    // Fix any rounding drift so total of free+moved = 100 before locked
-    const drift=remaining-freeIdxs.reduce((s,i)=>s+_weights[i],0);
-    if(freeIdxs.length>0) _weights[freeIdxs[0]]+=drift;
   }
-  // Clamp all free weights >=0
-  freeIdxs.forEach(i=>{ _weights[i]=Math.max(0,_weights[i]); });
-  // Locked index always = 0 (it auto-fills whatever is left, here always 0 since the 3 free sum to 100)
-  _weights[_lockIdx]=Math.max(0,100-val-freeIdxs.reduce((s,i)=>s+_weights[i],0));
-  // Update all slider displays
+  _weights[idx]=val;
+  // Update all displays
   _weights.forEach((w,i)=>{
     const sl=document.getElementById('wSlider'+i);
     const vl=document.getElementById('wVal'+i);
@@ -6983,7 +6977,7 @@ function onWeightChange(idx,val){
 function updateWeightNote(){
   const total=_weights.reduce((a,b)=>a+b,0);
   const note=document.getElementById('weightSumNote');
-  if(note) note.textContent=`Total: ${total}% ${total===100?'✓':'(adjusting…)'}`;
+  if(note) note.textContent='Total: '+total+'% '+(total===100?'✓':'(adjusting…)');
 }
 
 function getWeightedScore(p){
