@@ -386,6 +386,7 @@
         <option value="avg">Avg / season</option>
         <option value="top3">Avg top 3 seasons</option>
         <option value="peak">Peak season</option>
+        <option value="weighted">⚡ Weighted Score</option>
       </select>
       <div style="display:flex;align-items:center;gap:8px;background:#fffbf0;border:1px solid #e8c84a;border-radius:8px;padding:6px 12px;">
         <span style="font-size:12px;color:#888;white-space:nowrap;">ABA weight:</span>
@@ -404,6 +405,12 @@
             style="width:90px;accent-color:#4a7fd4;">
           <span id="pre77CorrectionVal" style="font-size:13px;font-weight:700;color:#2563eb;min-width:40px;">1.29×</span>
         </div>
+      </div>
+      <div id="weightPanel" style="display:none;flex-direction:column;gap:6px;background:#f3f0ff;border:1px solid #b197fc;border-radius:8px;padding:8px 12px;min-width:300px;max-width:400px;">
+        <div style="font-size:11px;color:#6741d9;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;">⚡ Composite Score Weights</div>
+        <div style="font-size:11px;color:#555;line-height:1.5;">Set the percentage weight for each metric. The fourth slider auto-adjusts so weights always sum to 100%.</div>
+        <div id="weightRows" style="display:flex;flex-direction:column;gap:5px;margin-top:2px;"></div>
+        <div style="font-size:10px;color:#888;margin-top:2px;" id="weightSumNote"></div>
       </div>
     </div>
   </div>
@@ -6907,9 +6914,71 @@ function buildRankTable(){
     }).join('')}</tbody></table>`;
 }
 
+// ---- Composite weight state ----
+const WEIGHT_LABELS=['Combined','Avg/Season','Top 3 Avg','Peak'];
+const WEIGHT_KEYS=['combined','avg','top3avg','peak'];
+let _weights=[25,25,25,25]; // percentages, auto-locked index = 3
+let _lockIdx=3; // index that auto-fills to 100%
+
+function buildWeightSliders(){
+  const container=document.getElementById('weightRows');
+  container.innerHTML='';
+  WEIGHT_LABELS.forEach((label,i)=>{
+    const row=document.createElement('div');
+    row.style.cssText='display:flex;align-items:center;gap:6px;margin-bottom:2px;';
+    const isLocked=(i===_lockIdx);
+    row.innerHTML=`
+      <span style="font-size:11px;color:#555;width:76px;flex-shrink:0;">${label}</span>
+      <input type="range" id="wSlider${i}" min="0" max="100" step="1" value="${_weights[i]}"
+        ${isLocked?'disabled':''}
+        style="width:90px;accent-color:#6741d9;${isLocked?'opacity:0.4;':''}"
+        oninput="onWeightChange(${i},+this.value)">
+      <span id="wVal${i}" style="font-size:12px;font-weight:700;color:${isLocked?'#aaa':'#6741d9'};min-width:34px;">${_weights[i]}%</span>
+      ${isLocked?'<span style="font-size:10px;color:#aaa;">(auto)</span>':''}
+    `;
+    container.appendChild(row);
+  });
+  updateWeightNote();
+}
+
+function onWeightChange(idx,val){
+  _weights[idx]=val;
+  // Clamp so the locked index doesn't go negative
+  const others=_weights.reduce((s,v,i)=>i===_lockIdx?s:s+v,0);
+  const remain=Math.max(0,100-others);
+  _weights[_lockIdx]=remain;
+  // Update locked slider display
+  const lockedSlider=document.getElementById(`wSlider${_lockIdx}`);
+  const lockedVal=document.getElementById(`wVal${_lockIdx}`);
+  if(lockedSlider) lockedSlider.value=remain;
+  if(lockedVal) lockedVal.textContent=remain+'%';
+  updateWeightNote();
+  buildAllRankings();
+}
+
+function updateWeightNote(){
+  const total=_weights.reduce((a,b)=>a+b,0);
+  const note=document.getElementById('weightSumNote');
+  if(note) note.textContent=`Total: ${total}% ${total===100?'✓':'(adjusting…)'}`;
+}
+
+function getWeightedScore(p){
+  const w=_weights.map(v=>v/100);
+  return p.combined*w[0] + p.avg*w[1] + p.top3avg*w[2] + p.peak*w[3];
+}
+// ---- End composite weight state ----
+
 function buildAllRankings(){
-  const filter=document.getElementById('allFilter').value;
+  // Show/hide weight panel
   const sort=document.getElementById('allSort').value;
+  const panel=document.getElementById('weightPanel');
+  if(sort==='weighted'){
+    panel.style.display='block';
+    if(!panel._built){ buildWeightSliders(); panel._built=true; }
+  } else {
+    panel.style.display='none';
+  }
+  const filter=document.getElementById('allFilter').value;
   const discount=getABADiscount();
   let names=playerNames.filter(n=>{
     const m=PLAYER_META[n]||{};
@@ -6928,6 +6997,7 @@ function buildAllRankings(){
     if(sort==='aba')return b.abaRaw-a.abaRaw;
     if(sort==='avg')return b.avg-a.avg;
     if(sort==='top3')return b.top3avg-a.top3avg;
+    if(sort==='weighted')return getWeightedScore(b)-getWeightedScore(a);
     return b.peak-a.peak;
   });
   document.getElementById('allRankContent').innerHTML=`<table class="rank-table">
@@ -6937,7 +7007,9 @@ function buildAllRankings(){
       <th style="color:#b8940a">ABA (×${Math.round(discount*100)}%)</th>
       <th style="color:#4a7fd4">Pre-77 adj.</th>
       <th style="color:#2563eb">Combined</th>
-      <th>Avg/season</th><th>Avg top 3</th><th>Peak</th><th>Seasons</th><th></th>
+      <th>Avg/season</th><th>Avg top 3</th><th>Peak</th>
+      ${sort==='weighted'?'<th style="color:#6741d9">⚡ Score</th>':''}
+      <th>Seasons</th><th></th>
     </tr></thead>
     <tbody>${stats.map((p,i)=>{
       const m=PLAYER_META[p.name]||{};
@@ -6956,6 +7028,7 @@ function buildAllRankings(){
         <td>${p.avg.toFixed(2)}</td>
         <td>${p.top3avg.toFixed(2)}</td>
         <td>${p.peak.toFixed(2)}</td>
+        ${sort==='weighted'?`<td style="font-weight:700;color:#6741d9">${getWeightedScore(p).toFixed(2)}</td>`:''}
         <td>${p.numSeasons}</td>
         <td>${onChart?'<span style="font-size:11px;color:#888">on chart</span>':`<button onclick="addPlayer('${p.name}')" style="font-size:11px;padding:2px 8px;">+ Add</button>`}</td>
       </tr>`;
