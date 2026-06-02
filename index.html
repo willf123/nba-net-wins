@@ -394,6 +394,17 @@
           style="width:80px;accent-color:#e8c84a;">
         <span id="abaDiscountVal" style="font-size:13px;font-weight:700;color:#b8940a;min-width:36px;">90%</span>
       </div>
+      <div style="display:flex;flex-direction:column;gap:6px;background:#f0f4ff;border:1px solid #93b4f5;border-radius:8px;padding:8px 12px;max-width:360px;">
+        <div style="font-size:11px;color:#2563eb;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;">Pre-1977 Turnover Correction</div>
+        <div style="font-size:11px;color:#555;line-height:1.55;">The NBA did not track turnovers before 1977-78, so pre-1977 seasons are missing roughly 23% of their negative actions. This slider scales the team loss-rate denominator to compensate, making each recorded negative action cost proportionally more losses. Default 1.29× reflects the league-average TOV share derived from post-1977 data. Slide left to 1.00× to remove the correction; slide right for a more aggressive adjustment.</div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span style="font-size:11px;color:#888;white-space:nowrap;">Correction factor:</span>
+          <input type="range" id="pre77Correction" min="100" max="150" step="1" value="129"
+            oninput="document.getElementById('pre77CorrectionVal').textContent=(this.value/100).toFixed(2)+'×';applyPre77Correction();"
+            style="width:90px;accent-color:#4a7fd4;">
+          <span id="pre77CorrectionVal" style="font-size:13px;font-weight:700;color:#2563eb;min-width:40px;">1.29×</span>
+        </div>
+      </div>
     </div>
   </div>
   <div class="tbl-wrap" id="allRankContent"></div>
@@ -6621,10 +6632,46 @@ function calcOne(s) {
   return {...s,pWins,pLosses,net:pWins-pLosses};
 }
 
+function getPre77Correction(){
+  return parseFloat(document.getElementById('pre77Correction')?.value||129)/100;
+}
+
+// calcOne variant that applies TOV correction to pre-1977 seasons
+// A season is pre-1977 if tov===0 (turnovers not tracked before 1977-78)
+function calcOneWithCorrection(s){
+  const correction = getPre77Correction();
+  const isPre77 = (s.wins > 0 && parseInt(s.season) < 1977);
+  const blk=s.blk??0,stl=s.stl??0,tblk=s.tblk??0,tstl=s.tstl??0;
+  const tPos=s.tpts+s.ttrb+s.tast+tblk+tstl;
+  const tNegRaw=(s.tfga-s.tfg)+(s.tfta-s.tft)+s.ttov+s.tpf;
+  // Asymmetric correction: scale only tNeg (team loss rate denominator).
+  // Symmetric scaling cancels out in the ratio; this correctly makes each
+  // unit of player negative action "cost" proportionally more losses.
+  const tNeg = isPre77 ? tNegRaw*correction : tNegRaw;
+  const winRate=s.wins>0?tPos/s.wins:0;
+  const lossRate=s.losses>0?tNeg/s.losses:0;
+  const pPos=s.pts+s.trb+s.ast+blk+stl;
+  const pNeg=(s.fga-s.fg)+(s.fta-s.ft)+s.tov+s.pf; // player pNeg stays raw
+  const pWins=winRate>0?pPos/winRate:0;
+  const pLosses=lossRate>0?pNeg/lossRate:0;
+  return {...s,pWins,pLosses,net:pWins-pLosses,pre77corrected:isPre77};
+}
+
+function applyPre77Correction(){
+  // Recompute COMPUTED with correction applied, then rebuild UI
+  playerNames.forEach(n=>{COMPUTED[n]=LIBRARY[n].map(calcOneWithCorrection);});
+  if(allData.length>0){
+    // Re-derive all fields via getStats so combined, avg, peak, top3avg all update
+    allData=allData.map(p=>({...p,...getStats(p.name)}));
+    buildSummary();buildChart();buildTable();
+  }
+  buildAllRankings();
+}
+
 const playerNames=Object.keys(LIBRARY);
 // Precompute all stats
 const COMPUTED={};
-playerNames.forEach(n=>{COMPUTED[n]=LIBRARY[n].map(calcOne);});
+playerNames.forEach(n=>{COMPUTED[n]=LIBRARY[n].map(calcOneWithCorrection);});
 
 // ─── COMPUTE PLAYOFF STATS ─────────────────────────────────────────────────────
 const PLAYOFF_COMPUTED = {};
@@ -6780,10 +6827,12 @@ function buildTable(){
     const rows=p.seasons.map((s,si)=>{
       const bE=s.blk_estimated,sE=s.stl_estimated;
       const isABA=s.aba===true;
-      const abaStyle=isABA?'background:#b8940a12;border-left:3px solid #b8940a;':'';
+      const isPre77=s.pre77corrected===true;
+      const abaStyle=isABA?'background:#b8940a12;border-left:3px solid #b8940a;':(isPre77?'background:#f0f4ff;border-left:3px solid #4a7fd4;':'');
       const abaTag=isABA?'<span style="font-size:9px;font-weight:800;color:#b8940a;background:#b8940a20;border-radius:3px;padding:1px 4px;margin-left:4px;vertical-align:middle;">ABA</span>':'';
+      const pre77Tag=isPre77?'<span style="font-size:9px;font-weight:800;color:#2563eb;background:#dbeafe;border-radius:3px;padding:1px 4px;margin-left:4px;vertical-align:middle;">pre-77</span>':'';
       return `<tr data-pi="${pi}" data-si="${si}" data-aba="${isABA?1:0}" style="${abaStyle}">
-        <td>${s.season}${abaTag}</td><td>${s.team}</td><td>${s.wins}</td><td>${s.losses}</td>
+        <td>${s.season}${abaTag}${pre77Tag}</td><td>${s.team}</td><td>${s.wins}</td><td>${s.losses}</td>
         <td><input class="ci${bE?' est':''}" type="number" min="0" value="${s.blk??0}" data-f="blk"></td>
         <td><input class="ci${bE?' est':''}" type="number" min="0" value="${s.tblk??0}" data-f="tblk"></td>
         <td><input class="ci${sE?' est':''}" type="number" min="0" value="${s.stl??0}" data-f="stl"></td>
@@ -6878,6 +6927,7 @@ function buildAllRankings(){
       <th>#</th><th>Player</th><th>Pos</th><th>Era</th>
       <th>Reg Season</th><th>Playoffs</th>
       <th style="color:#b8940a">ABA (×${Math.round(discount*100)}%)</th>
+      <th style="color:#4a7fd4">Pre-77 adj.</th>
       <th style="color:#2563eb">Combined</th>
       <th>Avg/season</th><th>Avg top 3</th><th>Peak</th><th>Seasons</th><th></th>
     </tr></thead>
@@ -6893,6 +6943,7 @@ function buildAllRankings(){
         <td class="${p.total>=0?'pos':'neg'}">${p.total.toFixed(1)}</td>
         <td style="color:${hasPlayoff?(p.playoffTotal>=0?'#16a34a':'#dc2626'):'#888'}">${hasPlayoff?p.playoffTotal.toFixed(1):'—'}</td>
         <td style="color:${hasABA?(p.abaRaw>=0?'#b8940a':'#dc2626'):'#ccc'}">${hasABA?p.abaTotal.toFixed(1)+'<span style="font-size:10px;color:#ccc;margin-left:2px;">('+p.abaRaw.toFixed(1)+')</span>':'—'}</td>
+        <td style="color:#4a7fd4;font-size:12px;">${(()=>{const pre77count=p.seasons.filter(s=>s.pre77corrected).length;return pre77count>0?pre77count+' ssn adj.':'—';})()}</td>
         <td style="font-weight:600;color:${p.combined>=0?'#2563eb':'#dc2626'}">${p.combined.toFixed(1)}</td>
         <td>${p.avg.toFixed(2)}</td>
         <td>${p.top3avg.toFixed(2)}</td>
