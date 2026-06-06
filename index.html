@@ -9073,23 +9073,32 @@ function buildTable(){
       const abaStyle=isABA?'background:#b8940a12;border-left:3px solid #b8940a;':(isPre77?'background:#f0f4ff;border-left:3px solid #4a7fd4;':'');
       const abaTag=isABA?'<span style="font-size:9px;font-weight:800;color:#b8940a;background:#b8940a20;border-radius:3px;padding:1px 4px;margin-left:4px;vertical-align:middle;">ABA</span>':'';
       const pre77Tag=isPre77?'<span style="font-size:9px;font-weight:800;color:#2563eb;background:#dbeafe;border-radius:3px;padding:1px 4px;margin-left:4px;vertical-align:middle;">pre-77</span>':'';
-      const pShare = s.tnet && s.tnet!==0 ? ((s.pNet??s.pnet??0)/s.tnet*100).toFixed(1) : '—';
+      const hasTeamEst = bE || sE;
+      const tnetAdj = (s.tnet??0) + (s.tblk??0) + (s.tstl??0);
+      const pShare = tnetAdj!==0 ? ((s.pNet??s.pnet??0)/tnetAdj*100).toFixed(1) : '—';
+      const teamBLKcell = hasTeamEst
+        ? `<td><input class="ci est" type="number" min="0" value="${s.tblk??0}" data-f="tblk" title="Team BLK (estimated)"></td>`
+        : `<td style="color:#444;font-size:11px;">—</td>`;
+      const teamSTLcell = hasTeamEst
+        ? `<td><input class="ci est" type="number" min="0" value="${s.tstl??0}" data-f="tstl" title="Team STL (estimated)"></td>`
+        : `<td style="color:#444;font-size:11px;">—</td>`;
       return `<tr data-pi="${pi}" data-si="${si}" data-aba="${isABA?1:0}" style="${abaStyle}">
         <td>${s.season}${abaTag}${pre77Tag}</td><td>${s.team}</td><td>${s.w??'—'}</td>
         <td><input class="ci${bE?' est':''}" type="number" min="0" value="${s.blk??0}" data-f="blk"></td>
         <td><input class="ci${sE?' est':''}" type="number" min="0" value="${s.stl??0}" data-f="stl"></td>
+        ${teamBLKcell}${teamSTLcell}
         <td class="pw">${pShare}%</td>
         <td class="${s.net>=0?'pos':'neg'}">${s.net.toFixed(2)}</td>
       </tr>`;
     }).join('');
     const tot=p.total;
     const abaTot=p.abaTotal;
-    const abaRow=abaTot!==0?`<tr style="background:#b8940a12;border-left:3px solid #b8940a;"><td colspan="5" style="text-align:right;padding-right:8px;font-size:11px;color:#b8940a;">ABA subtotal</td><td colspan="1"></td><td class="${abaTot>=0?'pos':'neg'}" style="color:#b8940a;">${abaTot.toFixed(2)}</td></tr>`:'';
+    const abaRow=abaTot!==0?`<tr style="background:#b8940a12;border-left:3px solid #b8940a;"><td colspan="7" style="text-align:right;padding-right:8px;font-size:11px;color:#b8940a;">ABA subtotal</td><td colspan="1"></td><td class="${abaTot>=0?'pos':'neg'}" style="color:#b8940a;">${abaTot.toFixed(2)}</td></tr>`:'';
     return `<div class="ph" style="color:${COLORS[pi]};border-color:${COLORS[pi]};">${p.name}</div>
-    <table><thead><tr><th>Season</th><th>Team</th><th>W</th><th>BLK</th><th>STL</th><th>Share %</th><th>Net wins</th></tr></thead>
+    <table><thead><tr><th>Season</th><th>Team</th><th>W</th><th>BLK</th><th>STL</th><th title="Team BLK — enter estimated total for pre-1974 seasons" style="color:#e8c84a;">T-BLK</th><th title="Team STL — enter estimated total for pre-1974 seasons" style="color:#e8c84a;">T-STL</th><th>Share %</th><th>Net wins</th></tr></thead>
     <tbody>${rows}
     ${abaRow}
-    <tr class="tot-row"><td colspan="5" style="text-align:right;padding-right:8px;font-size:11px;color:#888;">NBA career total</td><td colspan="1"></td><td class="${tot>=0?'pos':'neg'} ct${pi}">${tot.toFixed(2)}</td></tr>
+    <tr class="tot-row"><td colspan="7" style="text-align:right;padding-right:8px;font-size:11px;color:#888;">NBA career total</td><td colspan="1"></td><td class="${tot>=0?'pos':'neg'} ct${pi}">${tot.toFixed(2)}</td></tr>
     </tbody></table>`;
   }).join('');
 }
@@ -9097,11 +9106,16 @@ function buildTable(){
 function recalc(){
   document.querySelectorAll('tr[data-pi]').forEach(row=>{
     const pi=+row.dataset.pi,si=+row.dataset.si;
-    const get=f=>parseFloat(row.querySelector(`[data-f="${f}"]`).value)||0;
-    allData[pi].seasons[si]={...allData[pi].seasons[si],blk:get('blk'),stl:get('stl')};
+    const get=f=>{const el=row.querySelector(`[data-f="${f}"]`);return el?parseFloat(el.value)||0:0;};
+    const tblkVal=get('tblk'), tstlVal=get('tstl');
+    // Always derive from tnetBase so repeated recalcs don't compound the adjustment
+    const baseTnet=allData[pi].seasons[si].tnetBase??allData[pi].seasons[si].tnet??1;
+    const tnetAdjusted=baseTnet+tblkVal+tstlVal;
+    allData[pi].seasons[si]={...allData[pi].seasons[si],blk:get('blk'),stl:get('stl'),tblk:tblkVal,tstl:tstlVal,tnet:tnetAdjusted,tnetBase:baseTnet};
     const r=calcOneWithCorrection(allData[pi].seasons[si]);
     allData[pi].seasons[si]=r;
-    const tnet=r.tnet??1;
+    allData[pi].seasons[si].tnetBase=baseTnet;
+    const tnet=tnetAdjusted;
     const pShare = tnet!==0 ? ((r.pNet??0)/tnet*100).toFixed(1)+'%' : '—';
     row.querySelector('.pw').textContent=pShare;
     const nv=row.querySelector('td:last-child');
