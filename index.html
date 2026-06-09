@@ -387,6 +387,11 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;heigh
     <input type="text" id="search" placeholder="Search player name..." oninput="onSearch()" style="padding-right:30px;box-sizing:border-box;">
     <button id="search-clear" onclick="document.getElementById('search').value='';onSearch();" title="Clear" style="display:none;position:absolute;right:7px;background:none;border:none;color:var(--mu);font-size:18px;line-height:1;cursor:pointer;padding:0;z-index:1">×</button>
   </div>
+  <div style="position:relative;display:inline-flex;align-items:center;">
+    <input type="text" id="team-search" placeholder="Team (e.g. LAL)..." oninput="onTeamSearch()" style="padding-right:30px;box-sizing:border-box;width:150px" autocomplete="off">
+    <button id="team-clear" onclick="document.getElementById('team-search').value='';onTeamSearch();" title="Clear" style="display:none;position:absolute;right:7px;background:none;border:none;color:var(--mu);font-size:18px;line-height:1;cursor:pointer;padding:0;z-index:1">×</button>
+    <div id="team-dd" style="display:none;position:absolute;top:calc(100% + 4px);left:0;width:180px;background:var(--bg2);border:1px solid var(--bd2);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.4);max-height:220px;overflow-y:auto;z-index:200"></div>
+  </div>
   <select id="season" onchange="render()"><option value="">All seasons</option></select>
   <select id="pos" onchange="render()">
     <option value="">All positions</option>
@@ -539,6 +544,40 @@ function onSearch(){
   const btn=document.getElementById('search-clear');
   if(btn) btn.style.display=document.getElementById('search').value?'block':'none';
 }
+
+const ALL_TEAMS = ["ANA", "AND", "ATL", "BAL", "BLB", "BOS", "BRK", "BUF", "CAP", "CAR", "CHA", "CHH", "CHI", "CHO", "CHP", "CHS", "CHZ", "CIN", "CLE", "CLR", "DAL", "DEN", "DET", "DLC", "DNA", "DNR", "DTF", "FLO", "FTW", "GSW", "HOU", "HSM", "INA", "IND", "INJ", "INO", "KCK", "KCO", "KEN", "LAC", "LAL", "LAS", "MEM", "MIA", "MIL", "MIN", "MLH", "MMF", "MMP", "MMS", "MMT", "MNL", "MNM", "MNP", "NJA", "NJN", "NOB", "NOH", "NOJ", "NOK", "NOP", "NYA", "NYK", "NYN", "OAK", "OKC", "ORL", "PHI", "PHO", "PHW", "PIT", "POR", "PRO", "PTC", "PTP", "ROC", "SAA", "SAC", "SAS", "SDA", "SDC", "SDR", "SDS", "SEA", "SFW", "SHE", "SSL", "STB", "STL", "SYR", "TEX", "TOR", "TRH", "TRI", "UTA", "UTS", "VAN", "VIR", "WAS", "WAT", "WSA", "WSB", "WSC"];
+
+function onTeamSearch(){
+  clearTimeout(st);
+  const q = document.getElementById('team-search').value.trim().toUpperCase();
+  const btn = document.getElementById('team-clear');
+  if(btn) btn.style.display = q ? 'block' : 'none';
+  const dd = document.getElementById('team-dd');
+  if(!q){ dd.style.display='none'; st=setTimeout(render,120); return; }
+  const hits = ALL_TEAMS.filter(t => t.startsWith(q) || t.includes(q)).slice(0,15);
+  if(hits.length){
+    dd.innerHTML = hits.map(t =>
+      `<div onclick="selectTeam('${t}')" style="padding:7px 12px;cursor:pointer;font-size:13px;border-bottom:.5px solid var(--bd);font-family:monospace"
+            onmouseover="this.style.background='var(--bg3)'" onmouseout="this.style.background=''">${t}</div>`
+    ).join('');
+    dd.style.display='block';
+  } else {
+    dd.style.display='none';
+  }
+  st=setTimeout(render,120);
+}
+
+function selectTeam(t){
+  document.getElementById('team-search').value = t;
+  document.getElementById('team-dd').style.display = 'none';
+  document.getElementById('team-clear').style.display = 'block';
+  render();
+}
+
+document.addEventListener('click', e => {
+  if(!e.target.closest('#team-search') && !e.target.closest('#team-dd'))
+    document.getElementById('team-dd').style.display='none';
+});
 function setSort(k){sortBy=k;document.getElementById('sort').value=k;render();}
 
 function getSortVal(idx){
@@ -1181,6 +1220,8 @@ function render(){
   for(let i=0;i<__D.length;i++){
     const r=__D[i];
     if(q&&!r[1].toLowerCase().includes(q)) continue;
+    const tq=(document.getElementById('team-search')||{value:''}).value.trim().toUpperCase();
+    if(tq&&r[3]!==tq) continue;
     if(s&&r[0]!==s) continue;
     if(p&&r[4]!==p) continue;
     if(r[5]<mg) continue;
