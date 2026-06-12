@@ -148,6 +148,13 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;heigh
 .cp-tab{padding:6px 18px;font-size:13px;cursor:pointer;background:transparent;border:none;color:var(--mu);transition:all .1s;font-family:inherit}
 .cp-tab.active{background:var(--bg3);color:var(--tx);font-weight:600}
 .cp-chart-wrap{position:relative;width:100%;height:360px}
+.cmp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:6px}
+.cmp-card{background:var(--bg3);border:1px solid var(--bd);border-radius:10px;padding:12px}
+.cmp-name{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px}
+.cmp-stat{margin-bottom:8px}
+.cmp-stat:last-child{margin-bottom:0}
+.cmp-val{font-size:20px;font-weight:700;color:var(--tx)}
+.cmp-label{font-size:10px;color:var(--mu);text-transform:uppercase;letter-spacing:.4px}
 .cp-empty{padding:40px;text-align:center;color:var(--mu);font-size:13px}
 /* Rankings table */
 .rank-tbl{width:100%;border-collapse:collapse;font-size:12px}
@@ -356,7 +363,11 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;heigh
   </div>
   <div class="cp-tabs">
     <button class="cp-tab active" onclick="cpSwitchTab('chart',this)">Career Chart</button>
+    <button class="cp-tab" onclick="cpSwitchTab('summary',this)">Summary</button>
     <button class="cp-tab" onclick="cpSwitchTab('rankings',this)">All-Time Rankings</button>
+  </div>
+  <div id="cpViewSummary" style="display:none">
+    <div class="cmp-grid" id="cmpGrid"></div>
   </div>
   <div id="cpViewChart">
     <div class="cp-chart-wrap"><canvas id="cpCanvas"></canvas></div>
@@ -1108,8 +1119,8 @@ function buildRankings() {
       <td style="font-weight:600;white-space:nowrap">
         ${p.name}${m.hof?'<span class="hof-badge">HOF</span>':''}
         ${onChart
-          ? '<span style="font-size:10px;color:var(--mu);margin-left:4px">●</span>'
-          : `<button onclick="cpAdd('${safeName}');if(cpCurrentTab!=='chart'){cpSwitchTab('chart',document.querySelector('.cp-tab'));}" style="font-size:10px;padding:1px 7px;margin-left:6px;border-radius:4px;background:var(--bg3);border:1px solid var(--bd);color:var(--mu);cursor:pointer">+ Chart</button>`
+          ? `<span style="font-size:10px;color:var(--mu);margin-left:6px;cursor:pointer" title="Remove from comparison" onclick="cpRemovePlayer('${safeName}')">● remove</span>`
+          : `<button onclick="cpAdd('${safeName}')" style="font-size:10px;padding:1px 7px;margin-left:6px;border-radius:4px;background:var(--bg3);border:1px solid var(--bd);color:var(--mu);cursor:pointer">+ Compare</button>`
         }
       </td>
       <td><span class="era-badge">${m.pos||'—'}</span></td>
@@ -1125,14 +1136,50 @@ function buildRankings() {
   }).join('');
 }
 
+// Comparison summary cards (career total, avg/season, peak season)
+function buildCompareSummary() {
+  const grid = document.getElementById('cmpGrid');
+  if (!cpPlayers.length) {
+    grid.innerHTML = '<div class="cp-empty">Add players above to see their career summary.</div>';
+    return;
+  }
+  grid.innerHTML = cpPlayers.map((name, i) => {
+    const color = CP_COLORS[i % CP_COLORS.length];
+    const stats = cpGetCareerStats(name);
+    // Find peak season label (highest single regular-season nw)
+    let peakSeason = '--', peakVal = 0;
+    stats.rows.filter(r => !r.isPO && !r.isABAPO).forEach(r => {
+      if (r.nw > peakVal) { peakVal = r.nw; peakSeason = r.season; }
+    });
+    const safe = name.replace(/&/g,'&amp;').replace(/"/g,'&quot;');
+    return `<div class="cmp-card" style="border-color:${color}40">
+      <div class="cmp-name" style="color:${color}">${safe}</div>
+      <div class="cmp-stat">
+        <div class="cmp-val">${stats.combined.toFixed(1)}</div>
+        <div class="cmp-label">Career Net Wins</div>
+      </div>
+      <div class="cmp-stat">
+        <div class="cmp-val">${stats.avg.toFixed(1)}</div>
+        <div class="cmp-label">${stats.numSeasons} season${stats.numSeasons===1?'':'s'}</div>
+      </div>
+      <div class="cmp-stat">
+        <div class="cmp-val">${peakVal.toFixed(1)}</div>
+        <div class="cmp-label">Peak (${peakSeason})</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
 // Tab switching
 function cpSwitchTab(tab, el) {
   cpCurrentTab = tab;
   document.querySelectorAll('.cp-tab').forEach(t=>t.classList.remove('active'));
   el.classList.add('active');
   document.getElementById('cpViewChart').style.display = tab==='chart' ? '' : 'none';
+  document.getElementById('cpViewSummary').style.display = tab==='summary' ? '' : 'none';
   document.getElementById('cpViewRankings').style.display = tab==='rankings' ? '' : 'none';
   if(tab==='rankings') buildRankings();
+  else if(tab==='summary') buildCompareSummary();
   else cpBuildChart();
 }
 
@@ -1142,7 +1189,7 @@ function cpAddPlayer(name) {
   if(cpPlayers.length >= 8) { cpSetStatus('Max 8 players'); return; }
   cpPlayers.push(name);
   cpRenderChips();
-  cpBuildChart();
+  cpRefreshActiveView();
   document.getElementById('cpSearch').value='';
   document.getElementById('cpDd').classList.remove('open');
   cpSetStatus('');
@@ -1153,7 +1200,7 @@ function cpAdd(n){cpAddPlayer(n);}
 function cpRemovePlayer(name) {
   cpPlayers = cpPlayers.filter(p=>p!==name);
   cpRenderChips();
-  cpBuildChart();
+  cpRefreshActiveView();
 }
 function cpRemove(n){cpRemovePlayer(n);}
 
@@ -1161,8 +1208,13 @@ function cpRemove(n){cpRemovePlayer(n);}
 function cpClear() {
   cpPlayers = [];
   cpRenderChips();
-  cpBuildChart();
+  cpRefreshActiveView();
+}
+
+function cpRefreshActiveView() {
   if (cpCurrentTab === 'rankings') buildRankings();
+  else if (cpCurrentTab === 'summary') buildCompareSummary();
+  else cpBuildChart();
 }
 
 function cpSetStatus(msg) { /* status display removed */ }
