@@ -148,7 +148,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;heigh
 .cp-tab{padding:6px 18px;font-size:13px;cursor:pointer;background:transparent;border:none;color:var(--mu);transition:all .1s;font-family:inherit}
 .cp-tab.active{background:var(--bg3);color:var(--tx);font-weight:600}
 .cp-chart-wrap{position:relative;width:100%;height:360px}
-.cmp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:6px}
+.cmp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin-bottom:6px}
 .cmp-card{background:var(--bg3);border:1px solid var(--bd);border-radius:10px;padding:12px}
 .cmp-name{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px}
 .cmp-stat{margin-bottom:8px}
@@ -1157,6 +1157,14 @@ function buildCompareSummary() {
       <div class="cmp-stat">
         <div class="cmp-val">${stats.combined.toFixed(1)}</div>
         <div class="cmp-label">Career Net Wins</div>
+      </div>
+      <div class="cmp-stat">
+        <div style="font-size:12px;font-weight:600;color:var(--tx)">${stats.regTotal.toFixed(1)}</div>
+        <div class="cmp-label">Reg Season</div>
+      </div>
+      <div class="cmp-stat">
+        <div style="font-size:12px;font-weight:600;color:var(--ac2)">${stats.poTotal.toFixed(1)}</div>
+        <div class="cmp-label">Playoffs</div>
       </div>
       <div class="cmp-stat">
         <div class="cmp-val">${stats.avg.toFixed(1)}</div>
